@@ -1,115 +1,53 @@
-const fs = require('fs');
-const path = require('path');
 
-const DATA_FILE = path.join(process.cwd(), 'data', 'messages.json');
+const { MongoClient } = require('mongodb');
 
-/**
- * Read data from JSON file
- * @returns {object} - Data object
- */
-function readData() {
-  try {
-    if (fs.existsSync(DATA_FILE)) {
-      const data = fs.readFileSync(DATA_FILE, 'utf-8');
-      return JSON.parse(data);
+const uri = process.env.MONGODB_URI || 'mongodb+srv://makki971:makki8971@cluster0.n8lg0.mongodb.net/?retryWrites=true&w=majority&appName=Cluster0';
+const dbName = 'secretmsg';
+const usersCol = 'users';
+const messagesCol = 'messages';
+
+let client;
+
+async function connect() {
+    if (!client) {
+        client = new MongoClient(uri, { useNewUrlParser: true, useUnifiedTopology: true });
+        await client.connect();
     }
-    return { users: [], messages: [] };
-  } catch (error) {
-    console.error('Error reading data:', error);
-    return { users: [], messages: [] };
-  }
+    return client.db(dbName);
 }
 
-/**
- * Write data to JSON file
- * @param {object} data - Data object to write
- */
-function writeData(data) {
-  try {
-    const dirPath = path.dirname(DATA_FILE);
-    if (!fs.existsSync(dirPath)) {
-      fs.mkdirSync(dirPath, { recursive: true });
-    }
-    fs.writeFileSync(DATA_FILE, JSON.stringify(data, null, 2), 'utf-8');
-  } catch (error) {
-    console.error('Error writing data:', error);
-    throw error;
-  }
+async function findUserByLinkId(linkId) {
+    const db = await connect();
+    return db.collection(usersCol).findOne({ linkId });
 }
 
-/**
- * Find user by linkId
- * @param {string} linkId - User's link ID
- * @returns {object|null} - User object or null
- */
-function findUserByLinkId(linkId) {
-  const data = readData();
-  return data.users.find(u => u.linkId === linkId) || null;
+async function findUserByUsername(username) {
+    const db = await connect();
+    return db.collection(usersCol).findOne({ username });
 }
 
-/**
- * Find user by username
- * @param {string} username - Username
- * @returns {object|null} - User object or null
- */
-function findUserByUsername(username) {
-  const data = readData();
-  return data.users.find(u => u.username === username) || null;
+async function addUser(user) {
+    const db = await connect();
+    await db.collection(usersCol).insertOne(user);
 }
 
-/**
- * Add new user
- * @param {object} user - User object
- */
-function addUser(user) {
-  const data = readData();
-  data.users.push(user);
-  writeData(data);
+async function getMessages(linkId) {
+    const db = await connect();
+    return db.collection(messagesCol).find({ linkId }).toArray();
 }
 
-/**
- * Get messages for a user
- * @param {string} linkId - User's link ID
- * @returns {array} - Array of messages
- */
-function getMessages(linkId) {
-  const data = readData();
-  return data.messages.filter(m => m.linkId === linkId);
+async function addMessage(message) {
+    const db = await connect();
+    await db.collection(messagesCol).insertOne(message);
 }
 
-/**
- * Add new message
- * @param {object} message - Message object
- */
-function addMessage(message) {
-  const data = readData();
-  data.messages.push(message);
-  writeData(data);
-}
-
-/**
- * Delete message by ID
- * @param {string} linkId - User's link ID
- * @param {string} messageId - Message ID to delete
- * @returns {boolean} - True if deleted, false otherwise
- */
-function deleteMessage(linkId, messageId) {
-  const data = readData();
-  const initialLength = data.messages.length;
-  data.messages = data.messages.filter(
-    m => !(m.linkId === linkId && m.messageId === messageId)
-  );
-
-  if (data.messages.length < initialLength) {
-    writeData(data);
-    return true;
-  }
-  return false;
+async function deleteMessage(linkId, messageId) {
+    const db = await connect();
+    const result = await db.collection(messagesCol).deleteOne({ linkId, messageId });
+    return result.deletedCount === 1;
 }
 
 module.exports = {
-  readData,
-  writeData,
   findUserByLinkId,
   findUserByUsername,
   addUser,
