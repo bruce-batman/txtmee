@@ -20,9 +20,9 @@ module.exports = async (req, res) => {
 
   // Only allow POST requests
   if (req.method !== 'POST') {
-    return res.status(405).json({ 
-      success: false, 
-      error: 'Method not allowed. Use POST.' 
+    return res.status(405).json({
+      success: false,
+      error: 'Method not allowed. Use POST.'
     });
   }
 
@@ -31,32 +31,32 @@ module.exports = async (req, res) => {
 
     // Validate input
     if (!username || !password) {
-      return res.status(400).json({ 
-        success: false, 
-        error: 'Username and password are required' 
+      return res.status(400).json({
+        success: false,
+        error: 'Username and password are required'
       });
     }
 
     if (username.length < 3) {
-      return res.status(400).json({ 
-        success: false, 
-        error: 'Username must be at least 3 characters long' 
+      return res.status(400).json({
+        success: false,
+        error: 'Username must be at least 3 characters long'
       });
     }
 
     if (password.length < 6) {
-      return res.status(400).json({ 
-        success: false, 
-        error: 'Password must be at least 6 characters long' 
+      return res.status(400).json({
+        success: false,
+        error: 'Password must be at least 6 characters long'
       });
     }
 
-    // Check if username already exists
-    const existingUser = findUserByUsername(username);
+    // ✅ Fixed: Await async function
+    const existingUser = await findUserByUsername(username);
     if (existingUser) {
-      return res.status(409).json({ 
-        success: false, 
-        error: 'Username already exists' 
+      return res.status(409).json({
+        success: false,
+        error: 'Username already exists'
       });
     }
 
@@ -75,11 +75,11 @@ module.exports = async (req, res) => {
     };
 
     // Save user
-    addUser(user);
+    await addUser(user);
 
     // Generate the secret link
-    const baseUrl = process.env.VERCEL_URL 
-      ? `https://${process.env.VERCEL_URL}` 
+    const baseUrl = process.env.VERCEL_URL
+      ? `https://${process.env.VERCEL_URL}`
       : 'http://localhost:3000';
 
     const secretLink = `${baseUrl}/message/${linkId}`;
@@ -91,15 +91,16 @@ module.exports = async (req, res) => {
         linkId,
         username,
         secretLink,
-        message: 'Secret link created successfully! Share this link to receive anonymous messages.'
+        message:
+          'Secret link created successfully! Share this link to receive anonymous messages.'
       }
     });
 
   } catch (error) {
     console.error('Error creating link:', error);
-    return res.status(500).json({ 
-      success: false, 
-      error: 'Internal server error' 
+    return res.status(500).json({
+      success: false,
+      error: 'Internal server error'
     });
   }
 };
