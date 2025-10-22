@@ -2,9 +2,9 @@
 const { MongoClient } = require('mongodb');
 
 const uri = process.env.MONGODB_URI || 'mongodb+srv://makki971:makki8971@cluster0.n8lg0.mongodb.net/?retryWrites=true&w=majority&appName=Cluster0';
-const dbName = 'secretmsg';
-const usersCol = 'users';
-const messagesCol = 'messages';
+const dbName = 'secretmsgg';
+const usersCol = 'userss';
+const messagesCol = 'messagess';
 
 let client;
 
