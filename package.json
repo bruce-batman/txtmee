@@ -1,0 +1,21 @@
+{
+  "name": "secret-message-api",
+  "version": "1.0.0",
+  "description": "Anonymous secret message API with authentication",
+  "main": "index.js",
+  "scripts": {
+    "dev": "vercel dev",
+    "deploy": "vercel --prod"
+  },
+  "keywords": [
+    "api",
+    "secret-message",
+    "anonymous"
+  ],
+  "author": "",
+  "license": "MIT",
+  "dependencies": {
+    "bcryptjs": "^2.4.3",
+    "uuid": "^9.0.0"
+  }
+}
