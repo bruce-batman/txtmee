@@ -1,7 +1,7 @@
 {
   "name": "secret-message-api",
   "version": "1.0.0",
-  "description": "Anonymous secret message API with authentication",
+  "description": "Anonymous secret message API with authentication and MongoDB",
   "main": "index.js",
   "scripts": {
     "dev": "vercel dev",
@@ -10,12 +10,14 @@
   "keywords": [
     "api",
     "secret-message",
-    "anonymous"
+    "anonymous",
+    "mongodb"
   ],
   "author": "",
   "license": "MIT",
   "dependencies": {
     "bcryptjs": "^2.4.3",
-    "uuid": "^9.0.0"
+    "uuid": "^9.0.0",
+    "mongodb": "^5.7.0"
   }
 }
