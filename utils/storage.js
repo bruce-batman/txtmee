@@ -1,18 +1,14 @@
-const fs = require('fs').promises;
-const path = require('path');
-const DATA_PATH = path.join(__dirname, 'storage.json');
+const axios = require('axios');
+
+const BIN_URL = 'https://api.npoint.io/da74cf9dc370a1b06e32'; // replace with your bin URL
 
 async function readData() {
-  try {
-    const data = await fs.readFile(DATA_PATH, 'utf-8');
-    return JSON.parse(data);
-  } catch {
-    return { users: [], messages: {} };
-  }
+  const res = await axios.get(BIN_URL);
+  return res.data || { users: [], messages: {} };
 }
 
 async function writeData(data) {
-  await fs.writeFile(DATA_PATH, JSON.stringify(data, null, 2));
+  await axios.put(BIN_URL, data); // jsonbin/npoint allows write with PUT
 }
 
 exports.findUserByUsername = async (username) => {
