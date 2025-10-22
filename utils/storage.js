@@ -1,57 +1,51 @@
+const fs = require('fs').promises;
+const path = require('path');
+const DATA_PATH = path.join(__dirname, 'storage.json');
 
-const { MongoClient } = require('mongodb');
-
-const uri = process.env.MONGODB_URI || 'mongodb+srv://makki971:makki8971@cluster0.n8lg0.mongodb.net/?retryWrites=true&w=majority&appName=Cluster0';
-const dbName = 'secretmsgg';
-const usersCol = 'userss';
-const messagesCol = 'messagess';
-
-let client;
-
-async function connect() {
-    if (!client) {
-        client = new MongoClient(uri, { useNewUrlParser: true, useUnifiedTopology: true });
-        await client.connect();
-    }
-    return client.db(dbName);
+async function readData() {
+  try {
+    const data = await fs.readFile(DATA_PATH, 'utf-8');
+    return JSON.parse(data);
+  } catch {
+    return { users: [], messages: {} };
+  }
 }
 
-async function findUserByLinkId(linkId) {
-    const db = await connect();
-    return db.collection(usersCol).findOne({ linkId });
+async function writeData(data) {
+  await fs.writeFile(DATA_PATH, JSON.stringify(data, null, 2));
 }
 
-async function findUserByUsername(username) {
-    const db = await connect();
-    return db.collection(usersCol).findOne({ username });
-}
+exports.findUserByUsername = async (username) => {
+  const data = await readData();
+  return data.users.find(u => u.username === username);
+};
 
-async function addUser(user) {
-    const db = await connect();
-    await db.collection(usersCol).insertOne(user);
-}
+exports.findUserByLinkId = async (linkId) => {
+  const data = await readData();
+  return data.users.find(u => u.linkId === linkId);
+};
 
-async function getMessages(linkId) {
-    const db = await connect();
-    return db.collection(messagesCol).find({ linkId }).toArray();
-}
+exports.addUser = async (user) => {
+  const data = await readData();
+  data.users.push(user);
+  data.messages[user.linkId] = [];
+  await writeData(data);
+};
 
-async function addMessage(message) {
-    const db = await connect();
-    await db.collection(messagesCol).insertOne(message);
-}
+exports.addMessage = async (linkId, message) => {
+  const data = await readData();
+  if (!data.messages[linkId]) data.messages[linkId] = [];
+  data.messages[linkId].push(message);
+  await writeData(data);
+};
 
-async function deleteMessage(linkId, messageId) {
-    const db = await connect();
-    const result = await db.collection(messagesCol).deleteOne({ linkId, messageId });
-    return result.deletedCount === 1;
-}
+exports.getMessages = async (linkId) => {
+  const data = await readData();
+  return data.messages[linkId] || [];
+};
 
-module.exports = {
-  findUserByLinkId,
-  findUserByUsername,
-  addUser,
-  getMessages,
-  addMessage,
-  deleteMessage
+exports.clearMessages = async (linkId) => {
+  const data = await readData();
+  data.messages[linkId] = [];
+  await writeData(data);
 };
