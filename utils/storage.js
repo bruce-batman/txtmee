@@ -1,6 +1,6 @@
 const axios = require('axios');
 
-const BIN_URL = 'https://api.npoint.io/da74cf9dc370a1b06e32'; // replace with your bin URL
+const BIN_URL = 'https://api.npoint.io/ad7c527f7ded013ac415'; // replace with your bin URL
 
 async function readData() {
   const res = await axios.get(BIN_URL);
