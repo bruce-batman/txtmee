@@ -19,9 +19,9 @@ module.exports = async (req, res) => {
 
   // Only allow GET requests
   if (req.method !== 'GET') {
-    return res.status(405).json({ 
-      success: false, 
-      error: 'Method not allowed. Use GET.' 
+    return res.status(405).json({
+      success: false,
+      error: 'Method not allowed. Use GET.'
     });
   }
 
@@ -30,18 +30,18 @@ module.exports = async (req, res) => {
 
     // Validate linkId
     if (!linkId) {
-      return res.status(400).json({ 
-        success: false, 
-        error: 'Link ID is required' 
+      return res.status(400).json({
+        success: false,
+        error: 'Link ID is required'
       });
     }
 
-    // Check if user exists
-    const user = findUserByLinkId(linkId);
+    // ✅ Fixed: Await async DB call
+    const user = await findUserByLinkId(linkId);
     if (!user) {
-      return res.status(404).json({ 
-        success: false, 
-        error: 'Invalid link. User not found.' 
+      return res.status(404).json({
+        success: false,
+        error: 'Invalid link. User not found.'
       });
     }
 
@@ -51,31 +51,32 @@ module.exports = async (req, res) => {
 
     if (!credentials) {
       res.setHeader('WWW-Authenticate', 'Basic realm="Secret Messages"');
-      return res.status(401).json({ 
-        success: false, 
-        error: 'Authentication required. Provide username and password.' 
+      return res.status(401).json({
+        success: false,
+        error: 'Authentication required. Provide username and password.'
       });
     }
 
     // Verify credentials
     const { username, password } = credentials;
     if (username !== user.username) {
-      return res.status(403).json({ 
-        success: false, 
-        error: 'Invalid credentials' 
+      return res.status(403).json({
+        success: false,
+        error: 'Invalid credentials'
       });
     }
 
+    // ✅ Fixed: Await password comparison
     const passwordMatch = await comparePassword(password, user.password);
     if (!passwordMatch) {
-      return res.status(403).json({ 
-        success: false, 
-        error: 'Invalid credentials' 
+      return res.status(403).json({
+        success: false,
+        error: 'Invalid credentials'
       });
     }
 
-    // Get messages
-    const messages = getMessages(linkId);
+    // ✅ Fixed: Await messages fetch (if async)
+    const messages = await getMessages(linkId);
 
     // Return success response
     return res.status(200).json({
@@ -94,9 +95,9 @@ module.exports = async (req, res) => {
 
   } catch (error) {
     console.error('Error getting messages:', error);
-    return res.status(500).json({ 
-      success: false, 
-      error: 'Internal server error' 
+    return res.status(500).json({
+      success: false,
+      error: 'Internal server error'
     });
   }
 };
