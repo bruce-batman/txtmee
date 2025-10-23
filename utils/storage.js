@@ -1,5 +1,3 @@
-// utils/storage.js
-
 const BIN_ID = '68f980cbae596e708f2537fa';
 const JSONBIN_KEY = '$2a$10$aVJi0c6HQUMfEbmKHifNXuz25P7oZXqrlHTNZsAZXJ./DrNPIgE3y';
 
@@ -11,17 +9,7 @@ async function loadData() {
     const res = await fetch(READ_URL, {
       headers: { 'X-Master-Key': JSONBIN_KEY }
     });
-
-    if (!res.ok) {
-      console.error(`Load failed: ${res.status} ${res.statusText}`);
-      if (res.status === 404) {
-        console.warn('Bin not found — creating new.');
-        await saveData({ users: [], messages: {} });
-        return { users: [], messages: {} };
-      }
-      throw new Error(`JSONBin load failed (${res.status})`);
-    }
-
+    if (!res.ok) throw new Error(`Failed to load bin (${res.status})`);
     const json = await res.json();
     return json.record || json;
   } catch (err) {
@@ -31,28 +19,33 @@ async function loadData() {
 }
 
 async function saveData(data) {
-  try {
-    const res = await fetch(BASE_URL, {
-      method: 'PUT',
-      headers: {
-        'Content-Type': 'application/json',
-        'X-Master-Key': JSONBIN_KEY
-      },
-      body: JSON.stringify(data)
-    });
-
-    if (!res.ok) throw new Error(`Save failed: ${res.status} ${res.statusText}`);
-    const json = await res.json();
-    return json.record || json;
-  } catch (err) {
-    console.error('Error saving JSONBin:', err.message);
-    throw err;
-  }
+  const res = await fetch(BASE_URL, {
+    method: 'PUT',
+    headers: {
+      'Content-Type': 'application/json',
+      'X-Master-Key': JSONBIN_KEY
+    },
+    body: JSON.stringify(data)
+  });
+  if (!res.ok) throw new Error(`Save failed: ${res.status}`);
+  return true;
 }
 
 async function findUserByLinkId(linkId) {
   const data = await loadData();
   return data.users.find(u => u.linkId === linkId);
+}
+
+async function findUserByUsername(username) {
+  const data = await loadData();
+  return data.users.find(u => u.username === username);
+}
+
+async function addUser(user) {
+  const data = await loadData();
+  data.users.push(user);
+  await saveData(data);
+  return user;
 }
 
 async function addMessage(linkId, message) {
@@ -66,8 +59,7 @@ async function addMessage(linkId, message) {
 
 async function getMessages(linkId) {
   const data = await loadData();
-  const messages = data.messages?.[linkId] || [];
-  return Array.isArray(messages) ? messages : [];
+  return Array.isArray(data.messages?.[linkId]) ? data.messages[linkId] : [];
 }
 
-module.exports = { findUserByLinkId, addMessage, getMessages };
+module.exports = { loadData, saveData, findUserByLinkId, findUserByUsername, addUser, addMessage, getMessages };
