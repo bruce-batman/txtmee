@@ -1,207 +1,530 @@
+<!DOCTYPE html>
 <html lang="en">
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <title>Asklyy - Send Secret Message</title>
-  <!-- Tailwind CSS -->
   <script src="https://cdn.tailwindcss.com"></script>
   <style>
-    @import url('https://fonts.googleapis.com/css2?family=Inter:wght@400;600;700;800&display=swap');
+    @import url('https://fonts.googleapis.com/css2?family=Poppins:wght@400;600;700;800&display=swap');
+    
     :root {
-      --primary-color: #8b5cf6; /* Purple-500 */
-      --secondary-color: #ec4899; /* Pink-500 */
-      --neon-glow: 0 0 15px rgba(139, 92, 246, 0.7);
-      --glass-bg: rgba(255, 255, 255, 0.15);
-      --glass-border: 1px solid rgba(255, 255, 255, 0.2);
+      --neon-pink: #ff006e;
+      --neon-purple: #8338ec;
+      --neon-blue: #3a86ff;
+      --neon-cyan: #06ffa5;
+      --neon-yellow: #ffbe0b;
     }
+    
+    * {
+      margin: 0;
+      padding: 0;
+      box-sizing: border-box;
+    }
+    
     body {
-      font-family: 'Inter', sans-serif;
-      background: linear-gradient(145deg, #0f172a, #1e293b, #3730a3);
+      font-family: 'Poppins', sans-serif;
+      background: #0a0a0a;
       min-height: 100vh;
       display: flex;
       align-items: center;
       justify-content: center;
       padding: 20px;
-      color: white;
-    }
-    .card-container {
-      backdrop-filter: blur(16px);
-      background: var(--glass-bg);
-      border: var(--glass-border);
-      border-radius: 20px;
-      box-shadow: 0 25px 50px -12px rgba(0, 0, 0, 0.5);
-      width: 100%;
-      max-width: 450px;
-      animation: fadeIn 0.5s ease-out;
+      position: relative;
       overflow: hidden;
     }
-    @keyframes fadeIn {
-      from { opacity: 0; transform: translateY(30px); }
-      to { opacity: 1; transform: translateY(0); }
+    
+    /* Animated background */
+    body::before {
+      content: '';
+      position: fixed;
+      top: 0;
+      left: 0;
+      width: 100%;
+      height: 100%;
+      background: 
+        radial-gradient(circle at 20% 50%, rgba(255, 0, 110, 0.15) 0%, transparent 50%),
+        radial-gradient(circle at 80% 80%, rgba(131, 56, 236, 0.15) 0%, transparent 50%),
+        radial-gradient(circle at 50% 20%, rgba(58, 134, 255, 0.15) 0%, transparent 50%);
+      animation: bgPulse 10s ease-in-out infinite;
+      z-index: 0;
     }
-    .header-gradient {
-      background: linear-gradient(to right, var(--primary-color), var(--secondary-color));
-      padding: 1.5rem;
-      text-align: center;
+    
+    @keyframes bgPulse {
+      0%, 100% { opacity: 1; }
+      50% { opacity: 0.7; }
     }
-    .btn-primary {
-      background: linear-gradient(135deg, var(--primary-color), var(--secondary-color));
-      color: white;
-      padding: 14px 20px;
-      border-radius: 12px;
-      font-weight: 700;
-      transition: all 0.3s;
-      box-shadow: var(--neon-glow);
-    }
-    .btn-primary:hover:not(:disabled) {
-      transform: translateY(-3px);
-      box-shadow: 0 10px 20px rgba(139, 92, 246, 0.4), var(--neon-glow);
-    }
-    .form-control-styled {
-      border-radius: 12px;
-      border: var(--glass-border);
-      padding: 12px;
-      background: rgba(255, 255, 255, 0.1);
-      color: white;
-      transition: all 0.3s;
-    }
-    .form-control-styled:focus {
-      outline: none;
-      border-color: var(--primary-color);
-      box-shadow: 0 0 0 3px rgba(139, 92, 246, 0.3), var(--neon-glow);
-    }
-    .spinner-border {
-      width: 3rem;
-      height: 3rem;
-      border: 0.25em solid rgba(139, 92, 246, 0.3);
-      border-right-color: transparent;
+    
+    /* Floating particles */
+    .particle {
+      position: fixed;
+      width: 3px;
+      height: 3px;
+      background: var(--neon-cyan);
       border-radius: 50%;
-      animation: spinner-border 0.75s linear infinite;
-      display: inline-block;
+      box-shadow: 0 0 10px var(--neon-cyan);
+      animation: float 15s infinite;
+      z-index: 1;
     }
-    @keyframes spinner-border {
-      to { transform: rotate(360deg); }
+    
+    @keyframes float {
+      0%, 100% { transform: translateY(0) translateX(0); opacity: 0; }
+      10% { opacity: 1; }
+      90% { opacity: 1; }
+      100% { transform: translateY(-100vh) translateX(50px); opacity: 0; }
     }
-    /* Responsive adjustments */
-    @media (max-width: 640px) {
-      .card-container {
-        max-width: 95%;
+    
+    .card-container {
+      position: relative;
+      z-index: 10;
+      background: rgba(20, 20, 30, 0.9);
+      backdrop-filter: blur(20px);
+      border: 2px solid transparent;
+      border-radius: 30px;
+      width: 100%;
+      max-width: 500px;
+      box-shadow: 
+        0 0 60px rgba(255, 0, 110, 0.3),
+        0 0 100px rgba(131, 56, 236, 0.2),
+        inset 0 0 60px rgba(255, 255, 255, 0.03);
+      animation: cardGlow 3s ease-in-out infinite, slideIn 0.6s ease-out;
+      overflow: hidden;
+    }
+    
+    @keyframes cardGlow {
+      0%, 100% { 
+        box-shadow: 
+          0 0 60px rgba(255, 0, 110, 0.3),
+          0 0 100px rgba(131, 56, 236, 0.2),
+          inset 0 0 60px rgba(255, 255, 255, 0.03);
       }
+      50% { 
+        box-shadow: 
+          0 0 80px rgba(255, 0, 110, 0.5),
+          0 0 120px rgba(131, 56, 236, 0.4),
+          inset 0 0 80px rgba(255, 255, 255, 0.05);
+      }
+    }
+    
+    @keyframes slideIn {
+      from { opacity: 0; transform: translateY(50px) scale(0.9); }
+      to { opacity: 1; transform: translateY(0) scale(1); }
+    }
+    
+    .header-section {
+      background: linear-gradient(135deg, var(--neon-pink), var(--neon-purple), var(--neon-blue));
+      padding: 40px 30px;
+      position: relative;
+      overflow: hidden;
+    }
+    
+    .header-section::before {
+      content: '';
+      position: absolute;
+      top: -50%;
+      right: -50%;
+      width: 200%;
+      height: 200%;
+      background: radial-gradient(circle, rgba(255,255,255,0.1) 0%, transparent 70%);
+      animation: headerShine 4s linear infinite;
+    }
+    
+    @keyframes headerShine {
+      0% { transform: rotate(0deg); }
+      100% { transform: rotate(360deg); }
+    }
+    
+    .logo-icon {
+      width: 60px;
+      height: 60px;
+      background: linear-gradient(135deg, var(--neon-cyan), var(--neon-yellow));
+      border-radius: 20px;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      box-shadow: 0 0 30px rgba(6, 255, 165, 0.6);
+      animation: iconPulse 2s ease-in-out infinite;
+      position: relative;
+      z-index: 2;
+    }
+    
+    @keyframes iconPulse {
+      0%, 100% { transform: scale(1); }
+      50% { transform: scale(1.1); }
+    }
+    
+    .title-text {
+      font-size: 2.5rem;
+      font-weight: 800;
+      background: linear-gradient(90deg, #fff, var(--neon-cyan), #fff);
+      background-size: 200% 100%;
+      -webkit-background-clip: text;
+      background-clip: text;
+      -webkit-text-fill-color: transparent;
+      animation: titleShimmer 3s linear infinite;
+      text-shadow: 0 0 30px rgba(255, 255, 255, 0.5);
+      position: relative;
+      z-index: 2;
+    }
+    
+    @keyframes titleShimmer {
+      0% { background-position: 0% 50%; }
+      100% { background-position: 200% 50%; }
+    }
+    
+    .subtitle {
+      color: rgba(255, 255, 255, 0.8);
+      font-size: 0.95rem;
+      font-weight: 500;
+      letter-spacing: 1px;
+      position: relative;
+      z-index: 2;
+    }
+    
+    .form-section {
+      padding: 40px 30px;
+    }
+    
+    .neon-label {
+      color: var(--neon-cyan);
+      font-weight: 600;
+      font-size: 0.9rem;
+      text-transform: uppercase;
+      letter-spacing: 1px;
+      margin-bottom: 10px;
+      display: block;
+      text-shadow: 0 0 10px rgba(6, 255, 165, 0.5);
+    }
+    
+    .neon-input, .neon-textarea {
+      width: 100%;
+      background: rgba(255, 255, 255, 0.05);
+      border: 2px solid rgba(131, 56, 236, 0.4);
+      border-radius: 15px;
+      padding: 15px 20px;
+      color: #fff;
+      font-size: 1rem;
+      font-family: 'Poppins', sans-serif;
+      transition: all 0.3s ease;
+      outline: none;
+    }
+    
+    .neon-input::placeholder, .neon-textarea::placeholder {
+      color: rgba(255, 255, 255, 0.4);
+    }
+    
+    .neon-input:focus, .neon-textarea:focus {
+      background: rgba(255, 255, 255, 0.08);
+      border-color: var(--neon-cyan);
+      box-shadow: 
+        0 0 20px rgba(6, 255, 165, 0.3),
+        inset 0 0 20px rgba(6, 255, 165, 0.1);
+      transform: translateY(-2px);
+    }
+    
+    .neon-textarea {
+      resize: none;
+      min-height: 140px;
+    }
+    
+    .neon-button {
+      width: 100%;
+      background: linear-gradient(135deg, var(--neon-pink), var(--neon-purple));
+      border: none;
+      border-radius: 15px;
+      padding: 18px;
+      color: #fff;
+      font-size: 1.1rem;
+      font-weight: 700;
+      text-transform: uppercase;
+      letter-spacing: 2px;
+      cursor: pointer;
+      position: relative;
+      overflow: hidden;
+      transition: all 0.3s ease;
+      box-shadow: 
+        0 0 30px rgba(255, 0, 110, 0.5),
+        0 5px 25px rgba(0, 0, 0, 0.3);
+    }
+    
+    .neon-button::before {
+      content: '';
+      position: absolute;
+      top: 0;
+      left: -100%;
+      width: 100%;
+      height: 100%;
+      background: linear-gradient(90deg, transparent, rgba(255, 255, 255, 0.3), transparent);
+      transition: left 0.5s;
+    }
+    
+    .neon-button:hover:not(:disabled)::before {
+      left: 100%;
+    }
+    
+    .neon-button:hover:not(:disabled) {
+      transform: translateY(-3px);
+      box-shadow: 
+        0 0 50px rgba(255, 0, 110, 0.8),
+        0 8px 30px rgba(0, 0, 0, 0.4);
+    }
+    
+    .neon-button:active:not(:disabled) {
+      transform: translateY(-1px);
+    }
+    
+    .neon-button:disabled {
+      opacity: 0.6;
+      cursor: not-allowed;
+    }
+    
+    .alert-box {
+      padding: 20px;
+      border-radius: 15px;
+      margin-top: 20px;
+      border: 2px solid;
+      font-weight: 600;
+      animation: alertSlide 0.4s ease-out;
+    }
+    
+    @keyframes alertSlide {
+      from { opacity: 0; transform: translateX(-20px); }
+      to { opacity: 1; transform: translateX(0); }
+    }
+    
+    .alert-success {
+      background: rgba(6, 255, 165, 0.1);
+      border-color: var(--neon-cyan);
+      color: var(--neon-cyan);
+      box-shadow: 0 0 20px rgba(6, 255, 165, 0.2);
+    }
+    
+    .alert-danger {
+      background: rgba(255, 0, 110, 0.1);
+      border-color: var(--neon-pink);
+      color: var(--neon-pink);
+      box-shadow: 0 0 20px rgba(255, 0, 110, 0.2);
+    }
+    
+    .alert-warning {
+      background: rgba(255, 190, 11, 0.1);
+      border-color: var(--neon-yellow);
+      color: var(--neon-yellow);
+      box-shadow: 0 0 20px rgba(255, 190, 11, 0.2);
+    }
+    
+    .spinner {
+      width: 50px;
+      height: 50px;
+      border: 4px solid rgba(255, 255, 255, 0.1);
+      border-top: 4px solid var(--neon-cyan);
+      border-radius: 50%;
+      animation: spin 0.8s linear infinite;
+      margin: 0 auto;
+    }
+    
+    @keyframes spin {
+      0% { transform: rotate(0deg); }
+      100% { transform: rotate(360deg); }
+    }
+    
+    .loading-container {
+      text-align: center;
+      padding: 30px;
+    }
+    
+    .loading-text {
+      color: var(--neon-cyan);
+      margin-top: 20px;
+      font-weight: 600;
+      font-size: 1.1rem;
+      text-shadow: 0 0 10px rgba(6, 255, 165, 0.5);
+      animation: textPulse 1.5s ease-in-out infinite;
+    }
+    
+    @keyframes textPulse {
+      0%, 100% { opacity: 1; }
+      50% { opacity: 0.5; }
+    }
+    
+    .form-group {
+      margin-bottom: 25px;
+    }
+    
+    .icon-send {
+      display: inline-block;
+      margin-right: 10px;
+      animation: iconBounce 1s ease-in-out infinite;
+    }
+    
+    @keyframes iconBounce {
+      0%, 100% { transform: translateX(0); }
+      50% { transform: translateX(5px); }
+    }
+    
+    .error-page {
+      text-align: center;
+      color: #fff;
+      z-index: 10;
+      position: relative;
+    }
+    
+    .error-title {
+      font-size: 3rem;
+      font-weight: 800;
+      background: linear-gradient(135deg, var(--neon-pink), var(--neon-purple));
+      -webkit-background-clip: text;
+      background-clip: text;
+      -webkit-text-fill-color: transparent;
+      margin-bottom: 20px;
+    }
+    
+    .error-text {
+      color: rgba(255, 255, 255, 0.7);
+      font-size: 1.1rem;
     }
   </style>
 </head>
 <body>
+  <!-- Floating particles -->
+  <div class="particle" style="left: 10%; animation-delay: 0s;"></div>
+  <div class="particle" style="left: 20%; animation-delay: 2s;"></div>
+  <div class="particle" style="left: 30%; animation-delay: 4s;"></div>
+  <div class="particle" style="left: 40%; animation-delay: 1s;"></div>
+  <div class="particle" style="left: 50%; animation-delay: 3s;"></div>
+  <div class="particle" style="left: 60%; animation-delay: 5s;"></div>
+  <div class="particle" style="left: 70%; animation-delay: 2.5s;"></div>
+  <div class="particle" style="left: 80%; animation-delay: 4.5s;"></div>
+  <div class="particle" style="left: 90%; animation-delay: 1.5s;"></div>
+
   <div class="card-container">
-    <!-- Header -->
-    <div class="header-gradient">
-      <div class="flex items-center justify-center space-x-3">
-        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="currentColor" class="w-8 h-8 text-indigo-200">
-          <path d="M11.25 4.532a.75.75 0 0 1 .536 0L20.89 9.532a.75.75 0 0 1 .116 1.03l-9.532 9.532a.75.75 0 0 1-1.03-.116l-9.532-9.532a.75.75 0 0 1 0-1.06L11.25 4.532Z" />
-        </svg>
-        <h3 class="text-3xl font-extrabold tracking-tight">Asklyy</h3>
-      </div>
-      <p class="text-indigo-200 text-center mt-2 text-sm">Send a Secret, Anonymous Message</p>
-    </div>
-    <!-- Form -->
-    <div class="p-6 sm:p-8">
-      <form id="sendMessageForm" class="transition-opacity duration-300">
-        <div class="mb-4">
-          <label for="askerName" class="block text-sm font-medium mb-1">Your Name (optional)</label>
-          <input type="text" class="form-control-styled w-full" id="askerName" placeholder="Enter your name or leave blank">
-        </div>
-        <div class="mb-6">
-          <label for="question" class="block text-sm font-medium mb-1">Your Message</label>
-          <textarea class="form-control-styled w-full resize-none" id="question" rows="5" placeholder="Type your secret message..." required></textarea>
-        </div>
-        <button type="submit" class="btn-primary w-full flex items-center justify-center space-x-2">
-          <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="2.5" stroke="currentColor" class="w-5 h-5">
-            <path stroke-linecap="round" stroke-linejoin="round" d="M6 12L3.269 3.126A59.768 59.768 0 0121.485 12 59.77 59.77 0 013.27 20.874L5.999 12zm0 0h7.5" />
+    <div class="header-section">
+      <div style="display: flex; align-items: center; justify-content: center; gap: 20px; flex-wrap: wrap;">
+        <div class="logo-icon">
+          <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="white" style="width: 35px; height: 35px;">
+            <path d="M11.25 4.532a.75.75 0 0 1 .536 0L20.89 9.532a.75.75 0 0 1 .116 1.03l-9.532 9.532a.75.75 0 0 1-1.03-.116l-9.532-9.532a.75.75 0 0 1 0-1.06L11.25 4.532Z" />
           </svg>
+        </div>
+        <h1 class="title-text">ASKLYY</h1>
+      </div>
+      <p class="subtitle" style="text-align: center; margin-top: 15px;">✨ Send Anonymous Secret Messages ✨</p>
+    </div>
+
+    <div class="form-section">
+      <form id="sendMessageForm">
+        <div class="form-group">
+          <label for="askerName" class="neon-label">👤 Your Name (Optional)</label>
+          <input type="text" class="neon-input" id="askerName" placeholder="Stay anonymous or reveal yourself...">
+        </div>
+        
+        <div class="form-group">
+          <label for="question" class="neon-label">💌 Secret Message</label>
+          <textarea class="neon-textarea" id="question" placeholder="Pour your heart out... Nobody knows it's you 🤫" required></textarea>
+        </div>
+        
+        <button type="submit" class="neon-button">
+          <span class="icon-send">🚀</span>
           <span>Send Message</span>
         </button>
       </form>
-      <div id="sendMessageResult" class="mt-4"></div>
-      <div class="loading hidden" id="sendMessageLoading">
-        <div class="spinner-border" role="status"></div>
-        <p class="mt-3 text-gray-200 font-medium">Sending your message securely...</p>
+
+      <div id="sendMessageResult"></div>
+
+      <div id="sendMessageLoading" style="display: none;">
+        <div class="loading-container">
+          <div class="spinner"></div>
+          <p class="loading-text">Sending your secret message...</p>
+        </div>
       </div>
     </div>
   </div>
+
   <script>
-    // --- Link ID Detection Logic ---
+    const API_BASE_URL = 'https://asklyy.vercel.app';
+    
     const pathParts = window.location.pathname.split('/');
-    let linkId = pathParts.filter(Boolean).pop();
+    let linkId = pathParts.filter(Boolean).pop(); 
+
     const urlParams = new URLSearchParams(window.location.search);
     if (urlParams.has('id')) {
       linkId = urlParams.get('id');
     }
     if (linkId === 'send') linkId = null;
 
-    // --- UI Utility Functions ---
     function showLoading(show) {
       const form = document.getElementById('sendMessageForm');
       const loading = document.getElementById('sendMessageLoading');
-      const button = document.querySelector('.btn-primary');
-      loading.classList.toggle('hidden', !show);
+      const button = document.querySelector('.neon-button');
+
+      loading.style.display = show ? 'block' : 'none';
       form.style.opacity = show ? '0.3' : '1';
+      form.style.pointerEvents = show ? 'none' : 'auto';
       button.disabled = show;
     }
+
     function showAlert(type, message) {
       const classes = {
-        success: 'bg-green-900/30 border-green-400 text-green-300',
-        danger: 'bg-red-900/30 border-red-400 text-red-300',
-        warning: 'bg-yellow-900/30 border-yellow-400 text-yellow-300'
+        success: 'alert-success',
+        danger: 'alert-danger',
+        warning: 'alert-warning'
       };
+
       document.getElementById('sendMessageResult').innerHTML =
-        `<div role="alert" class="px-4 py-3 border rounded-lg ${classes[type]} mt-3">
-          <span class="font-medium">${message}</span>
-        </div>`;
+        `<div class="alert-box ${classes[type]}">${message}</div>`;
     }
 
-    // --- Initialization ---
     window.onload = () => {
       if (!linkId) {
         document.body.innerHTML = `
-          <div class="text-center">
-            <h1 class="text-4xl font-extrabold mb-2">Link Not Found</h1>
-            <p class="mt-2 text-indigo-300">Please ensure the URL includes a valid link ID.</p>
+          <div class="error-page">
+            <h1 class="error-title">🔗 Link Not Found</h1>
+            <p class="error-text">Please ensure the URL includes a valid link ID</p>
+            <p class="error-text" style="margin-top: 10px; font-size: 0.9rem;">(e.g., /send/?id=cozxlzn)</p>
           </div>`;
         return;
       }
+      
       document.getElementById('sendMessageForm').addEventListener('submit', handleSendMessage);
     };
 
-    // --- Main Logic ---
     async function handleSendMessage(e) {
       e.preventDefault();
+
       const askerName = document.getElementById('askerName').value.trim();
       const question = document.getElementById('question').value.trim();
-      if (!question) return showAlert('warning', '⚠️ The message field cannot be empty.');
+
+      if (!question) return showAlert('warning', '⚠️ The message field cannot be empty!');
+
       showLoading(true);
       document.getElementById('sendMessageResult').innerHTML = '';
+
       try {
-        const url = `https://asklyy.vercel.app/api/sendmessages`;
+        const url = `${API_BASE_URL}/api/sendmessages`; 
+        
         const payload = {
           linkId: linkId,
-          name: askerName || 'Anonymous',
-          text: question
+          name: askerName || 'Anonymous', 
+          text: question  
         };
+
         const res = await fetch(url, {
           method: 'POST',
           headers: { 'Content-Type': 'application/json' },
           body: JSON.stringify(payload)
         });
+        
         const data = await res.json();
+
         if (data.success) {
           document.getElementById('sendMessageForm').reset();
-          showAlert('success', '✅ Message delivered! It has reached its destination.');
+          showAlert('success', '✅ Message delivered successfully! Your secret is safe with us 🎉');
         } else {
           const errorMsg = res.status === 404 ? 'Link not found. Please verify the link ID.' : (data.error || 'A server error occurred.');
           showAlert('danger', `❌ Send Failed: ${errorMsg}`);
         }
       } catch (err) {
         console.error('Network Error:', err);
-        showAlert('danger', '⚠️ Connection Problem. Check your internet connection.');
+        showAlert('danger', '⚠️ Connection Problem. Please check your internet connection and try again.');
       } finally {
         showLoading(false);
       }
