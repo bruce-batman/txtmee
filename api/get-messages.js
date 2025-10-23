@@ -1,4 +1,3 @@
-// api/get-messages.js
 const { parseAuthHeader, comparePassword } = require('../utils/auth');
 const { findUserByLinkId, getMessages } = require('../utils/storage');
 
@@ -13,15 +12,12 @@ module.exports = async (req, res) => {
 
   try {
     const { linkId } = req.query;
-    if (!linkId)
-      return res.status(400).json({ success: false, error: 'Link ID required' });
+    if (!linkId) return res.status(400).json({ success: false, error: 'Link ID required' });
 
     const user = await findUserByLinkId(linkId);
-    if (!user)
-      return res.status(404).json({ success: false, error: 'User not found' });
+    if (!user) return res.status(404).json({ success: false, error: 'User not found' });
 
     let messages = await getMessages(linkId);
-    if (!Array.isArray(messages)) messages = [];
     messages.sort((a, b) => new Date(b.createdAt) - new Date(a.createdAt));
 
     const authHeader = req.headers.authorization;
@@ -30,20 +26,18 @@ module.exports = async (req, res) => {
     if (authHeader) {
       const creds = parseAuthHeader(authHeader);
       if (creds && creds.username === user.username) {
-        const valid = await comparePassword(creds.password, user.password);
-        authorized = valid;
+        authorized = await comparePassword(creds.password, user.password);
       }
     }
 
     if (!authorized) {
-      const publicMessages = messages.map(m => ({
-        question: m.question,
-        createdAt: m.createdAt
-      }));
       return res.status(200).json({
         success: true,
         mode: 'public',
-        messages: publicMessages
+        messages: messages.map(m => ({
+          question: m.question,
+          createdAt: m.createdAt
+        }))
       });
     }
 
