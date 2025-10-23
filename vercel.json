@@ -1,21 +1,21 @@
 {
   "rewrites": [
-    // Rule for user creation
+   
     {
       "source": "/api/createlink",
       "destination": "/api/createlink.js"
     },
-    // Rule for sending messages
+  
     {
       "source": "/api/sendmessages",
       "destination": "/api/sendmessages.js"
     },
-    // Rule for retrieving messages (the one that was failing)
+  
     {
       "source": "/api/getmessages",
       "destination": "/api/getmessages.js"
     },
-    // Rule for deleting messages
+   
     {
       "source": "/api/dltmessage",
       "destination": "/api/dltmessage.js"
