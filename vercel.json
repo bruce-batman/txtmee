@@ -1,24 +1,5 @@
 {
   "rewrites": [
-   
-    {
-      "source": "/api/createlink",
-      "destination": "/api/createlink.js"
-    },
-  
-    {
-      "source": "/api/sendmessages",
-      "destination": "/api/sendmessages.js"
-    },
-  
-    {
-      "source": "/api/getmessages",
-      "destination": "/api/getmessages.js"
-    },
-   
-    {
-      "source": "/api/dltmessage",
-      "destination": "/api/dltmessage.js"
-    }
+    { "source": "/(.*)", "destination": "/" }
   ]
 }
