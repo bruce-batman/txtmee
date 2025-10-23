@@ -1,6 +1,6 @@
 // api/createlink.js
 const { findUserByUsername, addUser } = require('../utils/storage');
-const { hashPassword } = require('../utils/auth'); // Use dedicated auth utility
+const { hashPassword } = require('../utils/auth');
 
 module.exports = async (req, res) => {
   res.setHeader('Access-Control-Allow-Origin', '*');
@@ -11,11 +11,7 @@ module.exports = async (req, res) => {
   if (req.method !== 'POST') return res.status(405).json({ success: false, error: 'Method Not Allowed. Use POST.' });
 
   try {
-    let data = req.body;
-
-    // --- START: Manual Body Parsing (Uncomment if req.body is undefined, e.g., on Vercel without bodyParser) ---
-    // If Vercel/environment does not automatically parse the body, use this:
-    /*
+    // ✅ Re-enable Manual Body Parsing (Crucial for environments like Vercel)
     let body = '';
     await new Promise((resolve, reject) => {
       req.on('data', chunk => (body += chunk));
@@ -23,15 +19,14 @@ module.exports = async (req, res) => {
       req.on('error', reject);
     });
 
+    let data;
     try {
-      data = JSON.parse(body);
+      data = JSON.parse(body); // This is where the original error likely occurred
     } catch (e) {
-      return res.status(400).json({ success: false, error: 'Invalid JSON body' });
+      // Handle JSON parsing errors explicitly
+      return res.status(400).json({ success: false, error: 'Invalid JSON body: ' + e.message });
     }
-    */
-    // --- END: Manual Body Parsing ---
-
-
+    
     // Check if data is present and correctly parsed
     if (!data || typeof data !== 'object') {
       return res.status(400).json({ success: false, error: 'Request body required' });
@@ -47,20 +42,16 @@ module.exports = async (req, res) => {
       return res.status(409).json({ success: false, error: 'Username already exists' });
     }
 
-    // Use the dedicated hashing utility
     const passwordHash = await hashPassword(password);
-    
-    // Create a simple, URL-safe linkId. The makeId in storage.js is better, 
-    // but keeping this for consistency with original if you're not using makeId here.
-    const linkId = Math.random().toString(36).slice(2, 9); 
+    const linkId = Math.random().toString(36).slice(2, 9);
     
     await addUser({ username, passwordHash, linkId });
     
-    // Don't expose the username or passwordHash back to the client
     return res.status(201).json({ success: true, linkId, message: 'Link created successfully' });
 
   } catch (e) {
     console.error('Error in createlink:', e);
+    // Log the specific error message to help debug in your logs
     return res.status(500).json({ success: false, error: 'Internal Server Error' });
   }
 };
