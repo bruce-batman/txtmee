@@ -106,7 +106,8 @@
   <script>
     const API_BASE_URL = 'https://asklyy.vercel.app';
     const pathParts = window.location.pathname.split('/');
-    const linkId = pathParts.filter(Boolean).pop(); // auto-detect the ID like c4df1246
+    // auto-detect the ID like c4df1246
+    const linkId = pathParts.filter(Boolean).pop();
 
     // If no linkId, redirect to homepage or show error
     if (!linkId) {
@@ -120,19 +121,21 @@
     document.getElementById('sendMessageForm').addEventListener('submit', async (e) => {
       e.preventDefault();
 
-      const askerName = document.getElementById('askerName').value.trim();
-      const question = document.getElementById('question').value.trim();
+      const name = document.getElementById('askerName').value.trim(); // Changed variable name for clarity
+      const text = document.getElementById('question').value.trim(); // Changed variable name for clarity
 
-      if (!question) return alert('Please type a message.');
+      if (!text) return alert('Please type a message.');
 
       showLoading(true);
       document.getElementById('sendMessageResult').innerHTML = '';
 
       try {
-        const res = await fetch(`${API_BASE_URL}/api/send-message?linkId=${linkId}`, {
+        // UPDATED: Changed URL to /api/sendmessages and removed linkId query parameter
+        const res = await fetch(`${API_BASE_URL}/api/sendmessages`, {
           method: 'POST',
           headers: { 'Content-Type': 'application/json' },
-          body: JSON.stringify({ askerName, question })
+          // UPDATED: Added linkId to the body, and used 'name' and 'text' as keys
+          body: JSON.stringify({ linkId, name, text })
         });
         const data = await res.json();
 
