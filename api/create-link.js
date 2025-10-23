@@ -10,7 +10,17 @@ module.exports = async (req, res) => {
   if (req.method !== 'POST') return res.status(405).json({ success: false, error: 'Use POST' });
 
   try {
-    const { username, password } = req.body;
+    // ✅ Handle JSON parsing manually (fix for Vercel)
+    let body = req.body;
+    if (typeof body === 'string') {
+      try {
+        body = JSON.parse(body);
+      } catch {
+        return res.status(400).json({ success: false, error: 'Invalid JSON format' });
+      }
+    }
+
+    const { username, password } = body || {};
 
     if (!username || !password)
       return res.status(400).json({ success: false, error: 'Username and password required' });
@@ -33,7 +43,6 @@ module.exports = async (req, res) => {
 
     await addUser(newUser);
 
-    // ✅ Success response
     return res.status(201).json({
       success: true,
       data: {
