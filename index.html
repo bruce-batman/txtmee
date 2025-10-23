@@ -1,272 +1,211 @@
 <html lang="en">
 <head>
-  <meta charset="UTF-8">
-  <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>Asklyy - Send Secret Message</title>
-    <script src="https://cdn.tailwindcss.com"></script>
-  <style>
-    @import url('https://fonts.googleapis.com/css2?family=Major+Mono+Display&family=Inter:wght@400;600;700;800&display=swap');
-    /* Custom CSS Variables and Global Styles for Neon Theme */
-    :root {
-      --neon-primary: #00ffc2; /* Neon Green/Cyan */
-      --neon-secondary: #ff00ff; /* Neon Magenta/Fuchsia */
-      --card-bg-color: rgba(30, 41, 59, 0.4); /* Slate-800 with Transparency */
-    }
-    body {
-      font-family: 'Inter', sans-serif;
-      /* Deep, dark background for contrast */
-      background: #000000;
-      min-height: 100vh;
-      display: flex;
-      align-items: center;
-      justify-content: center;
-      padding: 20px;
-      color: white; /* Default text color */
-    }
-    
-    .card-container {
-      /* Glassmorphism/Frosted Effect */
-      background: var(--card-bg-color);
-      backdrop-filter: blur(10px);
-      -webkit-backdrop-filter: blur(10px);
-      border-radius: 20px;
-      /* Neon Border Glow */
-      border: 1px solid rgba(255, 255, 255, 0.1);
-      box-shadow: 0 0 40px rgba(0, 255, 194, 0.2), 0 0 10px rgba(0, 255, 194, 0.1);
-      width: 100%;
-      max-width: 450px;
-      animation: fadeIn 0.8s ease-out;
-      overflow: hidden;
-    }
-    @keyframes fadeIn {
-      from { opacity: 0; transform: translateY(30px) scale(0.95); }
-      to { opacity: 1; transform: translateY(0) scale(1); }
-    }
-
-    .logo-text {
-      font-family: 'Major Mono Display', monospace;
-      text-shadow: 0 0 8px var(--neon-primary), 0 0 12px var(--neon-secondary);
-    }
-    
-    .header-gradient {
-      /* Subtle header gradient with neon colors */
-      background: linear-gradient(to right, rgba(0, 255, 194, 0.2), rgba(255, 0, 255, 0.2));
-      color: white;
-      border-bottom: 1px solid rgba(0, 255, 194, 0.3);
-    }
-
-    .btn-primary {
-      /* Custom button gradient and neon glow */
-      background: linear-gradient(45deg, var(--neon-primary), var(--neon-secondary));
-      color: #1e293b; /* Dark text for contrast */
-      padding: 14px 20px;
-      border-radius: 12px;
-      font-weight: 800;
-      transition: transform 0.2s, box-shadow 0.2s, opacity 0.3s;
-      box-shadow: 0 0 15px rgba(0, 255, 194, 0.4);
-    }
-    .btn-primary:hover:not(:disabled) {
-      transform: scale(1.03);
-      box-shadow: 0 0 25px var(--neon-primary), 0 0 15px var(--neon-secondary);
-      opacity: 1;
-    }
-    .btn-primary:disabled {
-      opacity: 0.5;
-      cursor: not-allowed;
-      box-shadow: none;
-    }
-
-    .form-control-styled {
-      background-color: rgba(2, 6, 23, 0.6); /* Slate-900 transparent */
-      color: var(--neon-primary);
-      border-radius: 10px;
-      border: 1px solid rgba(0, 255, 194, 0.3);
-      padding: 12px;
-      transition: border-color 0.3s, box-shadow 0.3s;
-    }
-    .form-control-styled::placeholder {
-      color: rgba(255, 255, 255, 0.4);
-    }
-    .form-control-styled:focus {
-      border-color: var(--neon-primary);
-      box-shadow: 0 0 5px var(--neon-primary), 0 0 10px rgba(255, 0, 255, 0.2);
-      outline: none;
-      background-color: rgba(0, 0, 0, 0.7);
-    }
-
-    /* Text Labels */
-    .form-label {
-      color: var(--neon-primary);
-      text-shadow: 0 0 2px rgba(0, 255, 194, 0.5);
-    }
-    
-    /* Spinner specific styles - now neon */
-    .spinner-border {
-      width: 2.5rem;
-      height: 2.5rem;
-      border: 0.3em solid var(--neon-primary);
-      border-right-color: transparent;
-      border-radius: 50%;
-      animation: spinner-border .75s linear infinite;
-      display: inline-block;
-      vertical-align: -0.125em;
-      box-shadow: 0 0 5px var(--neon-primary);
-    }
-    @keyframes spinner-border {
-      to { transform: rotate(360deg); }
-    }
-    
-    /* Alert Box Styling for Neon Theme */
-    .alert-success { background-color: rgba(0, 255, 194, 0.1); border-color: var(--neon-primary); color: var(--neon-primary); }
-    .alert-danger { background-color: rgba(255, 0, 255, 0.1); border-color: var(--neon-secondary); color: var(--neon-secondary); }
-    .alert-warning { background-color: rgba(255, 255, 0, 0.1); border-color: #ffff00; color: #ffff00; }
-  </style>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Asklyy - Send Secret Message</title>
+  <!-- Tailwind CSS -->
+  <script src="https://cdn.tailwindcss.com"></script>
+  <style>
+    @import url('https://fonts.googleapis.com/css2?family=Inter:wght@400;600;700;800&display=swap');
+    :root {
+      --primary-color: #8b5cf6; /* Purple-500 */
+      --secondary-color: #ec4899; /* Pink-500 */
+      --neon-glow: 0 0 15px rgba(139, 92, 246, 0.7);
+      --glass-bg: rgba(255, 255, 255, 0.15);
+      --glass-border: 1px solid rgba(255, 255, 255, 0.2);
+    }
+    body {
+      font-family: 'Inter', sans-serif;
+      background: linear-gradient(145deg, #0f172a, #1e293b, #3730a3);
+      min-height: 100vh;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      padding: 20px;
+      color: white;
+    }
+    .card-container {
+      backdrop-filter: blur(16px);
+      background: var(--glass-bg);
+      border: var(--glass-border);
+      border-radius: 20px;
+      box-shadow: 0 25px 50px -12px rgba(0, 0, 0, 0.5);
+      width: 100%;
+      max-width: 450px;
+      animation: fadeIn 0.5s ease-out;
+      overflow: hidden;
+    }
+    @keyframes fadeIn {
+      from { opacity: 0; transform: translateY(30px); }
+      to { opacity: 1; transform: translateY(0); }
+    }
+    .header-gradient {
+      background: linear-gradient(to right, var(--primary-color), var(--secondary-color));
+      padding: 1.5rem;
+      text-align: center;
+    }
+    .btn-primary {
+      background: linear-gradient(135deg, var(--primary-color), var(--secondary-color));
+      color: white;
+      padding: 14px 20px;
+      border-radius: 12px;
+      font-weight: 700;
+      transition: all 0.3s;
+      box-shadow: var(--neon-glow);
+    }
+    .btn-primary:hover:not(:disabled) {
+      transform: translateY(-3px);
+      box-shadow: 0 10px 20px rgba(139, 92, 246, 0.4), var(--neon-glow);
+    }
+    .form-control-styled {
+      border-radius: 12px;
+      border: var(--glass-border);
+      padding: 12px;
+      background: rgba(255, 255, 255, 0.1);
+      color: white;
+      transition: all 0.3s;
+    }
+    .form-control-styled:focus {
+      outline: none;
+      border-color: var(--primary-color);
+      box-shadow: 0 0 0 3px rgba(139, 92, 246, 0.3), var(--neon-glow);
+    }
+    .spinner-border {
+      width: 3rem;
+      height: 3rem;
+      border: 0.25em solid rgba(139, 92, 246, 0.3);
+      border-right-color: transparent;
+      border-radius: 50%;
+      animation: spinner-border 0.75s linear infinite;
+      display: inline-block;
+    }
+    @keyframes spinner-border {
+      to { transform: rotate(360deg); }
+    }
+    /* Responsive adjustments */
+    @media (max-width: 640px) {
+      .card-container {
+        max-width: 95%;
+      }
+    }
+  </style>
 </head>
 <body>
-  <div class="card-container">
-        <div class="header-gradient p-6">
-      <div class="flex items-center justify-center space-x-3">
-                <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="currentColor" class="w-8 h-8 text-[var(--neon-primary)]" style="filter: drop-shadow(0 0 4px var(--neon-primary));">
-          <path d="M11.25 4.532a.75.75 0 0 1 .536 0L20.89 9.532a.75.75 0 0 1 .116 1.03l-9.532 9.532a.75.75 0 0 1-1.03-.116l-9.532-9.532a.75.75 0 0 1 0-1.06L11.25 4.532Z" />
-        </svg>
-        <h3 class="text-4xl font-extrabold tracking-wider logo-text">Asklyy</h3>
-      </div>
-      <p class="text-[var(--neon-primary)] text-center mt-2 text-sm font-semibold tracking-wider opacity-80">SEND ENCRYPTED MESSAGE_</p>
-    </div>
+  <div class="card-container">
+    <!-- Header -->
+    <div class="header-gradient">
+      <div class="flex items-center justify-center space-x-3">
+        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="currentColor" class="w-8 h-8 text-indigo-200">
+          <path d="M11.25 4.532a.75.75 0 0 1 .536 0L20.89 9.532a.75.75 0 0 1 .116 1.03l-9.532 9.532a.75.75 0 0 1-1.03-.116l-9.532-9.532a.75.75 0 0 1 0-1.06L11.25 4.532Z" />
+        </svg>
+        <h3 class="text-3xl font-extrabold tracking-tight">Asklyy</h3>
+      </div>
+      <p class="text-indigo-200 text-center mt-2 text-sm">Send a Secret, Anonymous Message</p>
+    </div>
+    <!-- Form -->
+    <div class="p-6 sm:p-8">
+      <form id="sendMessageForm" class="transition-opacity duration-300">
+        <div class="mb-4">
+          <label for="askerName" class="block text-sm font-medium mb-1">Your Name (optional)</label>
+          <input type="text" class="form-control-styled w-full" id="askerName" placeholder="Enter your name or leave blank">
+        </div>
+        <div class="mb-6">
+          <label for="question" class="block text-sm font-medium mb-1">Your Message</label>
+          <textarea class="form-control-styled w-full resize-none" id="question" rows="5" placeholder="Type your secret message..." required></textarea>
+        </div>
+        <button type="submit" class="btn-primary w-full flex items-center justify-center space-x-2">
+          <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="2.5" stroke="currentColor" class="w-5 h-5">
+            <path stroke-linecap="round" stroke-linejoin="round" d="M6 12L3.269 3.126A59.768 59.768 0 0121.485 12 59.77 59.77 0 013.27 20.874L5.999 12zm0 0h7.5" />
+          </svg>
+          <span>Send Message</span>
+        </button>
+      </form>
+      <div id="sendMessageResult" class="mt-4"></div>
+      <div class="loading hidden" id="sendMessageLoading">
+        <div class="spinner-border" role="status"></div>
+        <p class="mt-3 text-gray-200 font-medium">Sending your message securely...</p>
+      </div>
+    </div>
+  </div>
+  <script>
+    // --- Link ID Detection Logic ---
+    const pathParts = window.location.pathname.split('/');
+    let linkId = pathParts.filter(Boolean).pop();
+    const urlParams = new URLSearchParams(window.location.search);
+    if (urlParams.has('id')) {
+      linkId = urlParams.get('id');
+    }
+    if (linkId === 'send') linkId = null;
 
-        <div class="p-6 sm:p-8">
-      <form id="sendMessageForm" class="transition-opacity duration-300">
-        <div class="mb-4">
-          <label for="askerName" class="form-label block text-sm font-medium mb-1">YOUR HANDLE (optional)</label>
-          <input type="text" class="form-control-styled w-full" id="askerName" placeholder="Anonymous Sender ID">
-        </div>
-        <div class="mb-6">
-          <label for="question" class="form-label block text-sm font-medium mb-1">MESSAGE PAYLOAD</label>
-          <textarea class="form-control-styled w-full resize-none" id="question" rows="5" placeholder="Transmit your secret data packet..." required></textarea>
-        </div>
-        <button type="submit" class="btn-primary w-full flex items-center justify-center space-x-2">
-                    <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="2.5" stroke="currentColor" class="w-5 h-5">
-            <path stroke-linecap="round" stroke-linejoin="round" d="M6 12L3.269 3.126A59.768 59.768 0 0121.485 12 59.77 59.77 0 013.27 20.874L5.999 12zm0 0h7.5" />
-          </svg>
-          <span>INITIATE TRANSMISSION</span>
-        </button>
-      </form>
+    // --- UI Utility Functions ---
+    function showLoading(show) {
+      const form = document.getElementById('sendMessageForm');
+      const loading = document.getElementById('sendMessageLoading');
+      const button = document.querySelector('.btn-primary');
+      loading.classList.toggle('hidden', !show);
+      form.style.opacity = show ? '0.3' : '1';
+      button.disabled = show;
+    }
+    function showAlert(type, message) {
+      const classes = {
+        success: 'bg-green-900/30 border-green-400 text-green-300',
+        danger: 'bg-red-900/30 border-red-400 text-red-300',
+        warning: 'bg-yellow-900/30 border-yellow-400 text-yellow-300'
+      };
+      document.getElementById('sendMessageResult').innerHTML =
+        `<div role="alert" class="px-4 py-3 border rounded-lg ${classes[type]} mt-3">
+          <span class="font-medium">${message}</span>
+        </div>`;
+    }
 
-      <div id="sendMessageResult" class="mt-4"></div>
+    // --- Initialization ---
+    window.onload = () => {
+      if (!linkId) {
+        document.body.innerHTML = `
+          <div class="text-center">
+            <h1 class="text-4xl font-extrabold mb-2">Link Not Found</h1>
+            <p class="mt-2 text-indigo-300">Please ensure the URL includes a valid link ID.</p>
+          </div>`;
+        return;
+      }
+      document.getElementById('sendMessageForm').addEventListener('submit', handleSendMessage);
+    };
 
-      <div class="loading hidden flex flex-col items-center justify-center" id="sendMessageLoading">
-        <div class="spinner-border" role="status"></div>
-        <p class="mt-3 text-[var(--neon-primary)] font-medium text-center opacity-90">SECURE PROTOCOL ACTIVE_</p>
-      </div>
-    </div>
-  </div>
-
-  <script>
-    // Global constants
-    const API_BASE_URL = 'https://asklyy.vercel.app';
-    
-    // --- Link ID Detection Logic (Supports both /linkId and /send?id=linkId) ---
-    
-    const pathParts = window.location.pathname.split('/');
-    let linkId = pathParts.filter(Boolean).pop(); 
-
-    const urlParams = new URLSearchParams(window.location.search);
-    if (urlParams.has('id')) {
-      linkId = urlParams.get('id');
-    }
-    // Ensure linkId is clean and exists
-    if (linkId === 'send') linkId = null; // Prevent /send/ from being mistaken as a linkId
-
-
-    // --- UI Utility Functions ---
-    
-    function showLoading(show) {
-      const form = document.getElementById('sendMessageForm');
-      const loading = document.getElementById('sendMessageLoading');
-      const button = document.querySelector('.btn-primary');
-
-      loading.classList.toggle('hidden', !show);
-      form.style.opacity = show ? '0.3' : '1';
-      button.disabled = show;
-    }
-
-    function showAlert(type, message) {
-      // Use custom alert classes for neon theme
-      const classes = {
-        success: 'alert-success',
-        danger: 'alert-danger',
-        warning: 'alert-warning'
-      };
-
-      document.getElementById('sendMessageResult').innerHTML =
-        `<div role="alert" class="px-4 py-3 border rounded-lg ${classes[type]} mt-3 font-mono">
-          <span class="font-bold">${message}</span>
-        </div>`;
-    }
-
-
-    // --- Initialization and Event Listener ---
-    
-    window.onload = () => {
-      // If no linkId is found, show an error state
-      if (!linkId) {
-        document.body.innerHTML = `
-          <div class="text-center text-white p-6 card-container" style="background-color: rgba(255, 0, 255, 0.1);">
-            <h1 class="text-4xl font-extrabold mb-2 logo-text" style="color: var(--neon-secondary);">ERROR [404]</h1>
-            <p class="mt-2 text-[var(--neon-secondary)] text-sm font-mono">CONNECTION_TARGET_INVALID. Check link ID and retry.</p>
-          </div>`;
-        return;
-      }
-      
-      document.getElementById('sendMessageForm').addEventListener('submit', handleSendMessage);
-    };
-
-    // --- Main Logic ---
-
-    async function handleSendMessage(e) {
-      e.preventDefault();
-
-      const askerName = document.getElementById('askerName').value.trim();
-      const question = document.getElementById('question').value.trim();
-
-      // Input validation
-      if (!question) return showAlert('warning', '⚠️ PAYLOAD_EMPTY. Message field required.');
-
-      showLoading(true);
-      document.getElementById('sendMessageResult').innerHTML = ''; // Clear previous results
-
-      try {
-        const url = `${API_BASE_URL}/api/sendmessages`; 
-        
-        const payload = {
-          linkId: linkId,
-          name: askerName || 'Anonymous', 
-          text: question  
-        };
-
-        const res = await fetch(url, {
-          method: 'POST',
-          headers: { 'Content-Type': 'application/json' },
-          body: JSON.stringify(payload)
-        });
-        
-        const data = await res.json();
-
-        if (data.success) {
-          document.getElementById('sendMessageForm').reset();
-          showAlert('success', '✅ TRANSMISSION_SUCCESS. Message data received by target.');
-        } else {
-          // Check for 404/Link not found error and general API errors
-          const errorMsg = res.status === 404 ? 'LINK_ID_ERROR. Target not found.' : (data.error || 'SERVER_ERROR. Transmission failed.');
-          showAlert('danger', `❌ ERROR: ${errorMsg}`);
-        }
-      } catch (err) {
-        console.error('Network Error:', err);
-        showAlert('danger', '⚠️ NETWORK_FAILURE. Check your connection.');
-      } finally {
-        showLoading(false);
-      }
-    }
-  </script>
+    // --- Main Logic ---
+    async function handleSendMessage(e) {
+      e.preventDefault();
+      const askerName = document.getElementById('askerName').value.trim();
+      const question = document.getElementById('question').value.trim();
+      if (!question) return showAlert('warning', '⚠️ The message field cannot be empty.');
+      showLoading(true);
+      document.getElementById('sendMessageResult').innerHTML = '';
+      try {
+        const url = `https://asklyy.vercel.app/api/sendmessages`;
+        const payload = {
+          linkId: linkId,
+          name: askerName || 'Anonymous',
+          text: question
+        };
+        const res = await fetch(url, {
+          method: 'POST',
+          headers: { 'Content-Type': 'application/json' },
+          body: JSON.stringify(payload)
+        });
+        const data = await res.json();
+        if (data.success) {
+          document.getElementById('sendMessageForm').reset();
+          showAlert('success', '✅ Message delivered! It has reached its destination.');
+        } else {
+          const errorMsg = res.status === 404 ? 'Link not found. Please verify the link ID.' : (data.error || 'A server error occurred.');
+          showAlert('danger', `❌ Send Failed: ${errorMsg}`);
+        }
+      } catch (err) {
+        console.error('Network Error:', err);
+        showAlert('danger', '⚠️ Connection Problem. Check your internet connection.');
+      } finally {
+        showLoading(false);
+      }
+    }
+  </script>
 </body>
 </html>
