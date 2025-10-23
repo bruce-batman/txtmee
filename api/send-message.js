@@ -15,20 +15,19 @@ module.exports = async (req, res) => {
     if (!linkId || !question)
       return res.status(400).json({ success: false, error: 'Link ID and question required' });
 
-    // ✅ Fixed: await async findUser
     const user = await findUserByLinkId(linkId);
     if (!user)
       return res.status(404).json({ success: false, error: 'Invalid link' });
 
     const message = {
       messageId: Date.now().toString(),
+      linkId,
       askerName: askerName || 'Anonymous',
       question,
       createdAt: new Date().toISOString()
     };
 
-    // ✅ Save message
-    await addMessage(linkId, message);
+    await addMessage(message);
 
     return res.status(201).json({
       success: true,
