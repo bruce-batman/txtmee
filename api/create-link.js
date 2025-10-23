@@ -24,7 +24,7 @@ module.exports = async (req, res) => {
 
     await addUser({ linkId, username, password: hashed, createdAt: new Date().toISOString() });
 
-    const secretLink = `https://txtmee-lg17.vercel.app/${linkId}`;
+    const secretLink = `https://asklyy.vercel.app/${linkId}`;
     return res.status(201).json({
       success: true,
       data: { linkId, username, secretLink, message: 'Secret link created successfully!' }
