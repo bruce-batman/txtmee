@@ -1,516 +1,164 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Secret Message - Anonymous Messages</title>
-    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet">
-    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
-    <style>
-        :root {
-            --primary-color: #6366f1;
-            --secondary-color: #8b5cf6;
-            --dark-bg: #1e1b4b;
-            --light-bg: #f8fafc;
-        }
-
-        body {
-            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
-            background: linear-gradient(135deg, var(--primary-color) 0%, var(--secondary-color) 100%);
-            min-height: 100vh;
-            padding: 20px 0;
-        }
-
-        .container-main {
-            max-width: 600px;
-            margin: 0 auto;
-        }
-
-        .card {
-            border: none;
-            border-radius: 15px;
-            box-shadow: 0 10px 30px rgba(0, 0, 0, 0.2);
-            margin-bottom: 20px;
-            animation: fadeIn 0.5s ease-in;
-        }
-
-        @keyframes fadeIn {
-            from { opacity: 0; transform: translateY(20px); }
-            to { opacity: 1; transform: translateY(0); }
-        }
-
-        .card-header {
-            background: linear-gradient(135deg, var(--primary-color), var(--secondary-color));
-            color: white;
-            border-radius: 15px 15px 0 0 !important;
-            padding: 20px;
-        }
-
-        .btn-custom {
-            background: linear-gradient(135deg, var(--primary-color), var(--secondary-color));
-            border: none;
-            color: white;
-            padding: 12px 30px;
-            border-radius: 25px;
-            font-weight: 600;
-            transition: transform 0.2s, box-shadow 0.2s;
-        }
-
-        .btn-custom:hover {
-            transform: translateY(-2px);
-            box-shadow: 0 5px 15px rgba(99, 102, 241, 0.4);
-            color: white;
-        }
-
-        .form-control, .form-select {
-            border-radius: 10px;
-            border: 2px solid #e2e8f0;
-            padding: 12px;
-            transition: border-color 0.3s;
-        }
-
-        .form-control:focus, .form-select:focus {
-            border-color: var(--primary-color);
-            box-shadow: 0 0 0 0.2rem rgba(99, 102, 241, 0.25);
-        }
-
-        .alert {
-            border-radius: 10px;
-            border: none;
-        }
-
-        .secret-link {
-            background: #f1f5f9;
-            padding: 15px;
-            border-radius: 10px;
-            word-break: break-all;
-            font-family: monospace;
-            margin: 10px 0;
-        }
-
-        .message-card {
-            background: white;
-            border-radius: 10px;
-            padding: 15px;
-            margin: 10px 0;
-            border-left: 4px solid var(--primary-color);
-            transition: transform 0.2s;
-        }
-
-        .message-card:hover {
-            transform: translateX(5px);
-        }
-
-        .nav-pills .nav-link {
-            border-radius: 10px;
-            color: var(--primary-color);
-            font-weight: 600;
-        }
-
-        .nav-pills .nav-link.active {
-            background: linear-gradient(135deg, var(--primary-color), var(--secondary-color));
-        }
-
-        .loading {
-            display: none;
-            text-align: center;
-            padding: 20px;
-        }
-
-        .spinner-border {
-            color: var(--primary-color);
-        }
-
-        .copy-btn {
-            cursor: pointer;
-            color: var(--primary-color);
-            transition: color 0.2s;
-        }
-
-        .copy-btn:hover {
-            color: var(--secondary-color);
-        }
-
-        .hidden {
-            display: none;
-        }
-    </style>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Send Anonymous Message</title>
+  <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet">
+  <style>
+    :root {
+      --primary-color: #6366f1;
+      --secondary-color: #8b5cf6;
+    }
+    body {
+      font-family: 'Segoe UI', sans-serif;
+      background: linear-gradient(135deg, var(--primary-color), var(--secondary-color));
+      min-height: 100vh;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      padding: 20px;
+    }
+    .card {
+      border: none;
+      border-radius: 15px;
+      box-shadow: 0 10px 30px rgba(0, 0, 0, 0.2);
+      width: 100%;
+      max-width: 420px;
+      animation: fadeIn 0.5s ease-in;
+    }
+    @keyframes fadeIn {
+      from { opacity: 0; transform: translateY(20px); }
+      to { opacity: 1; transform: translateY(0); }
+    }
+    .card-header {
+      background: linear-gradient(135deg, var(--primary-color), var(--secondary-color));
+      color: white;
+      border-radius: 15px 15px 0 0;
+      text-align: center;
+      padding: 25px;
+    }
+    .btn-custom {
+      background: linear-gradient(135deg, var(--primary-color), var(--secondary-color));
+      border: none;
+      color: white;
+      padding: 12px;
+      border-radius: 10px;
+      font-weight: 600;
+      transition: transform 0.2s, box-shadow 0.2s;
+    }
+    .btn-custom:hover {
+      transform: translateY(-2px);
+      box-shadow: 0 5px 15px rgba(99, 102, 241, 0.4);
+      color: white;
+    }
+    .form-control {
+      border-radius: 10px;
+      border: 2px solid #e2e8f0;
+      padding: 12px;
+      transition: border-color 0.3s;
+    }
+    .form-control:focus {
+      border-color: var(--primary-color);
+      box-shadow: 0 0 0 0.2rem rgba(99, 102, 241, 0.25);
+    }
+    .loading {
+      display: none;
+      text-align: center;
+      padding: 20px;
+    }
+    .spinner-border {
+      color: var(--primary-color);
+    }
+    .hidden { display: none; }
+  </style>
 </head>
 <body>
-    <div class="container container-main">
-        <!-- Header -->
-        <div class="text-center text-white mb-4">
-            <h1 class="display-4 fw-bold"><i class="fas fa-envelope-open-text"></i> Secret Message</h1>
-            <p class="lead">Send and receive anonymous messages</p>
-        </div>
-
-        <!-- Navigation Tabs -->
-        <ul class="nav nav-pills nav-fill mb-4 bg-white rounded-3 p-2" id="mainTabs">
-            <li class="nav-item">
-                <a class="nav-link active" data-bs-toggle="pill" href="#createLink">
-                    <i class="fas fa-link"></i> Create Link
-                </a>
-            </li>
-            <li class="nav-item">
-                <a class="nav-link" data-bs-toggle="pill" href="#sendMessage">
-                    <i class="fas fa-paper-plane"></i> Send Message
-                </a>
-            </li>
-            <li class="nav-item">
-                <a class="nav-link" data-bs-toggle="pill" href="#viewMessages">
-                    <i class="fas fa-inbox"></i> My Messages
-                </a>
-            </li>
-        </ul>
-
-        <!-- Tab Content -->
-        <div class="tab-content">
-            <!-- Create Link Tab -->
-            <div class="tab-pane fade show active" id="createLink">
-                <div class="card">
-                    <div class="card-header">
-                        <h4 class="mb-0"><i class="fas fa-user-plus"></i> Create Your Secret Link</h4>
-                    </div>
-                    <div class="card-body">
-                        <form id="createLinkForm">
-                            <div class="mb-3">
-                                <label for="createUsername" class="form-label">Username</label>
-                                <input type="text" class="form-control" id="createUsername" 
-                                       placeholder="Choose a username" required minlength="3">
-                                <small class="text-muted">At least 3 characters</small>
-                            </div>
-                            <div class="mb-3">
-                                <label for="createPassword" class="form-label">Password</label>
-                                <input type="password" class="form-control" id="createPassword" 
-                                       placeholder="Create a password" required minlength="6">
-                                <small class="text-muted">At least 6 characters</small>
-                            </div>
-                            <button type="submit" class="btn btn-custom w-100">
-                                <i class="fas fa-magic"></i> Generate Secret Link
-                            </button>
-                        </form>
-
-                        <div id="createLinkResult" class="mt-3 hidden">
-                            <div class="alert alert-success">
-                                <h5><i class="fas fa-check-circle"></i> Link Created Successfully!</h5>
-                                <p class="mb-2">Share this link to receive anonymous messages:</p>
-                                <div class="secret-link" id="generatedLink"></div>
-                                <button class="btn btn-sm btn-outline-success mt-2" onclick="copyLink()">
-                                    <i class="fas fa-copy"></i> Copy Link
-                                </button>
-                                <p class="mt-3 mb-0"><strong>Save your credentials:</strong></p>
-                                <p class="mb-0">Username: <span id="savedUsername" class="fw-bold"></span></p>
-                            </div>
-                        </div>
-
-                        <div class="loading" id="createLinkLoading">
-                            <div class="spinner-border" role="status"></div>
-                            <p class="mt-2">Creating your link...</p>
-                        </div>
-                    </div>
-                </div>
-            </div>
-
-            <!-- Send Message Tab -->
-            <div class="tab-pane fade" id="sendMessage">
-                <div class="card">
-                    <div class="card-header">
-                        <h4 class="mb-0"><i class="fas fa-comment-dots"></i> Send Anonymous Message</h4>
-                    </div>
-                    <div class="card-body">
-                        <form id="sendMessageForm">
-                            <div class="mb-3">
-                                <label for="recipientLinkId" class="form-label">Recipient Link ID</label>
-                                <input type="text" class="form-control" id="recipientLinkId" 
-                                       placeholder="Enter the link ID or paste full link" required>
-                                <small class="text-muted">Get this from the person's secret link</small>
-                            </div>
-                            <div class="mb-3">
-                                <label for="askerName" class="form-label">Your Name (Optional)</label>
-                                <input type="text" class="form-control" id="askerName" 
-                                       placeholder="Leave blank to stay anonymous">
-                            </div>
-                            <div class="mb-3">
-                                <label for="question" class="form-label">Your Message</label>
-                                <textarea class="form-control" id="question" rows="4" 
-                                          placeholder="Type your message here..." required></textarea>
-                            </div>
-                            <button type="submit" class="btn btn-custom w-100">
-                                <i class="fas fa-paper-plane"></i> Send Message
-                            </button>
-                        </form>
-
-                        <div id="sendMessageResult" class="mt-3"></div>
-
-                        <div class="loading" id="sendMessageLoading">
-                            <div class="spinner-border" role="status"></div>
-                            <p class="mt-2">Sending your message...</p>
-                        </div>
-                    </div>
-                </div>
-            </div>
-
-            <!-- View Messages Tab -->
-            <div class="tab-pane fade" id="viewMessages">
-                <div class="card">
-                    <div class="card-header">
-                        <h4 class="mb-0"><i class="fas fa-inbox"></i> My Messages</h4>
-                    </div>
-                    <div class="card-body">
-                        <form id="viewMessagesForm">
-                            <div class="mb-3">
-                                <label for="viewLinkId" class="form-label">Your Link ID</label>
-                                <input type="text" class="form-control" id="viewLinkId" 
-                                       placeholder="Enter your link ID" required>
-                            </div>
-                            <div class="mb-3">
-                                <label for="viewUsername" class="form-label">Username</label>
-                                <input type="text" class="form-control" id="viewUsername" 
-                                       placeholder="Enter your username" required>
-                            </div>
-                            <div class="mb-3">
-                                <label for="viewPassword" class="form-label">Password</label>
-                                <input type="password" class="form-control" id="viewPassword" 
-                                       placeholder="Enter your password" required>
-                            </div>
-                            <button type="submit" class="btn btn-custom w-100">
-                                <i class="fas fa-eye"></i> View Messages
-                            </button>
-                        </form>
-
-                        <div id="messagesContainer" class="mt-4 hidden"></div>
-
-                        <div class="loading" id="viewMessagesLoading">
-                            <div class="spinner-border" role="status"></div>
-                            <p class="mt-2">Loading messages...</p>
-                        </div>
-                    </div>
-                </div>
-            </div>
-        </div>
+  <div class="card">
+    <div class="card-header">
+      <h3 class="fw-bold mb-0">💌 Send a Secret Message</h3>
     </div>
+    <div class="card-body p-4">
+      <form id="sendMessageForm">
+        <div class="mb-3">
+          <label for="askerName" class="form-label">Your Name (optional)</label>
+          <input type="text" class="form-control" id="askerName" placeholder="Enter your name (or leave blank)">
+        </div>
+        <div class="mb-3">
+          <label for="question" class="form-label">Your Message</label>
+          <textarea class="form-control" id="question" rows="4" placeholder="Type your secret message..." required></textarea>
+        </div>
+        <button type="submit" class="btn btn-custom w-100">
+          <i class="fas fa-paper-plane"></i> Send Message
+        </button>
+      </form>
 
-    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js"></script>
-    <script>
-        const API_BASE_URL = 'https://txtmee-lg17.vercel.app';
+      <div id="sendMessageResult" class="mt-3"></div>
 
-        // Create Link Handler
-        document.getElementById('createLinkForm').addEventListener('submit', async (e) => {
-            e.preventDefault();
+      <div class="loading" id="sendMessageLoading">
+        <div class="spinner-border" role="status"></div>
+        <p class="mt-2 text-muted">Sending your message...</p>
+      </div>
+    </div>
+  </div>
 
-            const username = document.getElementById('createUsername').value;
-            const password = document.getElementById('createPassword').value;
+  <script src="https://kit.fontawesome.com/a2d04a6e1e.js" crossorigin="anonymous"></script>
+  <script>
+    const API_BASE_URL = 'https://asklyy.vercel.app';
+    const pathParts = window.location.pathname.split('/');
+    const linkId = pathParts.filter(Boolean).pop(); // auto-detect the ID like c4df1246
 
-            showLoading('createLinkLoading', true);
-            document.getElementById('createLinkResult').classList.add('hidden');
+    // If no linkId, redirect to homepage or show error
+    if (!linkId) {
+      document.body.innerHTML = `
+        <div class="text-center text-white">
+          <h1>Invalid Link</h1>
+          <p>This page needs a valid link ID (e.g. /c4df1246)</p>
+        </div>`;
+    }
 
-            try {
-                const response = await fetch(`${API_BASE_URL}/api/create-link`, {
-                    method: 'POST',
-                    headers: {
-                        'Content-Type': 'application/json'
-                    },
-                    body: JSON.stringify({ username, password })
-                });
+    document.getElementById('sendMessageForm').addEventListener('submit', async (e) => {
+      e.preventDefault();
 
-                const data = await response.json();
+      const askerName = document.getElementById('askerName').value.trim();
+      const question = document.getElementById('question').value.trim();
 
-                if (data.success) {
-                    document.getElementById('generatedLink').textContent = data.data.secretLink;
-                    document.getElementById('savedUsername').textContent = username;
-                    document.getElementById('createLinkResult').classList.remove('hidden');
-                    document.getElementById('createLinkForm').reset();
-                } else {
-                    showAlert('createLinkResult', 'danger', data.error || 'Failed to create link');
-                }
-            } catch (error) {
-                showAlert('createLinkResult', 'danger', 'Network error. Please try again.');
-                console.error('Error:', error);
-            } finally {
-                showLoading('createLinkLoading', false);
-            }
+      if (!question) return alert('Please type a message.');
+
+      showLoading(true);
+      document.getElementById('sendMessageResult').innerHTML = '';
+
+      try {
+        const res = await fetch(`${API_BASE_URL}/api/send-message?linkId=${linkId}`, {
+          method: 'POST',
+          headers: { 'Content-Type': 'application/json' },
+          body: JSON.stringify({ askerName, question })
         });
+        const data = await res.json();
 
-        // Send Message Handler
-        document.getElementById('sendMessageForm').addEventListener('submit', async (e) => {
-            e.preventDefault();
-
-            let linkId = document.getElementById('recipientLinkId').value.trim();
-            const askerName = document.getElementById('askerName').value.trim();
-            const question = document.getElementById('question').value.trim();
-
-            // Extract linkId from full URL if needed
-            if (linkId.includes('/')) {
-                linkId = linkId.split('/').pop();
-            }
-
-            showLoading('sendMessageLoading', true);
-            document.getElementById('sendMessageResult').innerHTML = '';
-
-            try {
-                const response = await fetch(`${API_BASE_URL}/api/send-message?linkId=${linkId}`, {
-                    method: 'POST',
-                    headers: {
-                        'Content-Type': 'application/json'
-                    },
-                    body: JSON.stringify({ askerName, question })
-                });
-
-                const data = await response.json();
-
-                if (data.success) {
-                    showAlert('sendMessageResult', 'success', 
-                        `<i class="fas fa-check-circle"></i> ${data.message}`);
-                    document.getElementById('sendMessageForm').reset();
-                } else {
-                    showAlert('sendMessageResult', 'danger', data.error || 'Failed to send message');
-                }
-            } catch (error) {
-                showAlert('sendMessageResult', 'danger', 'Network error. Please try again.');
-                console.error('Error:', error);
-            } finally {
-                showLoading('sendMessageLoading', false);
-            }
-        });
-
-        // View Messages Handler
-        document.getElementById('viewMessagesForm').addEventListener('submit', async (e) => {
-            e.preventDefault();
-
-            let linkId = document.getElementById('viewLinkId').value.trim();
-            const username = document.getElementById('viewUsername').value.trim();
-            const password = document.getElementById('viewPassword').value.trim();
-
-            // Extract linkId from full URL if needed
-            if (linkId.includes('/')) {
-                linkId = linkId.split('/').pop();
-            }
-
-            showLoading('viewMessagesLoading', true);
-            document.getElementById('messagesContainer').classList.add('hidden');
-
-            try {
-                const credentials = btoa(`${username}:${password}`);
-
-                const response = await fetch(`${API_BASE_URL}/api/get-messages?linkId=${linkId}`, {
-                    method: 'GET',
-                    headers: {
-                        'Authorization': `Basic ${credentials}`
-                    }
-                });
-
-                const data = await response.json();
-
-                if (data.success) {
-                    displayMessages(data.data.messages, linkId, username, password);
-                } else {
-                    showAlert('messagesContainer', 'danger', data.error || 'Failed to load messages');
-                    document.getElementById('messagesContainer').classList.remove('hidden');
-                }
-            } catch (error) {
-                showAlert('messagesContainer', 'danger', 'Network error. Please try again.');
-                document.getElementById('messagesContainer').classList.remove('hidden');
-                console.error('Error:', error);
-            } finally {
-                showLoading('viewMessagesLoading', false);
-            }
-        });
-
-        // Display Messages
-        function displayMessages(messages, linkId, username, password) {
-            const container = document.getElementById('messagesContainer');
-            container.classList.remove('hidden');
-
-            if (messages.length === 0) {
-                container.innerHTML = '<div class="alert alert-info"><i class="fas fa-info-circle"></i> No messages yet. Share your link to receive messages!</div>';
-                return;
-            }
-
-            let html = `<h5 class="mb-3"><i class="fas fa-envelope"></i> You have ${messages.length} message(s)</h5>`;
-
-            messages.forEach((msg, index) => {
-                const date = new Date(msg.createdAt).toLocaleString();
-                html += `
-                    <div class="message-card" id="message-${msg.messageId}">
-                        <div class="d-flex justify-content-between align-items-start">
-                            <div class="flex-grow-1">
-                                <p class="mb-1 text-muted small">
-                                    <i class="fas fa-user"></i> From: <strong>${msg.askerName}</strong> | 
-                                    <i class="fas fa-clock"></i> ${date}
-                                </p>
-                                <p class="mb-0 mt-2">${escapeHtml(msg.question)}</p>
-                            </div>
-                            <button class="btn btn-sm btn-outline-danger" 
-                                    onclick="deleteMessage('${linkId}', '${msg.messageId}', '${username}', '${password}')">
-                                <i class="fas fa-trash"></i>
-                            </button>
-                        </div>
-                    </div>
-                `;
-            });
-
-            container.innerHTML = html;
+        if (data.success) {
+          document.getElementById('sendMessageForm').reset();
+          showAlert('success', '✅ Message sent successfully!');
+        } else {
+          showAlert('danger', '❌ ' + (data.error || 'Failed to send message.'));
         }
+      } catch (err) {
+        console.error(err);
+        showAlert('danger', '⚠️ Network error. Please try again.');
+      } finally {
+        showLoading(false);
+      }
+    });
 
-        // Delete Message
-        async function deleteMessage(linkId, messageId, username, password) {
-            if (!confirm('Are you sure you want to delete this message?')) return;
+    function showLoading(show) {
+      document.getElementById('sendMessageLoading').style.display = show ? 'block' : 'none';
+    }
 
-            try {
-                const credentials = btoa(`${username}:${password}`);
-
-                const response = await fetch(`${API_BASE_URL}/api/delete-message?linkId=${linkId}&messageId=${messageId}`, {
-                    method: 'DELETE',
-                    headers: {
-                        'Authorization': `Basic ${credentials}`
-                    }
-                });
-
-                const data = await response.json();
-
-                if (data.success) {
-                    document.getElementById(`message-${messageId}`).remove();
-
-                    // Check if no messages left
-                    const remainingMessages = document.querySelectorAll('.message-card');
-                    if (remainingMessages.length === 0) {
-                        document.getElementById('messagesContainer').innerHTML = 
-                            '<div class="alert alert-info"><i class="fas fa-info-circle"></i> No messages remaining.</div>';
-                    }
-                } else {
-                    alert('Failed to delete message: ' + (data.error || 'Unknown error'));
-                }
-            } catch (error) {
-                alert('Network error. Please try again.');
-                console.error('Error:', error);
-            }
-        }
-
-        // Helper Functions
-        function showLoading(elementId, show) {
-            document.getElementById(elementId).style.display = show ? 'block' : 'none';
-        }
-
-        function showAlert(containerId, type, message) {
-            const container = document.getElementById(containerId);
-            container.innerHTML = `<div class="alert alert-${type}">${message}</div>`;
-            container.classList.remove('hidden');
-        }
-
-        function copyLink() {
-            const link = document.getElementById('generatedLink').textContent;
-            navigator.clipboard.writeText(link).then(() => {
-                alert('Link copied to clipboard!');
-            }).catch(err => {
-                console.error('Failed to copy:', err);
-            });
-        }
-
-        function escapeHtml(text) {
-            const div = document.createElement('div');
-            div.textContent = text;
-            return div.innerHTML;
-        }
-    </script>
+    function showAlert(type, message) {
+      const color = type === 'success' ? 'alert-success' : 'alert-danger';
+      document.getElementById('sendMessageResult').innerHTML =
+        `<div class="alert ${color} mt-3">${message}</div>`;
+    }
+  </script>
 </body>
 </html>
