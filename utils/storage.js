@@ -1,4 +1,3 @@
-// utils/storage.js
 const { MongoClient } = require('mongodb');
 
 // Get URI from environment variable. Fallback to the provided default is risky for production.
@@ -59,10 +58,14 @@ async function ensureIndexes() {
   }
 }
 
-// ensureIndexes runs automatically when `addUser` is called, but you could call it 
+// ensureIndexes runs automatically when `addUser` is called, but you could call it 
 // once on server startup for environments like AWS Lambda/Vercel.
 
-// generate a random, stable-ish, URL-safe ID
+/**
+ * Generates a random, URL-safe ID string.
+ * @param {number} [len=12] - Length of the ID.
+ * @returns {string} - The generated ID.
+ */
 function makeId(len = 12) {
   const chars = 'abcdefghijklmnopqrstuvwxyz0123456789';
   let s = '';
@@ -87,7 +90,7 @@ async function addUser({ username, passwordHash, linkId }) {
   if (!linkId) linkId = makeId(8); // Ensure linkId generation if not provided
   const doc = {
     username,
-    password: passwordHash, // Renamed to passwordHash for clarity in the API route, but field name in DB is 'password'
+    password: passwordHash, 
     linkId,
     createdAt: new Date(),
   };
@@ -119,11 +122,29 @@ async function addMessage({ linkId, name, text }) {
 
 async function deleteMessage(linkId, messageId) {
   const { db } = await connect();
-  // Deletes only if BOTH linkId and messageId match, ensuring a user only deletes 
+  // Deletes only if BOTH linkId and messageId match, ensuring a user only deletes 
   // messages for their link.
   const result = await db.collection(MESSAGES_COL).deleteOne({ linkId, messageId });
   return result.deletedCount === 1;
 }
+
+/**
+ * Deletes a user and all messages associated with their linkId.
+ * @param {string} linkId - The link ID of the user to delete.
+ * @returns {Promise<number>} - The number of messages deleted.
+ */
+async function deleteUserAndMessages(linkId) {
+  const { db } = await connect();
+  
+  // 1. Delete all associated messages
+  const messageResult = await db.collection(MESSAGES_COL).deleteMany({ linkId });
+  
+  // 2. Delete the user account
+  await db.collection(USERS_COL).deleteOne({ linkId });
+  
+  return messageResult.deletedCount;
+}
+
 
 module.exports = {
   findUserByUsername,
@@ -132,8 +153,9 @@ module.exports = {
   getMessages,
   addMessage,
   deleteMessage,
+  deleteUserAndMessages, // <-- New function exported
   // Exported for environments where immediate index creation is needed
-  ensureIndexes, 
+  ensureIndexes, 
   // exported for testing/debug
   _connect: connect,
 };
