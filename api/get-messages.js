@@ -1,10 +1,8 @@
 // api/get-messages.js
-
 const { parseAuthHeader, comparePassword } = require('../utils/auth');
 const { findUserByLinkId, getMessages } = require('../utils/storage');
 
 module.exports = async (req, res) => {
-  // ✅ Allow all origins (for public links)
   res.setHeader('Access-Control-Allow-Origin', '*');
   res.setHeader('Access-Control-Allow-Methods', 'GET,OPTIONS');
   res.setHeader('Access-Control-Allow-Headers', 'Authorization, Content-Type');
@@ -18,17 +16,14 @@ module.exports = async (req, res) => {
     if (!linkId)
       return res.status(400).json({ success: false, error: 'Link ID required' });
 
-    // 🔹 Find user associated with this link ID
     const user = await findUserByLinkId(linkId);
     if (!user)
       return res.status(404).json({ success: false, error: 'User not found' });
 
-    // 🔹 Fetch all messages for this user
     let messages = await getMessages(linkId);
     if (!Array.isArray(messages)) messages = [];
-    messages.sort((a, b) => new Date(b.createdAt) - new Date(a.createdAt)); // newest first
+    messages.sort((a, b) => new Date(b.createdAt) - new Date(a.createdAt));
 
-    // 🔹 Try to authenticate if credentials provided
     const authHeader = req.headers.authorization;
     let authorized = false;
 
@@ -40,34 +35,26 @@ module.exports = async (req, res) => {
       }
     }
 
-    // 🔹 Public view (no login)
     if (!authorized) {
-      const publicMessages = messages.map(msg => ({
-        question: msg.question,
-        createdAt: msg.createdAt
+      const publicMessages = messages.map(m => ({
+        question: m.question,
+        createdAt: m.createdAt
       }));
       return res.status(200).json({
         success: true,
         mode: 'public',
-        messageCount: publicMessages.length,
         messages: publicMessages
       });
     }
 
-    // 🔹 Private view (login successful)
     return res.status(200).json({
       success: true,
       mode: 'private',
       username: user.username,
-      messageCount: messages.length,
       messages
     });
-
   } catch (err) {
     console.error('Error fetching messages:', err);
-    return res.status(500).json({
-      success: false,
-      error: 'Internal server error'
-    });
+    return res.status(500).json({ success: false, error: 'Server error' });
   }
 };
