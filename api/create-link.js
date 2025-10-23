@@ -1,10 +1,9 @@
-const crypto = require('crypto');
-const { hashPassword } = require('../utils/auth');
-const { findUserByUsername, addUser } = require('../utils/storage');
+const bcrypt = require('bcryptjs');
+const { addUser, findUserByUsername } = require('../utils/storage');
 
 module.exports = async (req, res) => {
   res.setHeader('Access-Control-Allow-Origin', '*');
-  res.setHeader('Access-Control-Allow-Methods', 'GET,POST,OPTIONS');
+  res.setHeader('Access-Control-Allow-Methods', 'POST,OPTIONS');
   res.setHeader('Access-Control-Allow-Headers', 'Content-Type');
 
   if (req.method === 'OPTIONS') return res.status(200).end();
@@ -12,25 +11,28 @@ module.exports = async (req, res) => {
 
   try {
     const { username, password } = req.body;
+
     if (!username || !password)
       return res.status(400).json({ success: false, error: 'Username and password required' });
 
-    const existingUser = await findUserByUsername(username);
-    if (existingUser)
-      return res.status(409).json({ success: false, error: 'Username already exists' });
+    const existing = await findUserByUsername(username);
+    if (existing)
+      return res.status(400).json({ success: false, error: 'Username already taken' });
 
-    const linkId = crypto.randomBytes(4).toString('hex');
-    const hashed = await hashPassword(password);
+    const hashedPassword = await bcrypt.hash(password, 10);
+    const linkId = Math.random().toString(36).substring(2, 10);
 
-    await addUser({ linkId, username, password: hashed, createdAt: new Date().toISOString() });
+    const user = { username, password: hashedPassword, linkId, createdAt: new Date().toISOString() };
+    await addUser(user);
 
     const secretLink = `https://asklyy.vercel.app/${linkId}`;
+
     return res.status(201).json({
       success: true,
-      data: { linkId, username, secretLink, message: 'Secret link created successfully!' }
+      data: { secretLink, linkId }
     });
   } catch (e) {
-    console.error(e);
-    return res.status(500).json({ success: false, error: 'Server error' });
+    console.error('Error creating link:', e);
+    return res.status(500).json({ success: false, error: 'Internal server error' });
   }
 };
