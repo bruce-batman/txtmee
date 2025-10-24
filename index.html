@@ -1,188 +1,554 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-  <meta charset="UTF-8">
-  <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>Asklyy - Send Secret Message</title>
-  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;600;700&display=swap" rel="stylesheet">
-  <script src="https://cdn.tailwindcss.com"></script>
-  <style>
-    :root {
-      --primary: #6366f1;
-      --accent: #8b5cf6;
-      --dark-bg: #0f172a;
-      --card-bg: rgba(30, 41, 59, 0.95);
-      --input-bg: #1e293b;
-    }
-    body {
-      font-family: 'Inter', sans-serif;
-      background: linear-gradient(135deg, var(--dark-bg), #1e1b4b);
-      min-height: 100vh;
-      display: flex;
-      align-items: center;
-      justify-content: center;
-      padding: 1rem;
-      color: #f8fafc;
-    }
-    .card {
-      background: var(--card-bg);
-      border-radius: 12px;
-      box-shadow: 0 0 20px rgba(0,0,0,0.4);
-      padding: 1.4rem 1.2rem;
-      max-width: 360px;
-      width: 100%;
-      animation: fadeIn 0.5s ease-out both;
-    }
-    @keyframes fadeIn {
-      from { opacity: 0; transform: translateY(15px);} to { opacity:1; transform:translateY(0); }
-    }
-    .title {
-      text-align: center;
-      font-size: 1.4rem;
-      font-weight: 700;
-      background: linear-gradient(90deg, var(--primary), var(--accent));
-      -webkit-background-clip: text;
-      -webkit-text-fill-color: transparent;
-    }
-    .subtitle {
-      text-align: center;
-      color: #94a3b8;
-      font-size: 0.85rem;
-      margin-bottom: 1rem;
-    }
-    label {
-      font-size: 0.8rem;
-      color: #cbd5e1;
-      margin-bottom: 0.25rem;
-      display: block;
-    }
-    input, textarea {
-      background: var(--input-bg);
-      border: 1px solid #334155;
-      border-radius: 8px;
-      color: #f1f5f9;
-      width: 100%;
-      padding: 0.45rem 0.7rem;
-      font-size: 0.85rem;
-      transition: border 0.2s, box-shadow 0.2s;
-    }
-    input:focus, textarea:focus {
-      border-color: var(--primary);
-      box-shadow: 0 0 0 2px rgba(99,102,241,0.4);
-      outline: none;
-    }
-    .btn {
-      background: linear-gradient(120deg, var(--primary), var(--accent));
-      color: white;
-      font-weight: 600;
-      font-size: 0.9rem;
-      padding: 0.6rem;
-      border: none;
-      border-radius: 8px;
-      width: 100%;
-      margin-top: 0.5rem;
-      transition: transform 0.2s, box-shadow 0.2s;
-    }
-    .btn:hover:not(:disabled) {
-      transform: translateY(-2px);
-      box-shadow: 0 4px 10px rgba(139,92,246,0.4);
-    }
-    .btn:disabled { opacity: 0.6; }
-    .char-counter {
-      text-align: right;
-      font-size: 0.7rem;
-      color: #94a3b8;
-    }
-    .char-counter.limit {
-      color: #fbbf24;
-    }
-    .alert {
-      margin-top: 0.75rem;
-      padding: 0.6rem;
-      font-size: 0.85rem;
-      border-radius: 6px;
-      text-align: center;
-    }
-    .success { background: rgba(34,197,94,0.1); color: #4ade80; }
-    .error { background: rgba(239,68,68,0.1); color: #f87171; }
-    .warning { background: rgba(250,204,21,0.1); color: #facc15; }
-  </style>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Asklyy - Send Secret Message</title>
+    <!-- Import Inter font -->
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet">
+    <script src="https://cdn.tailwindcss.com"></script>
+    <style>
+        /* --- Refined Color Palette (Less Neon, More Cyberpunk Subtlety) --- */
+        :root {
+            --subtle-cyan: #00aaff;
+            --subtle-magenta: #a040ff;
+            --accent-pulse: rgba(160, 64, 255, 0.6); /* New: For pulsing animation */
+            --dark-primary: #1e293b;
+            --dark-bg: #0c0c15;
+            --text-main: #e2e8f0;
+            --text-subtle: #94a3b8;
+            --accent-glow: rgba(0, 170, 255, 0.4);
+        }
+
+        /* --- Base & Scroll Optimization (Easy Scrolling + Scan Lines) --- */
+        html, body {
+            height: 100%;
+            background-color: var(--dark-bg);
+            min-height: 100vh;
+            font-family: 'Inter', sans-serif;
+            margin: 0;
+            padding: 0;
+            overflow-x: hidden; /* Prevent horizontal scrolling */
+            color: var(--text-main);
+        }
+        /* Subtle scan line background texture */
+        body::before {
+            content: '';
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            pointer-events: none;
+            background: linear-gradient(rgba(15, 15, 20, 0) 50%, rgba(10, 10, 15, 0.2) 50%), 
+                        linear-gradient(90deg, rgba(15, 15, 20, 0) 50%, rgba(10, 10, 15, 0.15) 50%);
+            background-size: 100% 2px, 2px 100%;
+            opacity: 0.5;
+            z-index: 0;
+        }
+
+        /* --- Compact Card Design --- */
+        .cyber-card {
+            background: rgba(20, 28, 40, 0.95); /* Dark blue/slate background */
+            box-shadow: 0 4px 12px rgba(0, 0, 0, 0.5);
+            border-radius: 10px;
+            border: 1px solid var(--dark-primary);
+            backdrop-filter: blur(4px);
+            animation: fadeIn 0.8s ease-out both;
+            max-width: 380px;
+            width: 90%;
+            margin: 2rem auto;
+            position: relative;
+            z-index: 10;
+            
+            /* Subtler pulsing border effect */
+            box-shadow: 0 4px 12px rgba(0, 0, 0, 0.5), 
+                        0 0 5px 1px var(--accent-pulse);
+            border-color: var(--subtle-cyan);
+            animation: fadeIn 0.8s ease-out both, pulse-border 3s infinite alternate;
+        }
+        @keyframes fadeIn {
+            0% { opacity: 0; transform: translateY(20px);}
+            100% { opacity: 1; transform: translateY(0);}
+        }
+        @keyframes pulse-border {
+            0% { box-shadow: 0 4px 12px rgba(0, 0, 0, 0.5), 0 0 5px 1px var(--subtle-cyan); }
+            100% { box-shadow: 0 4px 12px rgba(0, 0, 0, 0.5), 0 0 10px 2px var(--accent-pulse); }
+        }
+
+        /* --- Header Styling (Reduced Intensity) --- */
+        .cyber-header {
+            background: rgba(30, 41, 59, 0.95);
+            border-bottom: 1px solid #374151;
+            text-align: center;
+            padding: 1rem 1rem 0.8rem 1rem;
+        }
+        .cyber-title {
+            font-weight: 700;
+            font-size: 1.5rem;
+            background: linear-gradient(90deg, var(--subtle-cyan), var(--subtle-magenta));
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            filter: drop-shadow(0 0 1px var(--subtle-cyan));
+            letter-spacing: 0.5px;
+        }
+        .cyber-sub {
+            font-size: 0.85rem;
+            color: var(--text-subtle);
+            margin-top: 0.2rem;
+            opacity: 0.9;
+        }
+        .cyber-divider {
+            border: none;
+            border-top: 1px solid var(--dark-primary);
+            margin: 0.6rem auto 0.4rem auto;
+            width: 30%;
+            opacity: 0.5;
+        }
+
+        /* --- Form Elements (Smaller and Cleaner) --- */
+        .form-label {
+            color: var(--text-main);
+            font-weight: 500;
+            margin-bottom: 0.2rem;
+            font-size: 0.85rem;
+            display: block;
+        }
+        .cyber-input, .cyber-textarea {
+            background: #111827;
+            border: 1px solid #374151;
+            border-radius: 6px;
+            color: #fff;
+            padding: 0.5rem 0.8rem;
+            margin-bottom: 0.4rem;
+            font-size: 0.9rem;
+            transition: border-color 0.2s, box-shadow 0.2s;
+            outline: none;
+            width: 100%;
+            resize: none;
+        }
+        .cyber-input:focus, .cyber-textarea:focus {
+            border-color: var(--subtle-cyan);
+            box-shadow: 0 0 0 2px var(--accent-glow);
+        }
+        .cyber-input::placeholder, .cyber-textarea::placeholder {
+             color: #6b7280;
+             opacity: 1;
+        }
+
+        /* --- Character Counter (New Feature) --- */
+        .char-counter {
+            font-size: 0.75rem;
+            color: var(--text-subtle);
+            text-align: right;
+            margin-top: 0.2rem;
+            transition: color 0.3s;
+        }
+        .char-counter.limit-near {
+            color: #facc15; /* Warning yellow */
+            font-weight: 600;
+        }
+        .char-counter.limit-max {
+            color: #f87171; /* Error red */
+            font-weight: 700;
+        }
+
+        /* --- Button Styling (Reduced Intensity) --- */
+        .cyber-btn {
+            background: linear-gradient(100deg, var(--subtle-magenta), var(--subtle-cyan));
+            color: #fff;
+            font-weight: 600;
+            border: none;
+            padding: 0.75rem 1rem;
+            border-radius: 6px;
+            width: 100%;
+            font-size: 1rem;
+            margin-top: 0.5rem;
+            cursor: pointer;
+            box-shadow: 0 0 5px 1px var(--accent-glow);
+            transition: filter 0.2s, transform 0.2s, box-shadow 0.2s;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            gap: 0.5rem;
+            position: relative;
+        }
+        .cyber-btn:hover:not(:disabled) {
+            filter: brightness(1.15);
+            transform: translateY(-1px);
+            box-shadow: 0 0 10px 3px var(--accent-glow);
+        }
+        .cyber-btn:disabled {
+            filter: grayscale(0.7) brightness(0.5);
+            opacity: 0.6;
+            cursor: not-allowed;
+        }
+
+        /* --- Loading and Alert Styles --- */
+        .spinner {
+            border: 3px solid var(--subtle-cyan);
+            border-top: 3px solid var(--subtle-magenta);
+            width: 1.8rem;
+            height: 1.8rem;
+            animation: spin 0.8s linear infinite;
+        }
+        @keyframes spin {
+            100% { transform: rotate(360deg);}
+        }
+        .cyber-alert {
+            border-radius: 8px;
+            padding: 0.75rem;
+            margin: 1rem 0 0.5rem 0;
+            font-weight: 500;
+            font-size: 0.9rem;
+            animation: fadeIn 0.5s;
+            text-align: center;
+        }
+        .cyber-alert.success {
+            border: 1px solid #34d399;
+            background: rgba(52, 211, 153, 0.1);
+            color: #34d399;
+            box-shadow: 0 0 8px rgba(52, 211, 153, 0.5);
+        }
+        .cyber-alert.error {
+            border: 1px solid #f87171;
+            background: rgba(248, 113, 113, 0.1);
+            color: #f87171;
+            box-shadow: 0 0 8px rgba(248, 113, 113, 0.5);
+        }
+        .cyber-alert.warning {
+            border: 1px solid #facc15;
+            background: rgba(250, 204, 21, 0.1);
+            color: #facc15;
+            box-shadow: 0 0 8px rgba(250, 204, 21, 0.5);
+        }
+        .blur-loading {
+            filter: blur(2px) brightness(0.8);
+            pointer-events: none;
+            user-select: none;
+        }
+    </style>
 </head>
 <body>
-  <div class="card">
-    <h1 class="title">Asklyy</h1>
-    <p class="subtitle">Send an honest, respectful, anonymous message</p>
+    <!-- The padding on y-axis ensures the card is visible even when scrolling is necessary -->
+    <div class="min-h-screen flex items-center justify-center py-8">
+        <div class="cyber-card w-full">
+            <div class="cyber-header">
+                <!-- SVG Icon style simplified -->
+                <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 40 40" width="28" height="28"
+                    style="display:inline-block;filter: drop-shadow(0 0 2px var(--subtle-cyan));vertical-align: middle;margin-right:4px;">
+                    <path fill="currentColor" d="M20 9l14.5 8.5a1 1 0 0 1 0 1.8L20 28.3a1 1 0 0 1-1 0L5.5 19.3a1 1 0 0 1 0-1.8L19 9a1 1 0 0 1 1 0z" style="color:var(--subtle-cyan);"/>
+                </svg>
+                <span class="cyber-title">Asklyy</span>
+                <div class="cyber-sub">Send a Secret, Anonymous Message</div>
+                <hr class="cyber-divider">
+            </div>
+            <form id="sendMessageForm" style="padding:1.5rem 1.2rem;" autocomplete="off">
+                <div class="mb-3">
+                    <label for="askerName" class="form-label">Your Sender ID (optional)</label>
+                    <input class="cyber-input" placeholder="Enter your name or ID (max 28 chars)" id="askerName" type="text" maxlength="28">
+                </div>
+                <div class="mb-5">
+                    <label for="question" class="form-label">Your Message</label>
+                    <textarea class="cyber-textarea" placeholder="Type your secret message..." rows="4" required id="question" maxlength="400"></textarea>
+                    <div id="charCounter" class="char-counter">0 / 400</div>
+                </div>
+                <button type="submit" class="cyber-btn" id="sendBtn" disabled>
+                    <!-- Button disabled until API key is loaded -->
+                    <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" width="20" height="20"
+                        style="display:inline-block;">
+                        <path stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"
+                            d="M6 12L3.27 3.13A59.77 59.77 0 0121.49 12 59.77 59.77 0 013.27 20.87L6 12zm0 0h7.5" />
+                    </svg>
+                    <span>Loading Configuration...</span>
+                </button>
+            </form>
+            <div id="sendMessageResult" class="px-5 pb-3"></div>
 
-    <form id="sendMessageForm">
-      <label for="askerName">Your Name (optional)</label>
-      <input type="text" id="askerName" maxlength="28" placeholder="Enter name or leave blank">
+            <div id="sendMessageLoading" class="hidden" style="text-align:center;padding:1.2rem 0;">
+                <div class="spinner"></div>
+                <span style="color: var(--subtle-cyan);font-weight:500;font-size:0.95rem;opacity:0.9;">
+                    Encrypting and Transmitting Data...
+                </span>
+            </div>
+        </div>
+    </div>
+    <script>
+        // --- API Configuration ---
+        const API_BASE_URL = 'https://asklyy.vercel.app';
+        const MAX_CHARS = 400;
 
-      <label for="question" class="mt-2">Your Message</label>
-      <textarea id="question" rows="4" maxlength="400" placeholder="Type your secret message..." required></textarea>
-      <div class="char-counter" id="charCounter">0 / 400</div>
-      <button type="submit" class="btn" id="sendBtn">Send Message</button>
-    </form>
+        // Configuration variables are initialized to null and populated from apikey.json
+        let LONGCAT_API_KEY = null; 
+        let LONGCAT_API_URL = null; 
+        let MODERATION_SYSTEM_PROMPT = null; 
 
-    <div id="sendMessageResult"></div>
-  </div>
-
-  <script>
-    const API_BASE_URL = 'https://asklyy.vercel.app';
-    const MAX_CHARS = 400;
-    const form = document.getElementById('sendMessageForm');
-    const counter = document.getElementById('charCounter');
-
-    document.getElementById('question').addEventListener('input', e => {
-      const len = e.target.value.length;
-      counter.textContent = `${len} / ${MAX_CHARS}`;
-      counter.classList.toggle('limit', len > MAX_CHARS * 0.85);
-    });
-
-    form.addEventListener('submit', async e => {
-      e.preventDefault();
-      const name = document.getElementById('askerName').value.trim();
-      const question = document.getElementById('question').value.trim();
-      const words = question.split(/\s+/).filter(Boolean);
-      if (!question) return showAlert('warning','⚠️ Please write a message.');
-      if (words.length < 4) return showAlert('warning','✍️ Message too short, please write more detail.');
-
-      try {
-        const res = await fetch(`${API_BASE_URL}/api/sendmessages`, {
-          method: 'POST',
-          headers: { 'Content-Type': 'application/json' },
-          body: JSON.stringify({ linkId: getLinkId(), name: name || 'Anonymous', text: question })
-        });
-        const data = await res.json();
-        if (data.success) {
-          form.reset();
-          counter.textContent = '0 / 400';
-          showAlert('success','✅ Message delivered successfully!');
-        } else if (data.flagged) {
-          showAlert('warning','⚠️ Please make sure your message does not use any slang words and stays within good manners and respectful tone.');
-        } else {
-          showAlert('error','❌ Failed to send message. Try again.');
+        /**
+         * Fetches all necessary API configuration from apikey.json.
+         * @returns {Promise<boolean>} True if config loaded successfully, false otherwise.
+         */
+        async function loadApiKey() {
+            const btn = document.getElementById('sendBtn');
+            btn.querySelector('span').textContent = 'Initializing System...';
+            try {
+                // Use explicit relative path for robustness
+                const response = await fetch('../apikey.json'); 
+                
+                if (!response.ok) {
+                    console.error(`Failed to load apikey.json. HTTP Status: ${response.status} (${response.statusText}).`);
+                    // This error is caught in the catch block below
+                    throw new Error(`Failed to load apikey.json. Status: ${response.status}`);
+                }
+                const config = await response.json();
+                
+                // Assign and check all required configuration fields
+                LONGCAT_API_KEY = config.LONGCAT_API_KEY;
+                LONGCAT_API_URL = config.LONGCAT_API_URL;
+                MODERATION_SYSTEM_PROMPT = config.MODERATION_SYSTEM_PROMPT;
+                
+                if (!LONGCAT_API_KEY || !LONGCAT_API_URL || !MODERATION_SYSTEM_PROMPT) {
+                     console.error('Missing configuration data in apikey.json.');
+                     showAlert('danger', '❌ Configuration Error: Missing API Key or URL setting.');
+                     return false;
+                }
+                // Update button text to Ready
+                btn.querySelector('span').textContent = 'Transmit Message Securely';
+                return true;
+            } catch (error) {
+                console.error('Error loading configuration:', error);
+                showAlert('danger', '❌ Configuration Error: Could not load apikey.json.');
+                // Update button text to Error
+                btn.querySelector('span').textContent = 'Error Loading';
+                return false;
+            }
         }
-      } catch {
-        showAlert('error','⚠️ Network error, please try again later.');
-      }
-    });
 
-    function getLinkId(){
-      const p = window.location.pathname.split('/');
-      let id = p.filter(Boolean).pop();
-      const q = new URLSearchParams(window.location.search);
-      if(q.has('id')) id=q.get('id');
-      return id === 'send'? null:id;
-    }
+        /**
+         * Determines the link ID from the URL path or query parameters.
+         * @returns {string | null} The extracted link ID or null if not found.
+         */
+        function getLinkId() {
+            const pathParts = window.location.pathname.split('/');
+            let id = pathParts.filter(Boolean).pop();
+            const urlParams = new URLSearchParams(window.location.search);
 
-    function showAlert(type,msg){
-      const box=document.createElement('div');
-      box.className=`alert ${type}`;
-      box.textContent=msg;
-      const res=document.getElementById('sendMessageResult');
-      res.innerHTML='';
-      res.appendChild(box);
-    }
-  </script>
+            if (urlParams.has('id')) id = urlParams.get('id');
+            // Ignore 'send' if it was the last path segment (e.g., /send)
+            if (id === 'send') id = null;
+
+            return id;
+        }
+
+        /** Controls the visibility of the loading indicator and disables the form. */
+        function showLoading(show) {
+            const form = document.getElementById('sendMessageForm');
+            const loading = document.getElementById('sendMessageLoading');
+            const btn = document.getElementById('sendBtn');
+
+            loading.classList.toggle('hidden', !show);
+
+            if (show) form.classList.add('blur-loading');
+            else form.classList.remove('blur-loading');
+
+            btn.disabled = show;
+        }
+
+        /** Displays a stylized alert message. */
+        function showAlert(type, message) {
+            const types = { success: "success", danger: "error", warning: "warning" };
+            document.getElementById('sendMessageResult').innerHTML =
+                `<div class="cyber-alert ${types[type] || ''}">
+                    <span>${message}</span>
+                </div>`;
+        }
+
+        /** Sets up the real-time character counter for the message input. */
+        function setupCharCounter() {
+            const textarea = document.getElementById('question');
+            const counter = document.getElementById('charCounter');
+
+            const updateCounter = () => {
+                const currentLength = textarea.value.length;
+                counter.textContent = `${currentLength} / ${MAX_CHARS}`;
+                counter.classList.remove('limit-near', 'limit-max');
+
+                if (currentLength >= MAX_CHARS * 0.9) {
+                    counter.classList.add('limit-max');
+                } else if (currentLength >= MAX_CHARS * 0.75) {
+                    counter.classList.add('limit-near');
+                }
+            };
+
+            textarea.addEventListener('input', updateCounter);
+            updateCounter(); // Initial call
+        }
+
+        /** * Calls the external LLM API to check content for slang/vulgarity. 
+         * @returns {string} "FLAGGED" or "CLEAN".
+         */
+        async function moderateContent(text) {
+            // Defensive check since this is a critical step
+            if (!LONGCAT_API_KEY) {
+                // If key is missing, treat it as an internal system failure for moderation
+                return "FLAGGED"; 
+            }
+
+            const payload = {
+                model: "LongCat-Flash-Chat",
+                messages: [
+                    { role: "system", content: MODERATION_SYSTEM_PROMPT },
+                    { role: "user", content: text }
+                ],
+                max_tokens: 10,
+                temperature: 0.0,
+            };
+
+            try {
+                const response = await fetch(LONGCAT_API_URL, {
+                    method: 'POST',
+                    headers: { 
+                        'Authorization': `Bearer ${LONGCAT_API_KEY}`,
+                        'Content-Type': 'application/json'
+                    },
+                    body: JSON.stringify(payload)
+                });
+
+                if (!response.ok) {
+                    console.error('LongCat API call failed with status:', response.status);
+                    // Treat API failure as CLEAN to allow messages through if moderator is down
+                    return "CLEAN"; 
+                }
+
+                const data = await response.json();
+                const result = data.choices?.[0]?.message?.content?.trim().toUpperCase() || "CLEAN";
+                
+                return result;
+
+            } catch (error) {
+                console.error('Network error calling LongCat API:', error);
+                return "CLEAN";
+            }
+        }
+
+
+        /** Core logic for sending the message via API with exponential backoff and new validations. */
+        async function handleSendMessage(e) {
+            e.preventDefault();
+            const askerName = document.getElementById('askerName').value.trim();
+            const question = document.getElementById('question').value.trim();
+            
+            // Calculate word count by splitting the text by any sequence of whitespace
+            const textWords = question.split(/\s+/).filter(word => word.length > 0); 
+
+            if (!question) {
+                showAlert('warning', '⚠️ The message field cannot be empty.');
+                return;
+            }
+
+            // 1. Min Word Count Check (More than 3 words)
+            if (textWords.length <= 3) {
+                showAlert('warning', '✍️ Message too short. It must be more than 3 words long.');
+                return;
+            }
+
+            showLoading(true);
+            document.getElementById('sendMessageResult').innerHTML = '';
+
+            try {
+                // 2. Content Moderation Check
+                const moderationResult = await moderateContent(question);
+                
+                if (moderationResult === 'FLAGGED') {
+                    // Custom response for slang/non-serious questions: "sharam kar le bhai"
+                    showAlert('warning', 'شرم کر لے بھائی');
+                    return; // Stop processing if flagged
+                }
+
+                // 3. Proceed with original message sending if CLEAN
+                let response = null;
+                const maxRetries = 3;
+                let delay = 1000;
+
+                for (let i = 0; i < maxRetries; i++) {
+                    try {
+                        response = await fetch(API_BASE_URL + '/api/sendmessages', {
+                            method: 'POST',
+                            headers: { 'Content-Type': 'application/json' },
+                            body: JSON.stringify({
+                                linkId: linkId,
+                                name: askerName || 'Anonymous',
+                                text: question
+                            })
+                        });
+                        if (response.status !== 429) { // 429 is rate limit, don't auto-retry
+                            break;
+                        }
+                    } catch (err) {
+                        console.error(`Attempt ${i + 1} failed (Network error during fetch):`, err);
+                    }
+                    if (i < maxRetries - 1) {
+                        await new Promise(resolve => setTimeout(resolve, delay));
+                        delay *= 2;
+                    }
+                }
+
+                if (!response) {
+                     throw new Error('All connection attempts failed after retries.');
+                }
+
+                const data = await response.json();
+
+                if (response.ok && data.success) {
+                    document.getElementById('sendMessageForm').reset();
+                    document.getElementById('charCounter').textContent = `0 / ${MAX_CHARS}`; // Reset counter on success
+                    showAlert('success', '✅ Transmission complete. Message delivered.');
+                } else {
+                    const errorMsg = response.status === 404
+                        ? '❌ Destination Link ID not recognized.'
+                        : (data.error || 'A critical server error occurred.');
+                    showAlert('danger', errorMsg);
+                }
+            } catch (err) {
+                showAlert('danger', '⚠️ System Failure. Please check your network connection.');
+            } finally {
+                showLoading(false);
+            }
+        }
+
+        // --- Initialization ---
+        const linkId = getLinkId();
+
+        window.onload = async () => {
+            if (!linkId) {
+                // If link ID is missing, replace the content with an informative error.
+                document.body.innerHTML = `
+                    <div class="min-h-screen flex items-center justify-center">
+                        <div class="cyber-card" style="padding:1.5rem;text-align:center;border-color:#f87171;">
+                            <div class="cyber-title" style="font-size:1.7rem; color:#f87171;">ACCESS DENIED</div>
+                            <div class="cyber-sub" style="color:#f87171;">ERROR: Target Link ID is missing from the URL.</div>
+                            <p class="text-xs mt-3" style="color:var(--text-subtle);">
+                                Please use the full, valid link provided by the recipient (e.g., /send/?id=YOURCODE).
+                            </p>
+                        </div>
+                    </div>`;
+                return;
+            }
+
+            // Load API key before doing anything else
+            const keyLoaded = await loadApiKey();
+            const btn = document.getElementById('sendBtn');
+            
+            if (keyLoaded) {
+                // If key is loaded, enable the button and set up listeners
+                btn.disabled = false;
+                setupCharCounter();
+                document.getElementById('sendMessageForm').addEventListener('submit', handleSendMessage);
+            } else {
+                 // If key failed to load, keep the button disabled and show error message
+                 btn.disabled = true;
+            }
+        };
+    </script>
 </body>
 </html>
+ give this one same look make short boxes short text etc . and when ai flags any word then write that make sure your question do not uses any sland words and is like aek ikhlaak tehzeeb k daairay ma uestion ha . write in englsh. and to make web professonal adds oeme more changes too
