@@ -1,10 +1,11 @@
 const { findUserByLinkId, addMessage } = require('../utils/storage');
-const fetch = require('node-fetch'); // Assuming a Node.js/Vercel environment for backend
+// NOTE: Removed 'const fetch = require("node-fetch")' to rely on the global native fetch object,
+// which is required for stability in serverless environments and resolves FUNCTION_INVOCATION_FAILED errors.
 
 // --- SECURE CONFIGURATION (Should be replaced by Environment Variables in a real application) ---
 const LONGCAT_API_KEY = "ak_1xA5mf34M7Gg36q0oS1qh0Jl5zU09";
 const LONGCAT_API_URL = "https://api.longcat.chat/openai/v1/chat/completions";
-const MODERATION_SYSTEM_PROMPT = "You are a content filter. Analyze the user's message. If the message contains vulgar language, profanity, serious slang, or non-serious (especially in English, Urdu, or Hinglish). Content can be funny and non serious but if it is using slang words than flag it and respond fastly, respond with the single word 'FLAGGED'. Otherwise, respond with the single word 'CLEAN'.Answer only FLAGGED or ClEAN";
+const MODERATION_SYSTEM_PROMPT = "You are a content filter. Analyze the user's message. If the message contains vulgar language, profanity, serious slang, or non-serious, trolling content (especially in English, Urdu, or Hinglish), respond with the single word 'FLAGGED'. Otherwise, respond with the single word 'CLEAN'.";
 // -----------------------------------------------------------------------------------------------
 
 const TIMEOUT_MS = 5000; // 5-second timeout for the external API call
