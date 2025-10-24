@@ -292,7 +292,7 @@
             btn.querySelector('span').textContent = 'Initializing System...';
             try {
                 // Use explicit relative path for robustness
-                const response = await fetch('./apikey.json'); 
+                const response = await fetch('../apikey.json'); 
                 
                 if (!response.ok) {
                     console.error(`Failed to load apikey.json. HTTP Status: ${response.status} (${response.statusText}).`);
