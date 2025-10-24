@@ -21,7 +21,6 @@
             --warning: #f59e0b;
             --error: #ef4444;
         }
-
         /* --- Base & Scroll Optimization --- */
         html, body {
             height: 100%;
@@ -33,7 +32,7 @@
             overflow-x: hidden;
             color: var(--text-main);
         }
-        
+
         /* Subtle gradient background */
         body::before {
             content: '';
@@ -48,11 +47,10 @@
             background-color: var(--dark-bg);
             z-index: -1;
         }
-
         /* --- Professional Card Design --- */
         .pro-card {
             background: rgba(30, 41, 59, 0.8);
-            box-shadow: 0 10px 25px -5px rgba(0, 0, 0, 0.5), 
+            box-shadow: 0 10px 25px -5px rgba(0, 0, 0, 0.5),
                         0 0 15px -3px rgba(59, 130, 246, 0.3);
             border-radius: 12px;
             border: 1px solid rgba(100, 116, 139, 0.2);
@@ -64,8 +62,15 @@
             position: relative;
             z-index: 10;
             overflow: hidden;
+            transition: transform 0.3s ease, box-shadow 0.3s ease;
         }
-        
+
+        .pro-card:hover {
+            transform: translateY(-3px);
+            box-shadow: 0 12px 25px -5px rgba(0, 0, 0, 0.5),
+                        0 0 18px -3px rgba(59, 130, 246, 0.4);
+        }
+
         .pro-card::before {
             content: '';
             position: absolute;
@@ -75,12 +80,11 @@
             height: 1px;
             background: linear-gradient(90deg, transparent, var(--primary-blue), transparent);
         }
-        
+
         @keyframes fadeIn {
             0% { opacity: 0; transform: translateY(20px); }
             100% { opacity: 1; transform: translateY(0); }
         }
-
         /* --- Header Styling --- */
         .pro-header {
             background: rgba(30, 41, 59, 0.9);
@@ -89,7 +93,7 @@
             padding: 1.2rem 1.2rem 0.8rem 1.2rem;
             position: relative;
         }
-        
+
         .pro-title {
             font-weight: 700;
             font-size: 1.5rem;
@@ -99,28 +103,27 @@
             letter-spacing: -0.025em;
             margin-bottom: 0.2rem;
         }
-        
+
         .pro-sub {
             font-size: 0.8rem;
             color: var(--text-subtle);
             font-weight: 400;
             margin-top: 0.2rem;
         }
-        
+
         .logo-container {
             display: flex;
             align-items: center;
             justify-content: center;
             margin-bottom: 0.5rem;
         }
-        
+
         .logo-icon {
             width: 28px;
             height: 28px;
             margin-right: 6px;
             filter: drop-shadow(0 0 6px rgba(59, 130, 246, 0.5));
         }
-
         /* --- Form Elements --- */
         .form-label {
             color: var(--text-main);
@@ -129,7 +132,7 @@
             font-size: 0.85rem;
             display: block;
         }
-        
+
         .pro-input, .pro-textarea {
             background: rgba(15, 23, 42, 0.7);
             border: 1px solid rgba(100, 116, 139, 0.3);
@@ -143,17 +146,21 @@
             width: 100%;
             resize: none;
         }
-        
+
+        .pro-textarea {
+            height: 100px;
+            max-height: 120px;
+        }
+
         .pro-input:focus, .pro-textarea:focus {
             border-color: var(--primary-blue);
             box-shadow: 0 0 0 3px var(--accent-glow);
         }
-        
+
         .pro-input::placeholder, .pro-textarea::placeholder {
             color: #64748b;
             opacity: 1;
         }
-
         /* --- Button Styling --- */
         .pro-btn {
             background: linear-gradient(135deg, var(--primary-blue), var(--primary-indigo));
@@ -174,7 +181,7 @@
             position: relative;
             overflow: hidden;
         }
-        
+
         .pro-btn::before {
             content: '';
             position: absolute;
@@ -185,27 +192,26 @@
             background: linear-gradient(90deg, transparent, rgba(255, 255, 255, 0.2), transparent);
             transition: left 0.5s;
         }
-        
+
         .pro-btn:hover:not(:disabled) {
             transform: translateY(-2px);
             box-shadow: 0 7px 14px -2px rgba(0, 0, 0, 0.4);
         }
-        
+
         .pro-btn:hover:not(:disabled)::before {
             left: 100%;
         }
-        
+
         .pro-btn:disabled {
             background: #475569;
             cursor: not-allowed;
             transform: none;
             box-shadow: none;
         }
-        
+
         .pro-btn:disabled::before {
             display: none;
         }
-
         /* --- Loading and Alert Styles --- */
         .spinner {
             border: 3px solid rgba(59, 130, 246, 0.3);
@@ -215,11 +221,11 @@
             height: 22px;
             animation: spin 1s linear infinite;
         }
-        
+
         @keyframes spin {
             100% { transform: rotate(360deg); }
         }
-        
+
         .pro-alert {
             border-radius: 8px;
             padding: 0.8rem;
@@ -229,32 +235,33 @@
             animation: fadeIn 0.5s;
             text-align: center;
             border-left: 4px solid;
+            transition: opacity 0.3s ease, transform 0.3s ease;
         }
-        
+
         .pro-alert.success {
             border-color: var(--success);
             background: rgba(16, 185, 129, 0.1);
             color: var(--success);
         }
-        
+
         .pro-alert.error {
             border-color: var(--error);
             background: rgba(239, 68, 68, 0.1);
             color: var(--error);
         }
-        
+
         .pro-alert.warning {
             border-color: var(--warning);
             background: rgba(245, 158, 11, 0.1);
             color: var(--warning);
         }
-        
+
         .blur-loading {
             filter: blur(2px) brightness(0.8);
             pointer-events: none;
             user-select: none;
         }
-        
+
         /* --- Security Features --- */
         .security-features {
             display: flex;
@@ -268,7 +275,7 @@
             background: rgba(15, 23, 42, 0.5);
             border-radius: 8px;
         }
-        
+
         .footer-note {
             text-align: center;
             font-size: 0.7rem;
@@ -277,9 +284,17 @@
             padding: 0.8rem;
             border-top: 1px solid rgba(100, 116, 139, 0.2);
         }
-        
+
         .hidden {
             display: none;
+        }
+
+        /* --- Responsive Design --- */
+        @media (max-width: 640px) {
+            .pro-card {
+                width: 95%;
+                margin: 1rem auto;
+            }
         }
     </style>
 </head>
@@ -297,18 +312,18 @@
                 </div>
                 <div class="pro-sub">Send Anonymous Messages</div>
             </div>
-            
+
             <form id="sendMessageForm" style="padding: 1.2rem;" autocomplete="off">
                 <div class="mb-3">
                     <label for="askerName" class="form-label">Your Name (Optional)</label>
                     <input class="pro-input" placeholder="Enter your name" id="askerName" type="text" maxlength="25">
                 </div>
-                
+
                 <div class="mb-3">
                     <label for="question" class="form-label">Your Message</label>
                     <textarea class="pro-textarea" placeholder="Type your message here..." rows="4" required id="question"></textarea>
                 </div>
-                
+
                 <button type="submit" class="pro-btn" id="sendBtn" disabled>
                     <svg xmlns="http://www.w3.org/2000/svg" width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
                         <line x1="22" y1="2" x2="11" y2="13"></line>
@@ -316,7 +331,7 @@
                     </svg>
                     <span>Loading...</span>
                 </button>
-                
+
                 <div class="security-features">
                     <svg xmlns="http://www.w3.org/2000/svg" width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
                         <rect x="3" y="11" width="18" height="11" rx="2" ry="2"></rect>
@@ -325,58 +340,47 @@
                     <span>Encrypted • Anonymous • Secure</span>
                 </div>
             </form>
-            
-            <div id="sendMessageResult" class="px-4 pb-2"></div>
 
+            <div id="sendMessageResult" class="px-4 pb-2"></div>
             <div id="sendMessageLoading" class="hidden" style="text-align:center; padding: 1.2rem;">
                 <div class="spinner" style="margin: 0 auto 0.8rem;"></div>
                 <span style="color: var(--primary-blue); font-weight:500; font-size:0.9rem;">
                     Sending message...
                 </span>
             </div>
-            
+
             <div class="footer-note">
                 Asklyy &copy; 2025 | All rights reserved
             </div>
         </div>
     </div>
-
     <script>
         // --- API Configuration ---
         const API_BASE_URL = 'https://asklyy.vercel.app';
+        let LONGCAT_API_KEY = null;
+        let LONGCAT_API_URL = null;
+        let MODERATION_SYSTEM_PROMPT = null;
 
-        // Configuration variables
-        let LONGCAT_API_KEY = null; 
-        let LONGCAT_API_URL = null; 
-        let MODERATION_SYSTEM_PROMPT = null; 
+        // --- Helper Functions ---
+        function isMessageValid(message) {
+            const words = message.trim().split(/\s+/);
+            return words.length >= 3;
+        }
 
-        /**
-         * Fetches all necessary API configuration from apikey.json.
-         * @returns {Promise<boolean>} True if config loaded successfully, false otherwise.
-         */
         async function loadApiKey() {
             const btn = document.getElementById('sendBtn');
             btn.querySelector('span').textContent = 'Initializing...';
             try {
-                const response = await fetch('../apikey.json'); 
-                
-                if (!response.ok) {
-                    throw new Error(`Failed to load configuration. Status: ${response.status}`);
-                }
-                
+                const response = await fetch('../apikey.json');
+                if (!response.ok) throw new Error(`Failed to load configuration. Status: ${response.status}`);
                 const config = await response.json();
-                
-                // Assign and check all required configuration fields
                 LONGCAT_API_KEY = config.LONGCAT_API_KEY;
                 LONGCAT_API_URL = config.LONGCAT_API_URL;
                 MODERATION_SYSTEM_PROMPT = config.MODERATION_SYSTEM_PROMPT;
-                
                 if (!LONGCAT_API_KEY || !LONGCAT_API_URL || !MODERATION_SYSTEM_PROMPT) {
-                     showAlert('error', 'Configuration Error: Missing API settings.');
-                     return false;
+                    showAlert('error', 'Configuration Error: Missing API settings.');
+                    return false;
                 }
-                
-                // Update button text to Ready
                 btn.querySelector('span').textContent = 'Send Message';
                 return true;
             } catch (error) {
@@ -387,36 +391,25 @@
             }
         }
 
-        /**
-         * Determines the link ID from the URL path or query parameters.
-         * @returns {string | null} The extracted link ID or null if not found.
-         */
         function getLinkId() {
             const pathParts = window.location.pathname.split('/');
             let id = pathParts.filter(Boolean).pop();
             const urlParams = new URLSearchParams(window.location.search);
-
             if (urlParams.has('id')) id = urlParams.get('id');
             if (id === 'send') id = null;
-
             return id;
         }
 
-        /** Controls the visibility of the loading indicator and disables the form. */
         function showLoading(show) {
             const form = document.getElementById('sendMessageForm');
             const loading = document.getElementById('sendMessageLoading');
             const btn = document.getElementById('sendBtn');
-
             loading.classList.toggle('hidden', !show);
-
             if (show) form.classList.add('blur-loading');
             else form.classList.remove('blur-loading');
-
             btn.disabled = show;
         }
 
-        /** Displays a stylized alert message. */
         function showAlert(type, message) {
             document.getElementById('sendMessageResult').innerHTML =
                 `<div class="pro-alert ${type}">
@@ -424,14 +417,8 @@
                 </div>`;
         }
 
-        /** * Calls the external LLM API to check content for inappropriate language. 
-         * @returns {string} "FLAGGED" or "CLEAN".
-         */
         async function moderateContent(text) {
-            if (!LONGCAT_API_KEY) {
-                return "FLAGGED"; 
-            }
-
+            if (!LONGCAT_API_KEY) return "FLAGGED";
             const payload = {
                 model: "LongCat-Flash-Chat",
                 messages: [
@@ -441,61 +428,46 @@
                 max_tokens: 10,
                 temperature: 0.0,
             };
-
             try {
                 const response = await fetch(LONGCAT_API_URL, {
                     method: 'POST',
-                    headers: { 
+                    headers: {
                         'Authorization': `Bearer ${LONGCAT_API_KEY}`,
                         'Content-Type': 'application/json'
                     },
                     body: JSON.stringify(payload)
                 });
-
-                if (!response.ok) {
-                    console.error('Moderation API call failed with status:', response.status);
-                    return "CLEAN"; 
-                }
-
+                if (!response.ok) return "CLEAN";
                 const data = await response.json();
-                const result = data.choices?.[0]?.message?.content?.trim().toUpperCase() || "CLEAN";
-                
-                return result;
-
+                return data.choices?.[0]?.message?.content?.trim().toUpperCase() || "CLEAN";
             } catch (error) {
                 console.error('Network error calling moderation API:', error);
                 return "CLEAN";
             }
         }
 
-        /** Core logic for sending the message via API */
         async function handleSendMessage(e) {
             e.preventDefault();
             const askerName = document.getElementById('askerName').value.trim();
             const question = document.getElementById('question').value.trim();
-
             if (!question) {
                 showAlert('warning', 'Please enter a message to send.');
                 return;
             }
-
+            if (!isMessageValid(question)) {
+                showAlert('warning', 'Please write a message with at least 3 words.');
+                return;
+            }
             showLoading(true);
-            document.getElementById('sendMessageResult').innerHTML = '';
-
             try {
-                // Content Moderation Check
                 const moderationResult = await moderateContent(question);
-                
                 if (moderationResult === 'FLAGGED') {
                     showAlert('warning', 'Please ensure your message is respectful and appropriate.');
                     return;
                 }
-
-                // Proceed with message sending if CLEAN
                 let response = null;
                 const maxRetries = 3;
                 let delay = 1000;
-
                 for (let i = 0; i < maxRetries; i++) {
                     try {
                         response = await fetch(API_BASE_URL + '/api/sendmessages', {
@@ -507,24 +479,14 @@
                                 text: question
                             })
                         });
-                        if (response.status !== 429) {
-                            break;
-                        }
+                        if (response.status !== 429) break;
                     } catch (err) {
                         console.error(`Attempt ${i + 1} failed:`, err);
                     }
-                    if (i < maxRetries - 1) {
-                        await new Promise(resolve => setTimeout(resolve, delay));
-                        delay *= 2;
-                    }
+                    if (i < maxRetries - 1) await new Promise(resolve => setTimeout(resolve, delay));
                 }
-
-                if (!response) {
-                     throw new Error('All connection attempts failed.');
-                }
-
+                if (!response) throw new Error('All connection attempts failed.');
                 const data = await response.json();
-
                 if (response.ok && data.success) {
                     document.getElementById('sendMessageForm').reset();
                     showAlert('success', 'Message sent successfully!');
@@ -543,7 +505,6 @@
 
         // --- Initialization ---
         const linkId = getLinkId();
-
         window.onload = async () => {
             if (!linkId) {
                 document.body.innerHTML = `
@@ -558,11 +519,8 @@
                     </div>`;
                 return;
             }
-
-            // Load API key before doing anything else
             const keyLoaded = await loadApiKey();
             const btn = document.getElementById('sendBtn');
-            
             if (keyLoaded) {
                 btn.disabled = false;
                 document.getElementById('sendMessageForm').addEventListener('submit', handleSendMessage);
