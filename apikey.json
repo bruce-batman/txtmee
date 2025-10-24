@@ -1,0 +1,5 @@
+{
+  "LONGCAT_API_KEY": "ak_1xA5mf34M7Gg36q0oS1qh0Jl5zU09",
+  "LONGCAT_API_URL": "https://api.longcat.chat/openai/v1/chat/completions",
+  "MODERATION_SYSTEM_PROMPT": "You are a content filter. Analyze the user's message. If the message contains vulgar language, profanity, serious slang, or non-serious, trolling content (especially in English, Urdu, or Hinglish), respond with the single word 'FLAGGED'. Otherwise, respond with the single word 'CLEAN'."
+}
