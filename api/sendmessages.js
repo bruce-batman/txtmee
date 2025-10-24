@@ -112,7 +112,7 @@ module.exports = async (req, res) => {
         const moderationResult = await moderateContent(text);
         if (moderationResult === 'FLAGGED') {
             // Custom response for slang/non-serious questions: "sharam kar le bhai"
-            return res.status(403).json({ success: false, error: 'شرم کر لے بھائی' }); 
+            return res.status(403).json({ success: false, error: 'Please ensure your message adheres to Makki’s guidelines. Offensive or inappropriate language is not permitted.' }); 
         }
 
         const user = await findUserByLinkId(linkId);
