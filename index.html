@@ -1,482 +1,464 @@
-<!DOCTYPE html>
+<!doctype html>
 <html lang="en">
 <head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Asklyy | Send Anonymous Messages</title>
-    <!-- Import Inter font -->
-    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&display=swap" rel="stylesheet">
-    <script src="https://cdn.tailwindcss.com"></script>
-    <style>
-        /* --- Professional Color Palette --- */
-        :root {
-            --primary-blue: #3b82f6;
-            --primary-indigo: #6366f1;
-            --dark-bg: #0f172a;
-            --card-bg: #1e293b;
-            --text-main: #f1f5f9;
-            --text-subtle: #94a3b8;
-            --accent-glow: rgba(59, 130, 246, 0.4);
-            --success: #10b981;
-            --warning: #f59e0b;
-            --error: #ef4444;
-        }
-        /* --- Base & Scroll Optimization --- */
-        html, body {
-            height: 100%;
-            background-color: var(--dark-bg);
-            min-height: 100vh;
-            font-family: 'Inter', sans-serif;
-            margin: 0;
-            padding: 0;
-            overflow-x: hidden;
-            color: var(--text-main);
-        }
-
-        /* Subtle gradient background */
-        body::before {
-            content: '';
-            position: fixed;
-            top: 0;
-            left: 0;
-            width: 100%;
-            height: 100%;
-            background: radial-gradient(circle at 20% 80%, rgba(59, 130, 246, 0.1) 0%, transparent 50%),
-                                radial-gradient(circle at 80% 20%, rgba(99, 102, 241, 0.1) 0%, transparent 50%),
-                                radial-gradient(circle at 40% 40%, rgba(30, 41, 59, 0.3) 0%, transparent 50%);
-            background-color: var(--dark-bg);
-            z-index: -1;
-        }
-        /* --- Professional Card Design --- */
-        .pro-card {
-            background: rgba(30, 41, 59, 0.8);
-            box-shadow: 0 10px 25px -5px rgba(0, 0, 0, 0.5),
-                                0 0 15px -3px rgba(59, 130, 246, 0.3);
-            border-radius: 12px;
-            border: 1px solid rgba(100, 116, 139, 0.2);
-            backdrop-filter: blur(10px);
-            animation: fadeIn 0.8s ease-out both;
-            max-width: 380px;
-            width: 90%;
-            margin: 2rem auto;
-            position: relative;
-            z-index: 10;
-            overflow: hidden;
-            transition: transform 0.3s ease, box-shadow 0.3s ease;
-        }
-
-        .pro-card:hover {
-            transform: translateY(-3px);
-            box-shadow: 0 12px 25px -5px rgba(0, 0, 0, 0.5),
-                                0 0 18px -3px rgba(59, 130, 246, 0.4);
-        }
-
-        .pro-card::before {
-            content: '';
-            position: absolute;
-            top: 0;
-            left: 0;
-            right: 0;
-            height: 1px;
-            background: linear-gradient(90deg, transparent, var(--primary-blue), transparent);
-        }
-
-        @keyframes fadeIn {
-            0% { opacity: 0; transform: translateY(20px); }
-            100% { opacity: 1; transform: translateY(0); }
-        }
-        /* --- Header Styling --- */
-        .pro-header {
-            background: rgba(30, 41, 59, 0.9);
-            border-bottom: 1px solid rgba(100, 116, 139, 0.2);
-            text-align: center;
-            padding: 1.2rem 1.2rem 0.8rem 1.2rem;
-            position: relative;
-        }
-
-        .pro-title {
-            font-weight: 700;
-            font-size: 1.5rem;
-            background: linear-gradient(90deg, var(--primary-blue), var(--primary-indigo));
-            -webkit-background-clip: text;
-            -webkit-text-fill-color: transparent;
-            letter-spacing: -0.025em;
-            margin-bottom: 0.2rem;
-        }
-
-        .pro-sub {
-            font-size: 0.8rem;
-            color: var(--text-subtle);
-            font-weight: 400;
-            margin-top: 0.2rem;
-        }
-
-        .logo-container {
-            display: flex;
-            align-items: center;
-            justify-content: center;
-            margin-bottom: 0.5rem;
-        }
-
-        .logo-icon {
-            width: 28px;
-            height: 28px;
-            margin-right: 6px;
-            filter: drop-shadow(0 0 6px rgba(59, 130, 246, 0.5));
-        }
-        /* --- Form Elements --- */
-        .form-label {
-            color: var(--text-main);
-            font-weight: 500;
-            margin-bottom: 0.4rem;
-            font-size: 0.85rem;
-            display: block;
-        }
-
-        .pro-input, .pro-textarea {
-            background: rgba(15, 23, 42, 0.7);
-            border: 1px solid rgba(100, 116, 139, 0.3);
-            border-radius: 8px;
-            color: var(--text-main);
-            padding: 0.6rem 0.8rem;
-            margin-bottom: 0.8rem;
-            font-size: 0.9rem;
-            transition: all 0.2s ease;
-            outline: none;
-            width: 100%;
-            resize: none;
-        }
-
-        .pro-textarea {
-            height: 100px;
-            max-height: 120px;
-        }
-
-        .pro-input:focus, .pro-textarea:focus {
-            border-color: var(--primary-blue);
-            box-shadow: 0 0 0 3px var(--accent-glow);
-        }
-
-        .pro-input::placeholder, .pro-textarea::placeholder {
-            color: #64748b;
-            opacity: 1;
-        }
-        /* --- Button Styling --- */
-        .pro-btn {
-            background: linear-gradient(135deg, var(--primary-blue), var(--primary-indigo));
-            color: white;
-            font-weight: 600;
-            border: none;
-            padding: 0.75rem 1.2rem;
-            border-radius: 8px;
-            width: 100%;
-            font-size: 0.95rem;
-            cursor: pointer;
-            box-shadow: 0 4px 6px -1px rgba(0, 0, 0, 0.3);
-            transition: all 0.2s ease;
-            display: flex;
-            align-items: center;
-            justify-content: center;
-            gap: 0.5rem;
-            position: relative;
-            overflow: hidden;
-        }
-
-        .pro-btn::before {
-            content: '';
-            position: absolute;
-            top: 0;
-            left: -100%;
-            width: 100%;
-            height: 100%;
-            background: linear-gradient(90deg, transparent, rgba(255, 255, 255, 0.2), transparent);
-            transition: left 0.5s;
-        }
-
-        .pro-btn:hover:not(:disabled) {
-            transform: translateY(-2px);
-            box-shadow: 0 7px 14px -2px rgba(0, 0, 0, 0.4);
-        }
-
-        .pro-btn:hover:not(:disabled)::before {
-            left: 100%;
-        }
-
-        .pro-btn:disabled {
-            background: #475569;
-            cursor: not-allowed;
-            transform: none;
-            box-shadow: none;
-        }
-
-        .pro-btn:disabled::before {
-            display: none;
-        }
-        /* --- Loading and Alert Styles --- */
-        .spinner {
-            border: 3px solid rgba(59, 130, 246, 0.3);
-            border-top: 3px solid var(--primary-blue);
-            border-radius: 50%;
-            width: 22px;
-            height: 22px;
-            animation: spin 1s linear infinite;
-        }
-
-        @keyframes spin {
-            100% { transform: rotate(360deg); }
-        }
-
-        .pro-alert {
-            border-radius: 8px;
-            padding: 0.8rem;
-            margin: 0.8rem 0;
-            font-weight: 500;
-            font-size: 0.85rem;
-            animation: fadeIn 0.5s;
-            text-align: center;
-            border-left: 4px solid;
-            transition: opacity 0.3s ease, transform 0.3s ease;
-        }
-
-        .pro-alert.success {
-            border-color: var(--success);
-            background: rgba(16, 185, 129, 0.1);
-            color: var(--success);
-        }
-
-        .pro-alert.error {
-            border-color: var(--error);
-            background: rgba(239, 68, 68, 0.1);
-            color: var(--error);
-        }
-
-        .pro-alert.warning {
-            border-color: var(--warning);
-            background: rgba(245, 158, 11, 0.1);
-            color: var(--warning);
-        }
-
-        .blur-loading {
-            filter: blur(2px) brightness(0.8);
-            pointer-events: none;
-            user-select: none;
-        }
-
-        /* --- Security Features --- */
-        .security-features {
-            display: flex;
-            align-items: center;
-            justify-content: center;
-            gap: 0.6rem;
-            font-size: 0.75rem;
-            color: var(--text-subtle);
-            margin-top: 0.8rem;
-            padding: 0.6rem;
-            background: rgba(15, 23, 42, 0.5);
-            border-radius: 8px;
-        }
-
-        .footer-note {
-            text-align: center;
-            font-size: 0.7rem;
-            color: var(--text-subtle);
-            margin-top: 1.2rem;
-            padding: 0.8rem;
-            border-top: 1px solid rgba(100, 116, 139, 0.2);
-        }
-
-        .hidden {
-            display: none;
-        }
-
-        /* --- Responsive Design --- */
-        @media (max-width: 640px) {
-            .pro-card {
-                width: 95%;
-                margin: 1rem auto;
-            }
-        }
-    </style>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width,initial-scale=1" />
+  <title>Asklyy — Send Anonymous Messages</title>
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;600;700&display=swap" rel="stylesheet">
+  <style>
+    :root{
+      --bg:#0f172a; --card:rgba(15,23,42,0.85); --muted:#94a3b8; --accent:#3b82f6; --glass:rgba(255,255,255,0.03);
+      color-scheme: dark;
+    }
+    *{box-sizing:border-box;font-family:Inter,system-ui,Segoe UI,Roboto,"Helvetica Neue",Arial;}
+    body{margin:0;background:linear-gradient(180deg,#071027 0%,var(--bg) 100%);min-height:100vh;color:#e6eef8;display:flex;align-items:center;justify-content:center;padding:32px;}
+    .container{width:100%;max-width:920px;}
+    .card{background:var(--card);padding:20px;border-radius:12px;box-shadow:0 10px 30px rgba(2,6,23,0.6);border:1px solid rgba(255,255,255,0.03);}
+    header{display:flex;gap:12px;align-items:center;margin-bottom:16px}
+    .logo{width:46px;height:46px;border-radius:10px;background:linear-gradient(90deg,#6366f1,#3b82f6);display:inline-flex;align-items:center;justify-content:center;font-weight:700;color:white}
+    h1{margin:0;font-size:18px}
+    p.lead{margin:4px 0 0;color:var(--muted);font-size:13px}
+    .row{display:flex;gap:12px;align-items:center}
+    .col{display:flex;flex-direction:column;gap:8px}
+    input[type="text"],input[type="password"],textarea{
+      background:var(--glass);border:1px solid rgba(255,255,255,0.03);padding:10px;border-radius:8px;color:inherit;font-size:14px;width:100%;
+    }
+    button{background:var(--accent);border:none;color:white;padding:10px 12px;border-radius:8px;cursor:pointer;font-weight:600}
+    button.ghost{background:transparent;border:1px solid rgba(255,255,255,0.06)}
+    .muted{color:var(--muted);font-size:13px}
+    .small{font-size:12px;color:var(--muted)}
+    .actions{display:flex;gap:8px;align-items:center}
+    .link-card{background:linear-gradient(180deg, rgba(59,130,246,0.12), rgba(99,102,241,0.06));padding:10px;border-radius:8px;color:#dbeafe;display:flex;justify-content:space-between;align-items:center}
+    .messages{margin-top:12px;max-height:360px;overflow:auto;padding-right:6px}
+    .message{background:rgba(255,255,255,0.02);padding:10px;border-radius:8px;margin-bottom:8px}
+    .message .meta{font-size:12px;color:var(--muted);margin-bottom:6px}
+    .controls{display:flex;gap:8px;align-items:center}
+    .center{display:flex;align-items:center;justify-content:center}
+    .notice{padding:8px;border-radius:8px;background:rgba(255,255,255,0.02);margin-top:8px;color:var(--muted);font-size:13px}
+    @media (max-width:720px){body{padding:18px}.row{flex-direction:column;align-items:stretch}}
+  </style>
 </head>
 <body>
-    <div class="min-h-screen flex items-center justify-center py-6 px-4">
-        <div class="pro-card w-full">
-            <div class="pro-header">
-                <div class="logo-container">
-                    <svg class="logo-icon" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
-                        <path d="M21 15a2 2 0 0 1-2 2H7l-4 4V5a2 2 0 0 1 2-2h14a2 2 0 0 1 2 2z"></path>
-                        <line x1="9" y1="10" x2="15" y2="10"></line>
-                        <line x1="12" y1="7" x2="12" y2="13"></line>
-                    </svg>
-                    <span class="pro-title">Asklyy</span>
-                </div>
-                <div class="pro-sub">Send Anonymous Messages</div>
-            </div>
-
-            <form id="sendMessageForm" style="padding: 1.2rem;" autocomplete="off">
-                <div class="mb-3">
-                    <label for="askerName" class="form-label">Your Name (Optional)</label>
-                    <input class="pro-input" placeholder="Enter your name" id="askerName" type="text" maxlength="25">
-                </div>
-
-                <div class="mb-3">
-                    <label for="question" class="form-label">Your Message</label>
-                    <textarea class="pro-textarea" placeholder="Type your message here..." rows="4" required id="question"></textarea>
-                </div>
-
-                <button type="submit" class="pro-btn" id="sendBtn">
-                    <svg xmlns="http://www.w3.org/2000/svg" width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
-                        <line x1="22" y1="2" x2="11" y2="13"></line>
-                        <polygon points="22 2 15 22 11 13 2 9 22 2"></polygon>
-                    </svg>
-                    <span>Send Message</span>
-                </button>
-
-                <div class="security-features">
-                    <svg xmlns="http://www.w3.org/2000/svg" width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
-                        <rect x="3" y="11" width="18" height="11" rx="2" ry="2"></rect>
-                        <path d="M7 11V7a5 5 0 0 1 10 0v4"></path>
-                    </svg>
-                    <span>Encrypted • Anonymous • Secure</span>
-                </div>
-            </form>
-
-            <div id="sendMessageResult" class="px-4 pb-2"></div>
-            <div id="sendMessageLoading" class="hidden" style="text-align:center; padding: 1.2rem;">
-                <div class="spinner" style="margin: 0 auto 0.8rem;"></div>
-                <span style="color: var(--primary-blue); font-weight:500; font-size:0.9rem;">
-                    Sending message...
-                </span>
-            </div>
-
-            <div class="footer-note">
-                Asklyy &copy; 2025 | All rights reserved
-            </div>
+  <div class="container">
+    <div class="card" id="app">
+      <header>
+        <div class="logo">A</div>
+        <div>
+          <h1>Asklyy</h1>
+          <p class="lead">Create a sharable link and receive anonymous messages</p>
         </div>
+      </header>
+
+      <!-- MAIN / DASHBOARD / SEND views will be injected here -->
+      <div id="view"></div>
     </div>
-    <script>
-        // --- API Configuration ---
-        const API_BASE_URL = 'https://asklyy.vercel.app';
+  </div>
 
-        // --- Helper Functions ---
-        function getLinkId() {
-            const pathParts = window.location.pathname.split('/');
-            let id = pathParts.filter(Boolean).pop();
-            const urlParams = new URLSearchParams(window.location.search);
-            if (urlParams.has('id')) id = urlParams.get('id');
-            if (id === 'send') id = null;
-            return id;
+  <script>
+    /**
+     * Frontend logic:
+     * - root "/" shows create-account / login (and short info)
+     * - dashboard shows link, messages (autorefresh every 1s), logout, delete account
+     * - /send/?id=LINKID shows public send form
+     *
+     * Requirements: backend endpoints:
+     *   POST /api/createlink    { username, password } => { success:true, linkId }
+     *   GET  /api/getmessages?linkId=...   (protected - pass Authorization: Basic)
+     *   POST /api/sendmessages   { linkId, name, text }  => accept anonymous submissions
+     *   POST /api/dltlink        { linkId } (protected)
+     *   POST /api/dltmessage     { linkId, messageId } (protected)
+     *
+     * The frontend stores username/password in sessionStorage while logged in (so refresh keeps session).
+     */
+
+    const API_PREFIX = '/api';
+    const view = document.getElementById('view');
+    const pollIntervalMs = 1000; // 1s
+    let messagesPollId = null;
+    let lastMessages = [];
+
+    // ---------- Helpers ----------
+    function show(html){ view.innerHTML = html; }
+    function qs(sel, root=document) { return root.querySelector(sel); }
+    function qsa(sel, root=document) { return Array.from(root.querySelectorAll(sel)); }
+
+    function basicAuthHeader() {
+      const u = sessionStorage.getItem('asklyy_username');
+      const p = sessionStorage.getItem('asklyy_password');
+      if (!u || !p) return null;
+      return 'Basic ' + btoa(u + ':' + p);
+    }
+
+    async function apiPost(path, body, auth=false) {
+      const headers = { 'Content-Type': 'application/json' };
+      if (auth) {
+        const h = basicAuthHeader();
+        if (!h) throw new Error('Not authenticated');
+        headers['Authorization'] = h;
+      }
+      const res = await fetch(API_PREFIX + path, { method: 'POST', headers, body: JSON.stringify(body) });
+      const j = await res.json().catch(()=>({success:false, error:'Invalid JSON response'}));
+      if (!res.ok) throw new Error(j && j.error ? j.error : 'API Error');
+      return j;
+    }
+
+    async function apiGet(path, auth=false) {
+      const headers = {};
+      if (auth) {
+        const h = basicAuthHeader();
+        if (!h) throw new Error('Not authenticated');
+        headers['Authorization'] = h;
+      }
+      const res = await fetch(API_PREFIX + path, { method:'GET', headers });
+      const j = await res.json().catch(()=>({success:false, error:'Invalid JSON response'}));
+      if (!res.ok) throw new Error(j && j.error ? j.error : 'API Error');
+      return j;
+    }
+
+    function navigateToRoot() {
+      history.replaceState({}, '', '/');
+      route();
+    }
+
+    function route() {
+      // If path starts with /send/ or query param id present -> show send page
+      const url = new URL(location.href);
+      const id = url.searchParams.get('id');
+      if (location.pathname.startsWith('/send') || id) {
+        const linkId = id || (location.pathname.split('/send/')[1] || '').replace('/', '');
+        renderSendPage(linkId);
+        return;
+      }
+
+      // else main/dashboard
+      const username = sessionStorage.getItem('asklyy_username');
+      const password = sessionStorage.getItem('asklyy_password');
+      if (username && password) {
+        renderDashboard();
+      } else {
+        renderMain();
+      }
+    }
+
+    // ---------- MAIN (create / login) ----------
+    function renderMain() {
+      stopPolling();
+      show(`
+        <div>
+          <h2 style="margin:0 0 10px">Welcome to Asklyy</h2>
+          <p class="muted">Create a short link to receive anonymous messages. Share that link (e.g. https://asklyy.vercel.app/send/?id=abc123) — people can send messages without logging in.</p>
+
+          <div style="display:flex;gap:12px;margin-top:16px;flex-wrap:wrap">
+            <div style="flex:1;min-width:240px">
+              <div style="font-weight:600;margin-bottom:8px">Create account & link</div>
+              <input id="new_username" placeholder="Choose a username (letters/numbers)" />
+              <input id="new_password" placeholder="Choose a password" type="password" style="margin-top:8px" />
+              <div style="margin-top:8px" class="actions">
+                <button id="createBtn">Create & Generate Link</button>
+                <button id="demoBtn" class="ghost">Demo (quick)</button>
+              </div>
+              <div id="createMsg" class="small muted"></div>
+            </div>
+
+            <div style="flex:1;min-width:240px">
+              <div style="font-weight:600;margin-bottom:8px">Already have an account? Log in</div>
+              <input id="login_username" placeholder="Username" />
+              <input id="login_password" type="password" placeholder="Password" style="margin-top:8px" />
+              <div style="margin-top:8px" class="actions">
+                <button id="loginBtn">Log in</button>
+              </div>
+              <div id="loginMsg" class="small muted"></div>
+            </div>
+          </div>
+
+          <div class="notice">
+            <strong>Shareable send URL format:</strong> <span id="exampleUrl" class="small"></span>
+          </div>
+        </div>
+      `);
+
+      const createBtn = qs('#createBtn');
+      const loginBtn = qs('#loginBtn');
+      const demoBtn = qs('#demoBtn');
+      const ex = qs('#exampleUrl');
+      ex.textContent = `${location.origin}/send/?id/your-link-id  (example)`;
+
+      createBtn.onclick = async () => {
+        const u = qs('#new_username').value.trim();
+        const p = qs('#new_password').value;
+        const msg = qs('#createMsg');
+        msg.textContent = '';
+        if (!u || !p) { msg.textContent = 'username & password required'; return; }
+        try {
+          createBtn.disabled = true;
+          createBtn.textContent = 'Creating...';
+          const res = await apiPost('/createlink', { username: u, password: p }, false);
+          if (res && res.linkId) {
+            sessionStorage.setItem('asklyy_username', u);
+            sessionStorage.setItem('asklyy_password', p);
+            // store linkId too
+            sessionStorage.setItem('asklyy_linkId', res.linkId);
+            navigateToRoot(); // will go to dashboard
+            return;
+          }
+          msg.textContent = 'Unexpected response from server';
+        } catch (err) {
+          msg.textContent = 'Error: ' + (err.message || err);
+        } finally {
+          createBtn.disabled = false;
+          createBtn.textContent = 'Create & Generate Link';
         }
+      };
 
-        function showLoading(show) {
-            const form = document.getElementById('sendMessageForm');
-            const loading = document.getElementById('sendMessageLoading');
-            const btn = document.getElementById('sendBtn');
-            loading.classList.toggle('hidden', !show);
-            if (show) form.classList.add('blur-loading');
-            else form.classList.remove('blur-loading');
-            btn.disabled = show;
+      demoBtn.onclick = async () => {
+        // demo quick flow: create a random username and password
+        const demoU = 'demo' + Math.random().toString(36).slice(2,8);
+        const demoP = Math.random().toString(36).slice(2,10);
+        qs('#new_username').value = demoU;
+        qs('#new_password').value = demoP;
+        createBtn.click();
+      };
+
+      loginBtn.onclick = async () => {
+        const u = qs('#login_username').value.trim();
+        const p = qs('#login_password').value;
+        const msg = qs('#loginMsg');
+        msg.textContent = '';
+        if (!u || !p) { msg.textContent = 'username & password required'; return; }
+        try {
+          // We will verify log in by attempting to GET messages for that user's linkId (the backend needs to accept auth)
+          // First, try to find user's link by calling getmessages with no link -> backend may require linkId,
+          // so we rely on server-side to accept basic auth and return a user object via a special method.
+          // Simpler: store login credentials and request /api/getmessages?linkId= (server will check auth)
+          sessionStorage.setItem('asklyy_username', u);
+          sessionStorage.setItem('asklyy_password', p);
+          // Attempt to fetch linkId from /api/getmessages?linkId=NONE to cause auth-check; if it fails,
+          // we will fallback by asking user to re-enter credentials later.
+          try {
+            // Optional: server could expose an endpoint to return current user's linkId. If not present,
+            // the create/login flow will still work because the server returns linkId on create.
+            // We skip extra verification here and just go to dashboard — dashboard will show error if auth fails.
+            navigateToRoot();
+          } catch (err) {
+            msg.textContent = 'Login failed: ' + (err.message || err);
+            sessionStorage.removeItem('asklyy_username');
+            sessionStorage.removeItem('asklyy_password');
+          }
+        } catch (err) {
+          msg.textContent = 'Login error: ' + (err.message || err);
         }
+      };
+    }
 
-        function showAlert(type, message) {
-            // Check for the specific Urdu warning message returned by the server
-            const alertType = (message === 'شرم کر لے بھائی' || message.includes('at least 3 words')) ? 'warning' : type;
+    // ---------- DASHBOARD ----------
+    async function renderDashboard() {
+      const uname = sessionStorage.getItem('asklyy_username');
+      let linkId = sessionStorage.getItem('asklyy_linkId') || '';
+      // If we don't yet know linkId, try to get it by calling /api/getmessages?linkId=...(no). Many servers provide an endpoint to return user; if your server doesn't you'll rely on create step to set linkId in sessionStorage.
+      show(`<div>
+        <div style="display:flex;justify-content:space-between;align-items:center">
+          <div>
+            <div style="font-weight:700">${uname || 'User'}</div>
+            <div class="small muted">Manage your shareable link & messages</div>
+          </div>
+          <div class="controls">
+            <button id="logoutBtn" class="ghost">Logout</button>
+            <button id="deleteBtn" class="ghost">Delete Account</button>
+            <button id="refreshBtn">Refresh</button>
+          </div>
+        </div>
 
-            document.getElementById('sendMessageResult').innerHTML =
-                `<div class="pro-alert ${alertType}">
-                    <span>${message}</span>
-                </div>`;
+        <div style="margin-top:12px" class="link-card">
+          <div>
+            <div class="small muted">Share this URL to receive anonymous messages</div>
+            <div id="shareUrl" style="font-weight:600;margin-top:6px"></div>
+          </div>
+          <div style="display:flex;flex-direction:column;gap:6px;align-items:flex-end">
+            <div class="small muted">Link ID</div>
+            <div id="linkIdText" style="font-weight:700"></div>
+          </div>
+        </div>
+
+        <div class="messages" id="messagesBox">
+          <div class="muted small center">Loading messages...</div>
+        </div>
+      </div>`);
+
+      const logoutBtn = qs('#logoutBtn');
+      const deleteBtn = qs('#deleteBtn');
+      const refreshBtn = qs('#refreshBtn');
+      const linkIdText = qs('#linkIdText');
+      const shareUrlEl = qs('#shareUrl');
+
+      // If we don't have linkId in sessionStorage, try to obtain it: some backends will include it on login; if not, you must create it first.
+      if (!linkId) {
+        // attempt to call a small endpoint to discover linkId (not present in code by default) — fallback: ask user to re-create
+        linkIdText.textContent = '(unknown) — create an account first';
+        shareUrlEl.textContent = '—';
+      } else {
+        linkIdText.textContent = linkId;
+        shareUrlEl.innerHTML = `<a href="${location.origin}/send/?id=${encodeURIComponent(linkId)}" target="_blank" style="color:inherit; text-decoration:underline">${location.origin}/send/?id=${encodeURIComponent(linkId)}</a>`;
+      }
+
+      logoutBtn.onclick = () => {
+        stopPolling();
+        sessionStorage.removeItem('asklyy_username');
+        sessionStorage.removeItem('asklyy_password');
+        // keep linkId stored? we remove it so login flow is clean
+        sessionStorage.removeItem('asklyy_linkId');
+        navigateToRoot();
+      };
+
+      deleteBtn.onclick = async () => {
+        const ok = confirm('Delete your account and ALL messages for this link? This cannot be undone.');
+        if (!ok) return;
+        try {
+          deleteBtn.disabled = true;
+          const header = basicAuthHeader();
+          if (!header) throw new Error('Not authenticated');
+          // call delete link API
+          const res = await apiPost('/dltlink', { linkId }, true);
+          alert('Account deleted. Redirecting to main page.');
+          logoutBtn.click();
+        } catch (err) {
+          alert('Delete failed: ' + (err.message || err));
+        } finally {
+          deleteBtn.disabled = false;
         }
+      };
 
-        async function handleSendMessage(e) {
-            e.preventDefault();
-            const askerName = document.getElementById('askerName').value.trim();
-            const question = document.getElementById('question').value.trim();
-            
-            // Client-side check for empty message only. All other validation is server-side.
-            if (!question) {
-                showAlert('warning', 'Please enter a message to send.');
-                return;
-            }
+      refreshBtn.onclick = async () => {
+        await fetchAndRenderMessages(linkId);
+      };
 
-            showLoading(true);
-            
-            try {
-                let response = null;
-                const maxRetries = 3;
-                let delay = 1000;
-                
-                // Exponential Backoff implementation
-                for (let i = 0; i < maxRetries; i++) {
-                    try {
-                        response = await fetch(API_BASE_URL + '/api/sendmessages', {
-                            method: 'POST',
-                            headers: { 'Content-Type': 'application/json' },
-                            body: JSON.stringify({
-                                linkId: linkId,
-                                name: askerName || 'Anonymous',
-                                text: question
-                            })
-                        });
-                        // Break on success or non-rate-limit error
-                        if (response.status !== 429) break;
-                    } catch (err) {
-                        console.error(`Attempt ${i + 1} failed (Network error during fetch):`, err);
-                    }
-                    if (i < maxRetries - 1) {
-                        await new Promise(resolve => setTimeout(resolve, delay));
-                        delay *= 2;
-                    }
-                }
-                
-                if (!response) throw new Error('All connection attempts failed.');
-                
-                const data = await response.json();
-                
-                if (response.ok && data.success) {
-                    document.getElementById('sendMessageForm').reset();
-                    showAlert('success', 'Message sent successfully!');
-                } else {
-                    // Handle server-side errors (400, 403, 404, 500)
-                    const errorMsg = response.status === 404
-                        ? 'Invalid destination link. Please check the URL.'
-                        // The server sends the specific error message (e.g., Urdu or word count error) in data.error
-                        : (data.error || 'A server error occurred.'); 
-                    
-                    // The showAlert function will determine 'warning' vs 'error' based on the message content.
-                    showAlert('error', errorMsg);
-                }
-            } catch (err) {
-                showAlert('error', 'Network error. Please check your connection and try again.');
-            } finally {
-                showLoading(false);
-            }
-        }
+      // Start polling messages every 1s when on this dashboard
+      startPolling(() => fetchAndRenderMessages(linkId));
+      // initial fetch
+      fetchAndRenderMessages(linkId);
+    }
 
-        // --- Initialization ---
-        const linkId = getLinkId();
-        
-        window.onload = () => {
-            if (!linkId) {
-                // If link ID is missing, display the error page.
-                document.body.innerHTML = `
-                    <div class="min-h-screen flex items-center justify-center px-4">
-                        <div class="pro-card" style="padding: 1.5rem; text-align: center; border-color: var(--error);">
-                            <div class="pro-title" style="color: var(--error); margin-bottom: 0.8rem;">Invalid Link</div>
-                            <div class="pro-sub" style="color: var(--error); margin-bottom: 1rem;">The provided link is missing or invalid.</div>
-                            <p style="color: var(--text-subtle); font-size: 0.85rem;">
-                                Please use the complete link provided by the recipient.
-                            </p>
-                        </div>
+    async function fetchAndRenderMessages(linkId) {
+      const box = qs('#messagesBox');
+      if (!linkId) {
+        box.innerHTML = '<div class="muted small">No link id known. Create account first.</div>';
+        return;
+      }
+      try {
+        box.innerHTML = '<div class="muted small center">Refreshing...</div>';
+        // GET /api/getmessages?linkId=...   (requires auth)
+        const res = await apiGet('/getmessages?linkId=' + encodeURIComponent(linkId), true);
+        if (res && res.messages) {
+          lastMessages = res.messages;
+          if (res.messages.length === 0) {
+            box.innerHTML = '<div class="muted small center">No messages yet — share your link.</div>';
+            return;
+          }
+          // render messages
+          box.innerHTML = res.messages.map(m => {
+            // message object: { messageId, name, text, createdAt }
+            const name = m.name ? escapeHtml(m.name) : 'Anonymous';
+            const text = escapeHtml(m.text || '');
+            const date = m.createdAt ? new Date(m.createdAt).toLocaleString() : '';
+            const deleteBtn = `<button data-id="${m.messageId}" class="ghost small-btn" style="padding:6px;border-radius:6px">Delete</button>`;
+            return `<div class="message">
+                      <div class="meta">${name} • <span class="small muted">${date}</span></div>
+                      <div>${text}</div>
                     </div>`;
-                return;
-            }
-            
-            // Enable button and set up event listener immediately
-            document.getElementById('sendBtn').disabled = false;
-            document.getElementById('sendBtn').querySelector('span').textContent = 'Send Message';
-            document.getElementById('sendMessageForm').addEventListener('submit', handleSendMessage);
-        };
-    </script>
+          }).join('');
+        } else {
+          box.innerHTML = '<div class="muted small center">No items</div>';
+        }
+      } catch (err) {
+        box.innerHTML = `<div class="muted small center">Error loading messages: ${escapeHtml((err && err.message) || String(err))}</div>`;
+      }
+    }
+
+    // ---------- SEND PAGE ----------
+    function renderSendPage(linkIdFromUrl) {
+      stopPolling();
+      const linkId = linkIdFromUrl || '';
+      show(`
+        <div>
+          <div style="display:flex;justify-content:space-between;align-items:center">
+            <div>
+              <div style="font-weight:700">Send anonymous message</div>
+              <div class="small muted">To link: <strong id="sendLinkId">${escapeHtml(linkId)}</strong></div>
+            </div>
+            <div class="actions">
+              <button id="homeBtn" class="ghost">Home</button>
+            </div>
+          </div>
+
+          <form id="sendForm" style="margin-top:12px">
+            <div class="col">
+              <label class="small muted">Your name (optional)</label>
+              <input id="senderName" placeholder="Name (optional)" />
+              <label class="small muted">Message</label>
+              <textarea id="senderText" rows="5" placeholder="Write your anonymous message..." required></textarea>
+              <div style="display:flex;gap:8px;margin-top:8px">
+                <button id="sendNow" type="submit">Send Message</button>
+                <button id="clearBtn" type="button" class="ghost">Clear</button>
+              </div>
+              <div id="sendResult" class="small muted" style="margin-top:8px"></div>
+            </div>
+          </form>
+        </div>
+      `);
+
+      qs('#homeBtn').onclick = () => {
+        history.pushState({}, '', '/');
+        route();
+      };
+
+      const form = qs('#sendForm');
+      form.addEventListener('submit', async (ev) => {
+        ev.preventDefault();
+        const name = qs('#senderName').value.trim();
+        const text = qs('#senderText').value.trim();
+        const out = qs('#sendResult');
+        out.textContent = '';
+        if (!text) { out.textContent = 'Message cannot be empty.'; return; }
+        if (!linkId) { out.textContent = 'Invalid link id in URL.'; return; }
+        try {
+          qs('#sendNow').disabled = true;
+          const res = await apiPost('/sendmessages', { linkId, name, text }, false);
+          out.textContent = 'Message sent — thank you!';
+          qs('#senderText').value = '';
+          qs('#senderName').value = '';
+        } catch (err) {
+          out.textContent = 'Send failed: ' + (err.message || err);
+        } finally {
+          qs('#sendNow').disabled = false;
+        }
+      });
+
+      qs('#clearBtn').onclick = () => {
+        qs('#senderText').value = '';
+        qs('#senderName').value = '';
+      };
+    }
+
+    // ---------- Polling helpers ----------
+    function startPolling(fn) {
+      stopPolling();
+      messagesPollId = setInterval(() => {
+        // only call when user is visible on page
+        if (document.visibilityState === 'visible') fn();
+      }, pollIntervalMs);
+    }
+    function stopPolling() {
+      if (messagesPollId) { clearInterval(messagesPollId); messagesPollId = null; }
+    }
+
+    // ---------- Utilities ----------
+    function escapeHtml(s){
+      if (!s) return '';
+      return String(s).replace(/[&<>"']/g, c => ({'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;',"'":'&#39;'}[c]));
+    }
+
+    // ---------- Start ----------
+    window.addEventListener('popstate', route);
+    route();
+  </script>
 </body>
 </html>
