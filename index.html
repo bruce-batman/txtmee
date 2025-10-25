@@ -300,7 +300,8 @@
     
     <div class="modal-overlay" id="messageModalOverlay">
         <div class="modal-content" id="messageModalContent">
-            </div>
+            <!-- Modal content rendered by JS -->
+        </div>
     </div>
 
     <script>
@@ -493,11 +494,13 @@
                     loginBtn.disabled = true;
                     loginBtn.innerHTML = '<i class="fas fa-spinner fa-pulse"></i> Verifying...';
                     
-                    const tempLinkId = sessionStorage.getItem('asklyy_linkId') || 'temp';
+                    // Sending a temporary/stale linkId, but expecting the API to return the *correct* linkId on success
+                    const tempLinkId = sessionStorage.getItem('asklyy_linkId') || 'temp'; 
                     const res = await apiGet('/getmessages?linkId=' + encodeURIComponent(tempLinkId), true);
                     
                     if (res && res.linkId) {
-                        sessionStorage.setItem('asklyy_linkId', res.linkId);
+                        // This updates the linkId with the one validated by the API
+                        sessionStorage.setItem('asklyy_linkId', res.linkId); 
                     }
                     
                     navigateToRoot();
@@ -515,7 +518,7 @@
         // ---------- DASHBOARD ----------
         async function renderDashboard() {
             const uname = sessionStorage.getItem('asklyy_username');
-            const pass = sessionStorage.getItem('asklyy_password'); // Added to display password
+            const pass = sessionStorage.getItem('asklyy_password'); 
             let linkId = sessionStorage.getItem('asklyy_linkId') || '';
             
             show(`<div>
@@ -623,6 +626,8 @@
             
             try {
                 const res = await apiGet('/getmessages?linkId=' + encodeURIComponent(linkId), true);
+                // NOTE: The API now returns the *correct* linkId on success, but we don't need to re-save it here
+                
                 if (res && res.messages) {
                     lastMessages = res.messages; // Store full messages
                     messageCount = res.messages.length;
@@ -756,6 +761,11 @@
                         <div class="col" style="gap:10px">
                             
                             <div>
+                                <label class="small muted" style="display:block; margin-bottom: 5px;">Your Name (Optional)</label>
+                                <input id="senderName" type="text" placeholder="e.g., A friend, Someone who cares, etc." />
+                            </div>
+
+                            <div>
                                 <label class="small muted" style="display:block; margin-bottom: 5px;">Your secret message</label>
                                 <textarea id="senderText" rows="4" placeholder="Write your anonymous message here..." required></textarea>
                             </div>
@@ -775,8 +785,8 @@
             const form = qs('#sendForm');
             form.addEventListener('submit', async (ev) => {
                 ev.preventDefault();
-                // 'name' is now always empty, enforcing full anonymity
-                const name = ''; 
+                // Get name (now optional) and text
+                const name = qs('#senderName').value.trim(); 
                 const text = qs('#senderText').value.trim();
                 const out = qs('#sendResult');
                 out.textContent = '';
@@ -791,6 +801,7 @@
                     out.innerHTML = '<span class="success-text"><i class="fas fa-check-circle"></i> Message sent successfully!</span>';
                     
                     qs('#senderText').value = '';
+                    qs('#senderName').value = ''; // Clear name too
                 } catch (err) {
                     out.innerHTML = `<span class="error-text"><i class="fas fa-times-circle"></i> Send failed: ${err.message || 'Server error.'}</span>`;
                 } finally {
