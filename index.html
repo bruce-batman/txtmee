@@ -18,9 +18,9 @@
             --bg-primary: #04091A; 
             --bg-secondary: #0F172A; 
             --bg-tertiary: #1D263B; 
-            --card-base: rgba(15, 23, 42, 0.9);
+            --card-base: rgba(15, 23, 42, 0.95); /* Slightly less blur base */
             --card-border: rgba(255, 255, 255, 0.08);
-            --card-shadow: 0 6px 15px rgba(0, 0, 0, 0.4);
+            --card-shadow: 0 8px 20px rgba(0, 0, 0, 0.6);
             --accent-primary: #4C72E0; 
             --accent-secondary: #7F58E8; 
             --accent-gradient: linear-gradient(135deg, var(--accent-secondary) 0%, var(--accent-primary) 100%);
@@ -71,8 +71,8 @@
 
         /* Inputs & Buttons */
         input[type="text"], input[type="password"], textarea, select { 
-            padding: 8px 10px;
-            font-size: 13px;
+            padding: 10px 12px;
+            font-size: 14px;
             background: var(--bg-secondary);
             border: 1px solid var(--card-border);
             border-radius: 6px;
@@ -80,27 +80,33 @@
             width: 100%;
         }
         button, .btn { 
-            padding: 7px 14px;
-            font-size: 13px;
+            padding: 9px 16px;
+            font-size: 14px;
             line-height: 1.4; 
             border-radius: 6px;
             font-weight: 600;
+            border: none;
             background: var(--accent-primary);
             color: var(--text-primary);
-            box-shadow: var(--shadow-subtle);
+            box-shadow: 0 4px 10px rgba(76, 114, 224, 0.4);
+            cursor: pointer;
+            transition: transform 0.1s;
         }
+        button:hover, .btn:hover { transform: translateY(-1px); }
+        .btn--full { width: 100%; }
+        .btn-icon i { margin-right: 8px; }
         
         /* Card/Wrapper Styles */
         .wrapper {
             background: var(--card-base);
-            padding: 20px;
-            border-radius: 10px;
+            padding: 30px;
+            border-radius: 12px;
             box-shadow: var(--card-shadow);
             border: 1px solid var(--card-border);
             backdrop-filter: blur(8px);
             margin-bottom: 20px;
         }
-        .create-account-container { max-width: 400px; margin-top: 50px; }
+        .create-account-container { max-width: 420px; margin-top: 50px; }
 
 
         /* --- 3. NAVBAR & FOOTER --- */
@@ -113,26 +119,22 @@
             border-bottom: 1px solid var(--card-border);
         }
         .nav .logo h3 { font-size: 20px; margin: 0; color: var(--text-primary); }
-        .navOpenBtn, .navCloseBtn { background: none; border: none; font-size: 20px; color: var(--text-primary); cursor: pointer; }
+        .navOpenBtn, .navCloseBtn { background: none; border: none; font-size: 24px; color: var(--text-primary); cursor: pointer; }
         .nav-links { display: flex; align-items: center; }
-        .nav-links ul { display: flex; list-style: none; margin: 0; padding: 0; gap: 20px; }
-        .nav-links li a { color: var(--text-primary); font-size: 14px; font-weight: 500; }
+        .nav-links ul { display: flex; list-style: none; margin: 0; padding: 0; gap: 25px; }
+        .nav-links li a { color: var(--text-primary); font-size: 15px; font-weight: 500; }
         .navCloseBtn { display: none; }
-        .navOpenBtn { display: block; }
         
         footer {
             background: var(--bg-secondary);
             color: var(--text-muted);
-            padding: 20px 0;
+            padding: 25px 0;
             text-align: center;
             border-top: 1px solid var(--card-border);
             margin-top: 30px;
         }
-        .social-link a { margin: 0 10px; font-size: 18px; color: var(--text-primary); }
-        .footer-menu ul { list-style: none; padding: 10px 0 15px; margin: 0; display: flex; flex-wrap: wrap; justify-content: center; gap: 8px 15px; }
-        .footer-menu a { color: var(--text-muted); font-size: 12px; }
-        footer p { font-size: 11px; margin: 10px 0 0; }
-        footer hr { border: none; border-top: 1px solid var(--card-border); max-width: 400px; margin: 10px auto; }
+        footer hr { border: none; border-top: 1px solid var(--card-border); max-width: 400px; margin: 15px auto; }
+        footer p { font-size: 12px; margin: 0; }
 
 
         /* --- 4. DASHBOARD & MESSAGE BOARD --- */
@@ -144,91 +146,97 @@
             padding: 15px;
             border-radius: 8px;
             margin-top: 20px;
-            border: 1px solid var(--card-border);
+            border: 1px solid var(--stat-border);
             width: 100%;
         }
-        .hellouser { font-size: 16px; font-weight: 600; margin: 0; color: var(--text-primary); }
-        .helloicon { display: flex; gap: 12px; }
+        .hellouser { font-size: 18px; font-weight: 700; margin: 0; color: var(--accent-primary); }
+        .helloicon { display: flex; gap: 15px; }
         .iconbg {
-            font-size: 20px;
+            font-size: 22px;
             color: var(--text-muted);
             cursor: pointer;
+            transition: color 0.2s;
         }
+        .iconbg:hover { color: var(--text-primary); }
+        
         .messagehead { 
             display: flex; 
             justify-content: space-between; 
             align-items: center; 
             margin-top: 20px;
             padding-bottom: 5px;
-            border-bottom: 1px solid var(--card-border);
         }
-        .reload-btn { background: none; border: none; color: var(--text-muted); font-size: 20px; padding: 5px; box-shadow: none; cursor: pointer;}
+        .messagehead h3 { margin: 0; font-size: 18px; color: var(--text-primary); }
+        .reload-btn { background: none; border: none; color: var(--text-muted); font-size: 22px; padding: 5px; cursor: pointer;}
         .reload-icon.spin { animation: spin 0.8s linear; }
         @keyframes spin { 100% { transform: rotate(360deg); } }
 
-        #messageBoard { margin-top: 15px; display: flex; flex-direction: column; gap: 12px; }
+        #messagesBox { margin-top: 15px; display: flex; flex-direction: column; gap: 10px; }
         .message {
             background: var(--bg-secondary);
-            padding: 12px;
+            padding: 15px;
             border-radius: 8px;
-            border-left: 3px solid var(--accent-primary);
+            border-left: 4px solid var(--accent-primary);
             box-shadow: var(--shadow-subtle);
-            cursor: pointer; /* Message is clickable */
+            cursor: pointer;
+            transition: background-color 0.1s;
         }
-        .message .mess { margin: 0; font-size: 14px; line-height: 1.4; max-height: 2.8em; overflow: hidden; text-overflow: ellipsis; }
-        .message .timestamp { font-size: 11px; color: var(--text-muted); margin-bottom: 5px; display: block; }
-        .message div { display: flex; justify-content: space-between; align-items: center; margin-top: 5px; }
-        .message div p { margin: 0; font-size: 11px; color: var(--text-muted); }
-        .icondele { color: var(--text-error); cursor: pointer; font-size: 14px; padding: 5px; }
+        .message:hover { background-color: var(--bg-tertiary); }
+        .message .mess { margin: 0; font-size: 15px; line-height: 1.4; max-height: 3em; overflow: hidden; text-overflow: ellipsis; }
+        .message .timestamp { font-size: 12px; color: var(--text-muted); margin: 5px 0; display: block; }
+        .message-footer { display: flex; justify-content: space-between; align-items: center; margin-top: 10px; font-size: 12px;}
+        .message-footer p { margin: 0; color: var(--text-muted); }
+        .icondele { color: var(--text-error); cursor: pointer; font-size: 16px; padding: 5px; }
         
         
         /* --- 5. MODALS & POPUPS --- */
         .overlay {
             position: fixed; top: 0; left: 0; width: 100%; height: 100%;
-            background: rgba(0, 0, 0, 0.8);
-            backdrop-filter: blur(5px);
+            background: rgba(0, 0, 0, 0.85);
+            backdrop-filter: blur(8px);
             z-index: 999;
             display: none;
+            transition: opacity 0.3s;
         }
         .popupcred, .popup-share {
             position: fixed;
             top: 50%; left: 50%;
             transform: translate(-50%, -50%);
-            padding: 20px;
-            border-radius: 10px;
+            padding: 25px;
+            border-radius: 12px;
             background: var(--bg-tertiary);
             box-shadow: var(--card-shadow);
             border: 1px solid var(--accent-secondary);
             z-index: 1000;
-            max-width: 90%; width: 350px;
+            max-width: 90%; width: 380px;
             display: none;
         }
 
-        /* Message Detail Modal (New positioning) */
+        /* Message Detail Modal (Slide-in from top) */
         #messageDetailModal {
             position: fixed;
             top: -100%; /* Start above screen */
             left: 50%;
             transform: translate(-50%, 0);
-            padding: 20px;
-            border-radius: 10px;
-            background: var(--bg-tertiary);
+            padding: 25px;
+            border-radius: 12px;
+            background: var(--card-base);
             box-shadow: var(--card-shadow);
             border: 1px solid var(--accent-primary);
             z-index: 1001;
             max-width: 90%;
-            width: 450px;
-            transition: top 0.4s ease-out; /* Smooth slide down */
+            width: 500px;
+            transition: top 0.4s cubic-bezier(0.175, 0.885, 0.32, 1.275);
             display: none;
         }
         #messageDetailModal.active {
-            top: 20px; /* Slide down to visible position */
+            top: 20px;
             display: block;
         }
         #messageDetailModal .full-message {
             white-space: pre-wrap;
             word-wrap: break-word;
-            font-size: 15px;
+            font-size: 16px;
             line-height: 1.6;
             background: var(--bg-secondary);
             padding: 15px;
@@ -236,7 +244,7 @@
             margin: 15px 0;
             border: 1px solid var(--card-border);
         }
-        .modal-header { display: flex; justify-content: space-between; align-items: center; }
+        .modal-header { display: flex; justify-content: space-between; align-items: center; margin-bottom: 10px; }
         .modal-header h4 { margin: 0; font-size: 18px; color: var(--accent-primary); }
         
         /* Toast Notifications */
@@ -245,12 +253,27 @@
             display: flex; flex-direction: column; gap: 10px;
         }
         .toast {
-            background-color: var(--text-success); color: var(--bg-primary); padding: 10px 15px;
-            border-radius: 5px; font-size: 14px; font-weight: 600; opacity: 0; visibility: hidden;
+            background-color: var(--text-success); color: var(--bg-primary); padding: 12px 18px;
+            border-radius: 6px; font-size: 15px; font-weight: 600; opacity: 0; visibility: hidden;
             transform: translateY(20px); transition: all 0.3s;
         }
         .toast.show { opacity: 1; visibility: visible; transform: translateY(0); }
+        .toast.error-toast { background-color: var(--text-error); }
 
+        /* Mobile specific adjustments */
+        @media (max-width: 768px) {
+            .nav-links {
+                position: fixed; top: 0; right: -100%; width: 70%; height: 100%;
+                background: var(--bg-secondary); transition: right 0.3s; flex-direction: column;
+                padding-top: 60px; z-index: 50; border-left: 1px solid var(--card-border);
+            }
+            .nav-links.active { right: 0; }
+            .nav-links ul { flex-direction: column; gap: 20px; width: 100%; padding: 0 20px; }
+            .navCloseBtn { position: absolute; top: 15px; right: 15px; }
+            .helloicon { gap: 10px; }
+            .iconbg { font-size: 20px; }
+            .wrapper { padding: 20px; }
+        }
     </style>
 </head>
 
@@ -296,11 +319,11 @@
                     <button onclick="copyLink()" style="flex-shrink: 0;"> Copy </button>
                 </div>
                 <ul class="icons" style="display: flex; justify-content: space-around; list-style: none; padding: 0; margin-top: 20px;">
-                    <a id="waShare"><i class="fab fa-whatsapp"></i> </a>
-                    <a id="fbShare"><i class="fab fa-facebook-f"></i> </a>
-                    <a id="twitterShare"><i class="fa-brands fa-x-twitter"></i></a>
-                    <a id="igShare"><i class="fab fa-instagram"></i></a>
-                    <a id="teleShare"><i class="fab fa-telegram-plane"></i></a>
+                    <a id="waShare" target="_blank"><i class="fab fa-whatsapp"></i> </a>
+                    <a id="fbShare" target="_blank"><i class="fab fa-facebook-f"></i> </a>
+                    <a id="twitterShare" target="_blank"><i class="fa-brands fa-x-twitter"></i></a>
+                    <a id="igShare" href="javascript:void(0)"><i class="fab fa-instagram"></i></a>
+                    <a id="teleShare" target="_blank"><i class="fab fa-telegram-plane"></i></a>
                 </ul>
             </div>
         </div>
@@ -356,7 +379,7 @@
         return String(s).replace(/[&<>"']/g, c => ({ '&': '&amp;', '<': '&lt;', '>': '&gt;', '"': '&quot;', "'": '&#039;' }[c]));
     }
     
-    // --- API Functions (MOCK IMPLEMENTATION) ---
+    // --- API Functions (MOCK IMPLEMENTATION - REPLACE WITH REAL BACKEND) ---
     async function apiPost(path, body, auth = false) {
         return new Promise((resolve, reject) => {
             setTimeout(() => {
@@ -380,9 +403,9 @@
         if (path.startsWith('/getmessages')) {
              if (!auth) throw new Error('Authentication Required');
              const mockMessages = [
-                { messageId: 1, text: "Your design looks awesome, keep up the great work! This is a longer message.", createdAt: new Date(Date.now() - 3600000).toISOString(), name: "A Fan" },
+                { messageId: 1, text: "Your design looks awesome, keep up the great work! This is a longer message that should demonstrate how text truncation works in the message list.", createdAt: new Date(Date.now() - 3600000).toISOString(), name: "A Fan" },
                 { messageId: 2, text: "Just wanted to say hi anonymously!", createdAt: new Date(Date.now() - 86400000).toISOString(), name: "" },
-                { messageId: 3, text: "This is a much longer message to test the word wrap and truncation functionality, ensuring that no matter how much text is submitted, it is displayed nicely in the dashboard list and fully in the modal popup.", createdAt: new Date(Date.now() - 7200000).toISOString(), name: "Test User" },
+                { messageId: 3, text: "This message is critical feedback about your recent project. It is honest, candid, and hopefully constructive. The system worked perfectly!", createdAt: new Date(Date.now() - 7200000).toISOString(), name: "The Critic" },
             ];
             return { success: true, linkId: sessionStorage.getItem('asklyy_linkId'), messages: mockMessages.reverse() };
         }
@@ -397,7 +420,6 @@
     }
 
     function route() {
-        // Close all popups on route change
         hideMessageDetailModal();
         closeCredentialPopup();
         closeSharePopup();
@@ -425,7 +447,6 @@
         const toast = document.createElement("div");
         toast.className = `toast show ${isError ? 'error-toast' : ''}`;
         toast.innerHTML = `<span>${message}</span>`;
-        if (isError) toast.style.backgroundColor = 'var(--text-error)'; else toast.style.backgroundColor = 'var(--text-success)';
         toastContainer.appendChild(toast);
 
         setTimeout(() => {
@@ -453,7 +474,6 @@
 
         qs('#shareLinkInput').value = shareUrl;
 
-        // Update social links
         const encodedUrl = encodeURIComponent(shareUrl);
         const encodedText = encodeURIComponent(baseText);
 
@@ -461,7 +481,6 @@
         qs('#fbShare').href = `https://www.facebook.com/sharer/sharer.php?u=${encodedUrl}&quote=${encodedText}`;
         qs('#twitterShare').href = `https://twitter.com/intent/tweet?url=${encodedUrl}&text=${encodedText}`;
         qs('#teleShare').href = `https://t.me/share/url?url=${encodedUrl}&text=${encodedText}`;
-        qs('#igShare').href = `javascript:copyLink();showToast('Link copied! Please paste it manually in your Story or Bio.');`;
         
         sharePopup.style.display = 'block';
         overlay.style.display = 'block';
@@ -477,10 +496,10 @@
     }
     
     function showMessageDetailModal(message) {
-        qs('#modalSenderName').innerHTML = `<i class="fas fa-user-secret" style="margin-right: 5px;"></i>${message.name || 'Anonymous'}`;
+        qs('#modalSenderName').innerHTML = `Full Message from <i class="fas fa-user-secret" style="margin-right: 5px;"></i>${message.name || 'Anonymous'}`;
         qs('#modalTimestamp').textContent = new Date(message.createdAt).toLocaleString();
         qs('#modalMessageContent').textContent = message.text;
-        messageDetailModal.dataset.fullText = message.text; // Store text for easy copy
+        messageDetailModal.dataset.fullText = message.text;
         
         messageDetailModal.classList.add('active');
         overlay.style.display = 'block';
@@ -488,7 +507,10 @@
 
     function hideMessageDetailModal() {
         messageDetailModal.classList.remove('active');
-        overlay.style.display = 'none';
+        // Only hide overlay if no other popups are active
+        if (credentialPopup.style.display !== 'block' && sharePopup.style.display !== 'block') {
+             overlay.style.display = 'none';
+        }
     }
 
     function copyMessageToClipboard() {
@@ -594,7 +616,6 @@
     }
 
     function attachAuthHandlers() {
-        // ... (CreateForm & LoginForm handlers - same as previous correct version)
         const createForm = qs('#createForm');
         if (createForm) {
             createForm.onsubmit = async (e) => {
@@ -606,9 +627,8 @@
                 
                 let finalU = u, finalP = p;
                 
-                if (!u) { msg.innerHTML = 'Username required.'; return; }
+                if (!u) { msg.innerHTML = '<span style="color:var(--text-error);">Username required.</span>'; return; }
                 if (!p) {
-                     // DEMO MODE if password is blank
                      finalP = Math.random().toString(36).slice(2,10);
                      msg.textContent = 'Creating demo credentials...';
                 }
@@ -679,7 +699,6 @@
 
 
     async function renderDashboard() {
-        // ... (Dashboard logic)
         stopPolling();
         const uname = sessionStorage.getItem('asklyy_username') || 'User';
         const linkId = sessionStorage.getItem('asklyy_linkId') || 'N/A';
@@ -711,7 +730,7 @@
                     <div class="messagehead" id="messageBoard">
                         <h3>Message Board</h3>
                         <div style="display: flex; gap: 10px;">
-                            <button class="ghost" id="deleteAccountBtn" style="color:var(--text-error); border-color:var(--text-error);"><i class="fas fa-trash-alt"></i> Delete</button>
+                            <button class="btn ghost" id="deleteAccountBtn" style="color:var(--text-error); border-color:var(--text-error); padding: 5px 10px;"><i class="fas fa-trash-alt"></i> Delete</button>
                             <button class="reload-btn" id="reloadButton">
                                 <i class="fa-regular fa-arrow-rotate-right reload-icon" id="reloadIcon"></i>
                             </button>
@@ -781,9 +800,9 @@
                     return `<div class="message" data-id="${m.messageId}">
                         <p class="mess">${escapeHtml(messageText)}</p>
                         <p class='timestamp' data-time='${m.createdAt}'>Loading...</p>
-                        <div>
+                        <div class="message-footer">
                         <p>💌 asklyy.com | From: ${m.name || 'Anonymous'}</p>
-                        <i class="fas fa-trash-alt icondele" onclick='deleteMessage(${m.messageId})' title="Delete Message"></i>
+                        <i class="fas fa-trash-alt icondele" onclick='deleteMessage(event, ${m.messageId})' title="Delete Message"></i>
                         </div>
                     </div>`;
                 }).join('');
@@ -810,10 +829,10 @@
     }
     
     // Placeholder function for client-side delete
-    window.deleteMessage = async (id) => {
+    window.deleteMessage = async (event, id) => {
+        event.stopPropagation(); // Prevent message detail modal from opening
         if (!confirm("Are you sure you want to delete this message?")) return;
         try {
-             // MOCK AJAX DELETE
              await new Promise(resolve => setTimeout(resolve, 300));
              lastMessages = lastMessages.filter(m => m.messageId !== id);
              showToast('🗑️ Message deleted.', true);
@@ -827,15 +846,13 @@
     function renderSendPage(linkIdFromUrl) {
         stopPolling();
         const linkId = linkIdFromUrl || '';
-        const username = sessionStorage.getItem('asklyy_username') || 'a user'; // Fallback
-
-        // A real app would make a server call here to get the recipient's username using linkId
-        // For this demo, we'll use a placeholder or session name if available.
+        // MOCK: Get recipient's username using a mock function (replace with real API call)
+        const recipientName = 'Recipient'; 
 
         show(`
             <div class="wrapper container create-account-container" style="max-width: 450px; margin-top: 50px;">
                 <div class="title" style="text-align: center;">
-                    <h1 class="sendtitle">Send a Secret <br> Mesage to ${escapeHtml(username)}</h1>
+                    <h1 class="sendtitle">Send a Secret <br> Message to ${escapeHtml(recipientName)}</h1>
                     <p class="sendpara lead muted">They will never know who messaged them 😉</p>
                 </div>
                 
@@ -845,7 +862,7 @@
                     <div style="display: flex; flex-direction: column; gap: 15px;">
                         
                         <div>
-                            <label class="small muted" style="display:block; margin-bottom: 5px;">Your identity (Optional - remains anonymous to recipient)</label>
+                            <label class="small muted" style="display:block; margin-bottom: 5px;">Your identity (Optional - remains anonymous)</label>
                             <input id="senderName" type="text" placeholder="e.g. Someone who cares" />
                         </div>
 
