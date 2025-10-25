@@ -7,7 +7,7 @@
     <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;600;700;800&display=swap" rel="stylesheet">
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
     <style>
-        /* --- 1. LUXURY COLOR PALETTE & VARIABLES (Finalized) --- */
+        /* --- 1. LUXURY COLOR PALETTE & VARIABLES --- */
         :root {
             --bg-primary: #04091A; 
             --bg-secondary: #0F172A; 
@@ -15,8 +15,8 @@
             --card-base: rgba(15, 23, 42, 0.75); 
             --card-border: rgba(255, 255, 255, 0.1);
             --card-shadow: 0 12px 30px rgba(0, 0, 0, 0.7);
-            --accent-primary: #4C72E0; /* Main Blue */
-            --accent-secondary: #7F58E8; /* Violet */
+            --accent-primary: #4C72E0; 
+            --accent-secondary: #7F58E8; 
             --accent-gradient: linear-gradient(135deg, var(--accent-secondary) 0%, var(--accent-primary) 100%);
             --accent-shadow: 0 4px 20px rgba(76, 114, 224, 0.4);
             --text-primary: #EBF4F7;
@@ -29,7 +29,7 @@
             color-scheme: dark;
         }
 
-        /* --- 2. BASE STYLES AND AESTHETICS (Tighter and Safer) --- */
+        /* --- 2. BASE STYLES AND AESTHETICS --- */
         *{ box-sizing: border-box; font-family: 'Inter', system-ui, sans-serif; }
         body{
             margin: 0;
@@ -44,8 +44,8 @@
                               radial-gradient(circle at 90% 90%, rgba(127, 88, 232, 0.1) 1%, transparent 35%);
         }
         .container{ width: 100%; max-width: 850px; }
-
-        /* --- 3. CORE COMPONENTS (Ensuring Gaps and Flow) --- */
+        
+        /* --- 3. CORE COMPONENTS --- */
         .card {
             background: var(--card-base);
             padding: 24px; 
@@ -55,163 +55,132 @@
             backdrop-filter: blur(8px); 
         }
         
-        /* Header and Logo */
-        header { display: flex; gap: 14px; align-items: center; margin-bottom: 20px; }
-        .logo {
-            width: 44px; height: 44px; 
-            border-radius: 10px;
-            background: var(--accent-gradient);
-            font-weight: 800; font-size: 20px; 
-            box-shadow: 0 0 10px rgba(76, 114, 224, 0.3);
-            display: inline-flex; align-items: center; justify-content: center;
-            color: white;
-            flex-shrink: 0; /* Prevents shrinking on mobile */
-        }
-        h1 { margin: 0; font-size: 24px; font-weight: 800; color: var(--text-primary); }
-        p.lead { margin: 2px 0 0; color: var(--text-muted); font-size: 13px; }
-
-        /* Inputs/Textareas */
-        input[type="text"], input[type="password"], textarea {
-            background: var(--bg-tertiary);
-            border: 1px solid rgba(255, 255, 255, 0.1);
-            padding: 10px 12px; 
-            border-radius: 6px; 
-            font-size: 14px; 
-            width: 100%;
-        }
-        
-        /* Buttons */
-        button {
-            background: var(--accent-gradient);
-            border: none;
-            color: white;
-            padding: 9px 16px; 
-            border-radius: 5px;
-            cursor: pointer;
-            font-weight: 600; 
-            font-size: 14px; 
-            transition: all 0.2s ease;
-            box-shadow: var(--accent-shadow);
-            line-height: 1.3; /* Fixes potential vertical alignment issues */
-        }
-        button.ghost {
-            padding: 8px 15px; 
-        }
-        
-        /* Layout & Typography Helpers */
+        /* Typography, Inputs, Buttons (Scaled) */
+        h1 { font-size: 24px; }
+        p.lead { font-size: 13px; }
+        input[type="text"], input[type="password"], textarea { padding: 10px 12px; font-size: 14px; }
+        button { padding: 9px 16px; font-size: 14px; line-height: 1.3; }
         .row { display: flex; gap: 20px; align-items: flex-start; }
         .col { display: flex; flex-direction: column; gap: 10px; flex: 1; }
         .muted{ color: var(--text-muted); font-size: 13px; }
         .small{ font-size: 11px; color: var(--text-muted); }
         .actions { display: flex; gap: 8px; align-items: center; }
 
-        /* --- 4. DASHBOARD AWESOMENESS (Stability and Scaling Fixes) --- */
-        .header-controls { 
-            display: flex;
-            justify-content: space-between;
-            align-items: center;
-            margin-bottom: 10px;
-            flex-wrap: wrap; /* Allows wrapping on smaller screens */
-            gap: 15px;
-        }
-        .user-info { flex-shrink: 0; }
-        .controls { 
-            display: flex; 
-            gap: 8px; 
-            flex-wrap: wrap; /* Ensures buttons never overlap */
-            margin-left: auto; /* Pushes controls to the right on desktop */
-        }
-
+        /* --- 4. DASHBOARD & MESSAGE STYLING --- */
         .dashboard-grid {
             display: grid;
             grid-template-columns: 2.5fr 1fr; 
-            gap: 15px; /* Slightly reduced gap */
+            gap: 15px; 
             margin-top: 15px;
         }
-        
-        /* Link Card (Tighter) */
-        .link-card { 
-            background: var(--bg-tertiary); 
-            padding: 12px; /* Tighter padding */
-            border-radius: 8px; 
-            border: 1px solid var(--stat-border);
-        }
-        .link-card .content {
-            display: flex;
-            justify-content: space-between;
-            align-items: center;
-            gap: 10px;
-        }
+        .link-card { background: var(--bg-tertiary); padding: 12px; border-radius: 8px; border: 1px solid var(--stat-border); }
+        .link-card .content { display: flex; justify-content: space-between; align-items: center; gap: 10px; }
+        .stats-box { background: var(--stat-bg); padding: 12px; border-radius: 8px; border: 1px solid var(--stat-border); text-align: center; display: flex; flex-direction: column; justify-content: center; }
+        .stats-box .count { font-size: 28px; font-weight: 800; color: var(--accent-primary); line-height: 1.1; }
+        .stats-box i { font-size: 18px; margin-bottom: 4px; }
 
-        /* Message Stats Box (Scaled Down Fix) */
-        .stats-box {
-            background: var(--stat-bg);
-            padding: 12px; /* Tighter padding */
-            border-radius: 8px;
-            border: 1px solid var(--stat-border);
-            text-align: center;
-            display: flex; /* Use flex to align content neatly */
-            flex-direction: column;
-            justify-content: center;
-        }
-        .stats-box .count {
-            font-size: 28px; /* Significantly reduced size */
-            font-weight: 800;
-            color: var(--accent-primary);
-            line-height: 1.1;
-        }
-        .stats-box .label {
-            font-size: 12px;
-            color: var(--text-muted);
-            margin-top: 3px;
-        }
-        .stats-box i {
-            font-size: 18px;
-            margin-bottom: 4px;
-        }
-
-
-        /* Message Feed */
-        .messages { margin-top: 20px; max-height: 380px; padding-right: 8px; }
+        .messages { margin-top: 20px; max-height: 380px; overflow-y: auto; padding-right: 8px; }
         .message { 
-            white-space: pre-wrap; /* Ensures long text wraps correctly */
-            word-wrap: break-word;
             background: var(--bg-secondary); 
             padding: 12px; 
             border-radius: 8px; 
             margin-bottom: 8px; 
             border-left: 3px solid var(--accent-primary);
+            cursor: pointer; /* Indicates it's clickable */
+            transition: background-color 0.1s, transform 0.1s;
         }
-        .message .meta { line-height: 1.2; }
-        .message .content { font-size: 14px; line-height: 1.4; }
+        .message:hover {
+            background-color: var(--bg-tertiary);
+            transform: translateY(-1px);
+        }
+        .message .meta { font-size: 12px; margin-bottom: 6px; line-height: 1.2; }
+        .message .content { 
+            font-size: 14px; 
+            line-height: 1.4;
+            max-height: 3.2em; /* Show max 2 lines of truncated text (1.4 * 2.3 = 3.2) */
+            overflow: hidden;
+            text-overflow: ellipsis;
+            display: -webkit-box;
+            -webkit-line-clamp: 2; /* Truncate after 2 lines */
+            -webkit-box-orient: vertical;
+        }
+        .message-full {
+             white-space: pre-wrap;
+             word-wrap: break-word;
+             font-size: 15px;
+             line-height: 1.6;
+             background: var(--bg-secondary);
+             padding: 15px;
+             border-radius: 8px;
+             border: 1px solid var(--card-border);
+             margin-bottom: 15px;
+        }
 
-        /* Final Mobile Adjustments (Guaranteed Stability) */
+        /* --- 5. MODAL/DETAIL CARD STYLES (The Beautiful Popup) --- */
+        .modal-overlay {
+            position: fixed;
+            top: 0; left: 0; right: 0; bottom: 0;
+            background: rgba(0, 0, 0, 0.85); /* Dark, blurring backdrop */
+            backdrop-filter: blur(5px);
+            display: none;
+            align-items: center;
+            justify-content: center;
+            z-index: 1000;
+            opacity: 0;
+            transition: opacity 0.3s ease;
+        }
+        .modal-overlay.active {
+            display: flex;
+            opacity: 1;
+        }
+        .modal-content {
+            background: var(--card-base);
+            padding: 30px;
+            border-radius: 12px;
+            width: 90%;
+            max-width: 600px;
+            box-shadow: var(--card-shadow);
+            border: 1px solid var(--accent-secondary);
+            transform: scale(0.95);
+            transition: transform 0.3s cubic-bezier(0.175, 0.885, 0.32, 1.275); /* Springy effect */
+        }
+        .modal-overlay.active .modal-content {
+            transform: scale(1);
+        }
+        .modal-header {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            margin-bottom: 15px;
+            border-bottom: 1px solid rgba(255, 255, 255, 0.1);
+            padding-bottom: 10px;
+        }
+        .modal-header h4 {
+            margin: 0;
+            font-size: 18px;
+            color: var(--accent-primary);
+        }
+        .modal-close {
+            background: transparent;
+            color: var(--text-muted);
+            border: none;
+            font-size: 20px;
+            cursor: pointer;
+            padding: 5px;
+            line-height: 1;
+        }
+        
+        /* --- 6. MOBILE ADJUSTMENTS (Stability) --- */
         @media (max-width: 768px) {
             body { padding: 12px; }
             .card { padding: 18px; }
-
-            /* Header Controls - Forced Vertical Stack */
             .header-controls { flex-direction: column; align-items: stretch; gap: 8px; }
-            .user-info { margin-bottom: 5px; }
-            .controls { 
-                margin-left: 0;
-                justify-content: space-between;
-                width: 100%; /* Take full width */
-            }
-            .controls button { 
-                flex-grow: 1; 
-                min-width: 48%; /* Ensures two fit per row */
-            }
-            .controls #deleteBtn { min-width: 100%; } /* Delete button remains full width for clarity */
-
-            /* Dashboard Grid Stack */
-            .dashboard-grid {
-                grid-template-columns: 1fr; 
-                gap: 10px;
-            }
-
-            /* Auth Boxes Stack */
+            .controls { justify-content: space-between; width: 100%; }
+            .controls button { flex-grow: 1; min-width: 48%; }
+            .controls #deleteBtn { min-width: 100%; }
+            .dashboard-grid { grid-template-columns: 1fr; gap: 10px; }
             .row, .auth-container { flex-direction: column; gap: 12px; }
+            .modal-content { max-height: 80vh; overflow-y: auto; }
         }
     </style>
 </head>
@@ -229,16 +198,24 @@
             <div id="view"></div>
         </div>
     </div>
+    
+    <div class="modal-overlay" id="messageModalOverlay">
+        <div class="modal-content" id="messageModalContent">
+            </div>
+    </div>
 
     <script>
         // JS Logic (Functionality remains unchanged)
         const API_PREFIX = '/api';
         const view = document.getElementById('view');
+        const modalOverlay = document.getElementById('messageModalOverlay');
+        const modalContent = document.getElementById('messageModalContent');
         const pollIntervalMs = 10000; 
         let messagesPollId = null;
         let messageCount = 0; 
+        let lastMessages = []; // Store the full list of messages
 
-        // ---------- Helpers (Unchanged) ----------
+        // ---------- Helpers (Updated) ----------
         function show(html){ view.innerHTML = html; }
         function qs(sel, root=document) { return root.querySelector(sel); }
         function qsa(sel, root=document) { return Array.from(root.querySelectorAll(sel)); }
@@ -298,8 +275,22 @@
                 renderMain();
             }
         }
+        
+        function truncateMessage(text, limit = 100) {
+            if (!text) return '';
+            text = text.trim();
+            if (text.length <= limit) return text;
+            
+            // Try to truncate to a clean sentence break
+            let short = text.substring(0, limit);
+            const lastSpace = short.lastIndexOf(' ');
+            if (lastSpace > 50) { // Only cut at space if not too close to the start
+                short = short.substring(0, lastSpace);
+            }
+            return short + '...';
+        }
 
-        // ---------- MAIN (create / login - Unchanged) ----------
+        // ---------- MAIN (Unchanged) ----------
         function renderMain() {
             stopPolling();
             show(`
@@ -411,7 +402,7 @@
             };
         }
 
-        // ---------- DASHBOARD (Stable and Perfected) ----------
+        // ---------- DASHBOARD (Awesome Polish) ----------
         async function renderDashboard() {
             const uname = sessionStorage.getItem('asklyy_username');
             let linkId = sessionStorage.getItem('asklyy_linkId') || '';
@@ -514,6 +505,7 @@
             try {
                 const res = await apiGet('/getmessages?linkId=' + encodeURIComponent(linkId), true);
                 if (res && res.messages) {
+                    lastMessages = res.messages; // Store full messages
                     messageCount = res.messages.length;
                     if (countDisplay) countDisplay.textContent = messageCount;
 
@@ -524,17 +516,23 @@
                     
                     box.innerHTML = res.messages.map(m => {
                         const name = m.name ? escapeHtml(m.name) : 'Anonymous';
-                        const text = escapeHtml(m.text || '');
                         const date = m.createdAt ? new Date(m.createdAt).toLocaleString() : 'Just now';
+                        const truncatedText = truncateMessage(m.text, 100);
                         
-                        return `<div class="message">
+                        return `<div class="message" data-id="${m.messageId}">
                             <div class="meta">
                                 <span><i class="fas fa-user-secret" style="margin-right: 5px;"></i>${name}</span>
                                 <span class="small muted">${date}</span>
                             </div>
-                            <div class="content">${text}</div>
+                            <div class="content">${escapeHtml(truncatedText)}</div>
                         </div>`;
                     }).join('');
+                    
+                    // Attach click handler to rendered messages
+                    qsa('.message', box).forEach(el => {
+                        el.onclick = () => openMessageModal(el.dataset.id);
+                    });
+
                 } else if (!silent) {
                     box.innerHTML = '<div class="muted small center" style="padding: 20px;"><span class="error-error">Server Error:</span> Failed to load messages.</div>';
                 }
@@ -544,6 +542,64 @@
                 }
             }
         }
+        
+        // --- MODAL FUNCTIONS ---
+        function openMessageModal(messageId) {
+            const message = lastMessages.find(m => String(m.messageId) === String(messageId));
+            if (!message) {
+                alert("Message not found.");
+                return;
+            }
+
+            modalContent.innerHTML = renderMessageModal(message);
+            modalOverlay.classList.add('active');
+            
+            // Attach close handler
+            qs('#modalCloseBtn').onclick = closeMessageModal;
+            
+            // Attach copy handler
+            qs('#modalCopyBtn').onclick = () => copyMessageToClipboard(message.text);
+        }
+
+        function closeMessageModal() {
+            modalOverlay.classList.remove('active');
+        }
+        
+        function renderMessageModal(m) {
+            const name = m.name ? escapeHtml(m.name) : 'Anonymous';
+            const date = m.createdAt ? new Date(m.createdAt).toLocaleString() : 'Just now';
+            const text = escapeHtml(m.text || '');
+            
+            return `
+                <div class="modal-header">
+                    <h4><i class="fas fa-envelope-open-text" style="margin-right: 8px;"></i>Full Message Details</h4>
+                    <button id="modalCloseBtn" class="modal-close">&times;</button>
+                </div>
+                <div class="muted" style="margin-bottom: 10px;">
+                    From: <strong>${name}</strong>
+                    <span style="float: right;">${date}</span>
+                </div>
+                
+                <div class="message-full" id="messageTextToCopy">${text}</div>
+                
+                <div class="actions" style="justify-content: flex-end; margin-top: 15px;">
+                    <button id="modalCopyBtn" style="background: var(--text-success); box-shadow: 0 4px 15px rgba(52, 211, 153, 0.5);"><i class="fas fa-copy"></i> Copy Message</button>
+                    </div>
+                <div id="copyFeedback" class="small muted" style="margin-top: 10px; text-align: right;"></div>
+            `;
+        }
+        
+        function copyMessageToClipboard(text) {
+            const feedbackEl = qs('#copyFeedback');
+            navigator.clipboard.writeText(text).then(() => {
+                feedbackEl.innerHTML = '<span style="color:var(--text-success);"><i class="fas fa-check"></i> Copied to clipboard!</span>';
+                setTimeout(() => feedbackEl.textContent = '', 2000);
+            }).catch(err => {
+                feedbackEl.innerHTML = '<span class="error-text"><i class="fas fa-times"></i> Failed to copy.</span>';
+                console.error('Copy failed:', err);
+            });
+        }
+
 
         // ---------- SEND PAGE (Unchanged) ----------
         function renderSendPage(linkIdFromUrl) {
@@ -641,6 +697,13 @@
         }
 
         window.addEventListener('popstate', route);
+        // Add listener to close modal on clicking outside or pressing ESC
+        modalOverlay.addEventListener('click', (e) => {
+            if (e.target === modalOverlay) closeMessageModal();
+        });
+        document.addEventListener('keydown', (e) => {
+            if (e.key === 'Escape' && modalOverlay.classList.contains('active')) closeMessageModal();
+        });
         route();
     </script>
 </body>
