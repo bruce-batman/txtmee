@@ -1,710 +1,773 @@
 <!doctype html>
 <html lang="en">
 <head>
-    <meta charset="utf-8" />
-    <meta name="viewport" content="width=device-width,initial-scale=1" />
-    <title>Asklyy — Send Anonymous Messages</title>
-    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;600;700;800&display=swap" rel="stylesheet">
-    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
-    <style>
-        /* --- 1. LUXURY COLOR PALETTE & VARIABLES --- */
-        :root {
-            --bg-primary: #04091A; 
-            --bg-secondary: #0F172A; 
-            --bg-tertiary: #1D263B; 
-            --card-base: rgba(15, 23, 42, 0.75); 
-            --card-border: rgba(255, 255, 255, 0.1);
-            --card-shadow: 0 12px 30px rgba(0, 0, 0, 0.7);
-            --accent-primary: #4C72E0; 
-            --accent-secondary: #7F58E8; 
-            --accent-gradient: linear-gradient(135deg, var(--accent-secondary) 0%, var(--accent-primary) 100%);
-            --accent-shadow: 0 4px 20px rgba(76, 114, 224, 0.4);
-            --text-primary: #EBF4F7;
-            --text-muted: #A0B9D5;
-            --text-success: #34D399; 
-            --text-error: #F87171; 
-            --stat-bg: rgba(76, 114, 224, 0.1);
-            --stat-border: rgba(76, 114, 224, 0.4);
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width,initial-scale=1" />
+    <title>Asklyy — Send Anonymous Messages</title>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;600;700;800&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <style>
+        /* --- 1. MINIMALIST DARK PALETTE & VARIABLES (Less Shine, Softer Shadows) --- */
+        :root {
+            --bg-primary: #04091A; 
+            --bg-secondary: #0f172a; /* Slightly lighter base */
+            --bg-tertiary: #1d263b; 
+            --card-base: #0f172a; /* Solid color for card background */
+            --card-border: rgba(255, 255, 255, 0.08); /* Lighter border */
+            --card-shadow: 0 6px 15px rgba(0, 0, 0, 0.5); /* Less intense shadow */
+            --accent-primary: #4C72E0; 
+            --accent-secondary: #7F58E8; 
+            --accent-gradient: linear-gradient(135deg, var(--accent-secondary) 0%, var(--accent-primary) 100%);
+            --accent-shadow: 0 2px 10px rgba(76, 114, 224, 0.2); /* Much softer shadow */
+            --text-primary: #EBF4F7;
+            --text-muted: #A0B9D5;
+            --text-success: #34D399; 
+            --text-error: #F87171; 
+            --stat-bg: rgba(76, 114, 224, 0.08); /* Softer background for stats */
+            --stat-border: rgba(76, 114, 224, 0.3);
 
-            color-scheme: dark;
-        }
+            color-scheme: dark;
+        }
 
-        /* --- 2. BASE STYLES AND AESTHETICS --- */
-        *{ box-sizing: border-box; font-family: 'Inter', system-ui, sans-serif; }
-        body{
-            margin: 0;
-            background: var(--bg-primary);
-            min-height: 100vh;
-            color: var(--text-primary);
-            display: flex;
-            align-items: center;
-            justify-content: center;
-            padding: 30px 15px; 
-            background-image: radial-gradient(circle at 10% 10%, rgba(76, 114, 224, 0.15) 1%, transparent 30%), 
-                              radial-gradient(circle at 90% 90%, rgba(127, 88, 232, 0.1) 1%, transparent 35%);
-        }
-        .container{ width: 100%; max-width: 850px; }
-        
-        /* --- 3. CORE COMPONENTS --- */
-        .card {
-            background: var(--card-base);
-            padding: 24px; 
-            border-radius: 12px; 
-            box-shadow: var(--card-shadow);
-            border: 1px solid var(--card-border);
-            backdrop-filter: blur(8px); 
-        }
-        
-        /* Typography, Inputs, Buttons (Scaled) */
-        h1 { font-size: 24px; }
-        p.lead { font-size: 13px; }
-        input[type="text"], input[type="password"], textarea { padding: 10px 12px; font-size: 14px; }
-        button { padding: 9px 16px; font-size: 14px; line-height: 1.3; }
-        .row { display: flex; gap: 20px; align-items: flex-start; }
-        .col { display: flex; flex-direction: column; gap: 10px; flex: 1; }
-        .muted{ color: var(--text-muted); font-size: 13px; }
-        .small{ font-size: 11px; color: var(--text-muted); }
-        .actions { display: flex; gap: 8px; align-items: center; }
+        /* --- 2. BASE STYLES AND AESTHETICS (Reduced Padding/Size) --- */
+        *{ box-sizing: border-box; font-family: 'Inter', system-ui, sans-serif; }
+        body{
+            margin: 0;
+            background: var(--bg-primary);
+            min-height: 100vh;
+            color: var(--text-primary);
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            padding: 20px 10px; /* Reduced body padding */
+            background-image: radial-gradient(circle at 10% 10%, rgba(76, 114, 224, 0.1) 1%, transparent 20%), 
+                              radial-gradient(circle at 90% 90%, rgba(127, 88, 232, 0.08) 1%, transparent 25%);
+        }
+        .container{ width: 100%; max-width: 750px; } /* Slightly smaller max width */
+        
+        /* --- 3. CORE COMPONENTS (Reduced Scale, More Space) --- */
+        .card {
+            background: var(--card-base);
+            padding: 20px;  /* Reduced padding */
+            border-radius: 10px; 
+            box-shadow: var(--card-shadow);
+            border: 1px solid var(--card-border);
+            backdrop-filter: none; /* Removed blur effect (less "shiny") */
+        }
+        
+        /* Typography, Inputs, Buttons (Scaled Down) */
+        h1 { font-size: 22px; margin: 0; }
+        p.lead { font-size: 12px; margin-top: 4px; }
+        input[type="text"], input[type="password"], textarea { 
+            padding: 8px 10px; 
+            font-size: 14px;
+            border: 1px solid var(--stat-border); /* Clearer border */
+            background: var(--bg-tertiary);
+            color: var(--text-primary);
+            border-radius: 6px;
+            width: 100%;
+        }
+        button { 
+            padding: 8px 14px; /* Reduced button padding */
+            font-size: 13px; 
+            line-height: 1.3;
+            border-radius: 6px;
+            border: none;
+            cursor: pointer;
+            background: var(--accent-gradient);
+            color: var(--text-primary);
+            font-weight: 600;
+            box-shadow: var(--accent-shadow);
+            transition: transform 0.1s, box-shadow 0.1s;
+        }
+        button:hover:not(:disabled) { 
+            transform: translateY(-1px); 
+            box-shadow: 0 6px 15px rgba(76, 114, 224, 0.4); 
+        }
+        button.ghost {
+            background: transparent;
+            color: var(--text-muted);
+            border: 1px solid var(--card-border);
+            box-shadow: none;
+            font-weight: 400;
+        }
+        button.ghost:hover:not(:disabled) {
+            background: var(--bg-tertiary);
+            transform: none;
+            box-shadow: none;
+            color: var(--text-primary);
+        }
+        .row { 
+            display: flex; 
+            gap: 30px; /* Increased gap */
+            align-items: flex-start; 
+        }
+        .col { 
+            display: flex; 
+            flex-direction: column; 
+            gap: 15px; /* Increased gap */
+            flex: 1; 
+        }
+        .muted{ color: var(--text-muted); font-size: 12px; } /* Smaller muted text */
+        .small{ font-size: 10px; color: var(--text-muted); }
+        .actions { display: flex; gap: 10px; align-items: center; } /* Increased action gap */
+        .error-text { color: var(--text-error); }
+        .success-text { color: var(--text-success); }
+        
+        /* Header Styling */
+        header { display: flex; align-items: center; gap: 15px; margin-bottom: 20px; }
+        .logo { width: 36px; height: 36px; border-radius: 50%; background: var(--accent-gradient); display: flex; justify-content: center; align-items: center; font-weight: 800; font-size: 20px; flex-shrink: 0;}
+        
+        /* --- 4. DASHBOARD & MESSAGE STYLING (Spacious and Refined) --- */
+        .header-controls {
+            display: flex;
+            justify-content: space-between;
+            align-items: flex-start;
+            margin-bottom: 20px; /* More space below header */
+            flex-wrap: wrap;
+        }
+        .user-info { margin-bottom: 10px; }
+        .controls { display: flex; gap: 10px; margin-top: 5px; }
 
-        /* --- 4. DASHBOARD & MESSAGE STYLING --- */
-        .dashboard-grid {
-            display: grid;
-            grid-template-columns: 2.5fr 1fr; 
-            gap: 15px; 
-            margin-top: 15px;
-        }
-        .link-card { background: var(--bg-tertiary); padding: 12px; border-radius: 8px; border: 1px solid var(--stat-border); }
-        .link-card .content { display: flex; justify-content: space-between; align-items: center; gap: 10px; }
-        .stats-box { background: var(--stat-bg); padding: 12px; border-radius: 8px; border: 1px solid var(--stat-border); text-align: center; display: flex; flex-direction: column; justify-content: center; }
-        .stats-box .count { font-size: 28px; font-weight: 800; color: var(--accent-primary); line-height: 1.1; }
-        .stats-box i { font-size: 18px; margin-bottom: 4px; }
+        .dashboard-grid {
+            display: grid;
+            grid-template-columns: 3fr 1fr; 
+            gap: 20px; /* Increased grid gap */
+            margin-top: 0;
+            margin-bottom: 20px; /* Added space before messages */
+        }
+        .link-card { background: var(--bg-tertiary); padding: 12px; border-radius: 6px; border: 1px solid var(--stat-border); }
+        .link-card .content { display: flex; justify-content: space-between; align-items: center; gap: 15px; }
+        .stats-box { background: var(--stat-bg); padding: 12px; border-radius: 6px; border: 1px solid var(--stat-border); text-align: center; display: flex; flex-direction: column; justify-content: center; }
+        .stats-box .count { font-size: 24px; font-weight: 800; color: var(--accent-primary); line-height: 1.1; } /* Smaller count font */
+        .stats-box i { font-size: 16px; margin-bottom: 4px; }
 
-        .messages { margin-top: 20px; max-height: 380px; overflow-y: auto; padding-right: 8px; }
-        .message { 
-            background: var(--bg-secondary); 
-            padding: 12px; 
-            border-radius: 8px; 
-            margin-bottom: 8px; 
-            border-left: 3px solid var(--accent-primary);
-            cursor: pointer; /* Indicates it's clickable */
-            transition: background-color 0.1s, transform 0.1s;
-        }
-        .message:hover {
-            background-color: var(--bg-tertiary);
-            transform: translateY(-1px);
-        }
-        .message .meta { font-size: 12px; margin-bottom: 6px; line-height: 1.2; }
-        .message .content { 
-            font-size: 14px; 
-            line-height: 1.4;
-            max-height: 3.2em; /* Show max 2 lines of truncated text (1.4 * 2.3 = 3.2) */
-            overflow: hidden;
-            text-overflow: ellipsis;
-            display: -webkit-box;
-            -webkit-line-clamp: 2; /* Truncate after 2 lines */
-            -webkit-box-orient: vertical;
-        }
-        .message-full {
-             white-space: pre-wrap;
-             word-wrap: break-word;
-             font-size: 15px;
-             line-height: 1.6;
-             background: var(--bg-secondary);
-             padding: 15px;
-             border-radius: 8px;
-             border: 1px solid var(--card-border);
-             margin-bottom: 15px;
-        }
+        .messages { margin-top: 0; max-height: 400px; overflow-y: auto; padding-right: 8px; }
+        .message { 
+            background: var(--bg-secondary); 
+            padding: 10px 12px;  /* Reduced padding */
+            border-radius: 6px; 
+            margin-bottom: 6px;  /* Reduced margin */
+            border-left: 3px solid var(--accent-primary);
+            transition: background-color 0.1s, transform 0.1s;
+        }
+        .message:hover {
+            background-color: var(--bg-tertiary);
+            transform: translateY(-1px);
+        }
+        .message .meta { font-size: 11px; margin-bottom: 4px; line-height: 1.2; display: flex; justify-content: space-between; } /* Better meta layout */
+        .message .content { 
+            font-size: 13px;  /* Smaller content font */
+            line-height: 1.4;
+            max-height: 2.8em; /* Adjusted height for smaller font */
+            overflow: hidden;
+            text-overflow: ellipsis;
+            display: -webkit-box;
+            -webkit-line-clamp: 2;
+            -webkit-box-orient: vertical;
+        }
+        .message-full {
+             white-space: pre-wrap;
+             word-wrap: break-word;
+             font-size: 14px;
+             line-height: 1.5;
+             background: var(--bg-secondary);
+             padding: 15px;
+             border-radius: 6px;
+             border: 1px solid var(--card-border);
+             margin-bottom: 15px;
+        }
 
-        /* --- 5. MODAL/DETAIL CARD STYLES (The Beautiful Popup) --- */
-        .modal-overlay {
-            position: fixed;
-            top: 0; left: 0; right: 0; bottom: 0;
-            background: rgba(0, 0, 0, 0.85); /* Dark, blurring backdrop */
-            backdrop-filter: blur(5px);
-            display: none;
-            align-items: center;
-            justify-content: center;
-            z-index: 1000;
-            opacity: 0;
-            transition: opacity 0.3s ease;
-        }
-        .modal-overlay.active {
-            display: flex;
-            opacity: 1;
-        }
-        .modal-content {
-            background: var(--card-base);
-            padding: 30px;
-            border-radius: 12px;
-            width: 90%;
-            max-width: 600px;
-            box-shadow: var(--card-shadow);
-            border: 1px solid var(--accent-secondary);
-            transform: scale(0.95);
-            transition: transform 0.3s cubic-bezier(0.175, 0.885, 0.32, 1.275); /* Springy effect */
-        }
-        .modal-overlay.active .modal-content {
-            transform: scale(1);
-        }
-        .modal-header {
-            display: flex;
-            justify-content: space-between;
-            align-items: center;
-            margin-bottom: 15px;
-            border-bottom: 1px solid rgba(255, 255, 255, 0.1);
-            padding-bottom: 10px;
-        }
-        .modal-header h4 {
-            margin: 0;
-            font-size: 18px;
-            color: var(--accent-primary);
-        }
-        .modal-close {
-            background: transparent;
-            color: var(--text-muted);
-            border: none;
-            font-size: 20px;
-            cursor: pointer;
-            padding: 5px;
-            line-height: 1;
-        }
-        
-        /* --- 6. MOBILE ADJUSTMENTS (Stability) --- */
-        @media (max-width: 768px) {
-            body { padding: 12px; }
-            .card { padding: 18px; }
-            .header-controls { flex-direction: column; align-items: stretch; gap: 8px; }
-            .controls { justify-content: space-between; width: 100%; }
-            .controls button { flex-grow: 1; min-width: 48%; }
-            .controls #deleteBtn { min-width: 100%; }
-            .dashboard-grid { grid-template-columns: 1fr; gap: 10px; }
-            .row, .auth-container { flex-direction: column; gap: 12px; }
-            .modal-content { max-height: 80vh; overflow-y: auto; }
-        }
-    </style>
+        /* --- 5. MODAL/DETAIL CARD STYLES (Less Springy/Shiny) --- */
+        .modal-overlay {
+            position: fixed;
+            top: 0; left: 0; right: 0; bottom: 0;
+            background: rgba(0, 0, 0, 0.9);
+            backdrop-filter: none; /* Removed blur */
+            display: none;
+            align-items: center;
+            justify-content: center;
+            z-index: 1000;
+            opacity: 0;
+            transition: opacity 0.2s ease;
+        }
+        .modal-overlay.active {
+            display: flex;
+            opacity: 1;
+        }
+        .modal-content {
+            background: var(--card-base);
+            padding: 25px; /* Reduced padding */
+            border-radius: 10px;
+            width: 90%;
+            max-width: 550px; /* Slightly smaller modal */
+            box-shadow: var(--card-shadow);
+            border: 1px solid var(--accent-secondary);
+            transform: scale(0.98);
+            transition: transform 0.2s ease-out; /* Smoother transition */
+        }
+        .modal-overlay.active .modal-content {
+            transform: scale(1);
+        }
+        .modal-header {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            margin-bottom: 10px; /* Reduced margin */
+            border-bottom: 1px solid rgba(255, 255, 255, 0.1);
+            padding-bottom: 8px; /* Reduced padding */
+        }
+        .modal-header h4 {
+            margin: 0;
+            font-size: 16px; /* Smaller header font */
+            color: var(--accent-primary);
+        }
+        .modal-close {
+            background: transparent;
+            color: var(--text-muted);
+            border: none;
+            font-size: 18px; /* Smaller close button */
+            cursor: pointer;
+            padding: 5px;
+            line-height: 1;
+        }
+        
+        /* --- 6. MOBILE ADJUSTMENTS (More Stable) --- */
+        @media (max-width: 768px) {
+            body { padding: 10px; }
+            .card { padding: 15px; }
+            /* Improved flow for header controls */
+            .header-controls { flex-direction: column; align-items: stretch; gap: 10px; margin-bottom: 15px; }
+            .controls { justify-content: space-between; width: 100%; flex-wrap: wrap; }
+            .controls button { flex-grow: 1; min-width: 45%; }
+            .controls #deleteBtn { min-width: 100%; order: 3; } /* Move delete button to its own line */
+            .dashboard-grid { grid-template-columns: 1fr; gap: 15px; }
+            .row, .auth-container { flex-direction: column; gap: 20px; } /* Increased gap for auth section */
+            .modal-content { max-height: 80vh; overflow-y: auto; }
+        }
+    </style>
 </head>
 <body>
-    <div class="container">
-        <div class="card" id="app">
-            <header>
-                <div class="logo center">A</div>
-                <div>
-                    <h1>Asklyy</h1>
-                    <p class="lead">Secure and truly anonymous communication, globally.</p>
-                </div>
-            </header>
+    <div class="container">
+        <div class="card" id="app">
+            <header>
+                <div class="logo center">A</div>
+                <div>
+                    <h1>Asklyy</h1>
+                    <p class="lead">Secure and truly anonymous communication, globally.</p>
+                </div>
+            </header>
 
-            <div id="view"></div>
-        </div>
-    </div>
-    
-    <div class="modal-overlay" id="messageModalOverlay">
-        <div class="modal-content" id="messageModalContent">
-            </div>
-    </div>
+            <div id="view"></div>
+        </div>
+    </div>
+    
+    <div class="modal-overlay" id="messageModalOverlay">
+        <div class="modal-content" id="messageModalContent">
+            </div>
+    </div>
 
-    <script>
-        // JS Logic (Functionality remains unchanged)
-        const API_PREFIX = '/api';
-        const view = document.getElementById('view');
-        const modalOverlay = document.getElementById('messageModalOverlay');
-        const modalContent = document.getElementById('messageModalContent');
-        const pollIntervalMs = 10000; 
-        let messagesPollId = null;
-        let messageCount = 0; 
-        let lastMessages = []; // Store the full list of messages
+    <script>
+        // JS Logic (Functionality remains unchanged)
+        const API_PREFIX = '/api';
+        const view = document.getElementById('view');
+        const modalOverlay = document.getElementById('messageModalOverlay');
+        const modalContent = document.getElementById('messageModalContent');
+        const pollIntervalMs = 10000; 
+        let messagesPollId = null;
+        let messageCount = 0; 
+        let lastMessages = []; // Store the full list of messages
 
-        // ---------- Helpers (Updated) ----------
-        function show(html){ view.innerHTML = html; }
-        function qs(sel, root=document) { return root.querySelector(sel); }
-        function qsa(sel, root=document) { return Array.from(root.querySelectorAll(sel)); }
+        // ---------- Helpers (Updated) ----------
+        function show(html){ view.innerHTML = html; }
+        function qs(sel, root=document) { return root.querySelector(sel); }
+        function qsa(sel, root=document) { return Array.from(root.querySelectorAll(sel)); }
 
-        function basicAuthHeader() {
-            const u = sessionStorage.getItem('asklyy_username');
-            const p = sessionStorage.getItem('asklyy_password');
-            if (!u || !p) return null;
-            return 'Basic ' + btoa(u + ':' + p);
-        }
+        function basicAuthHeader() {
+            const u = sessionStorage.getItem('asklyy_username');
+            const p = sessionStorage.getItem('asklyy_password');
+            if (!u || !p) return null;
+            return 'Basic ' + btoa(u + ':' + p);
+        }
 
-        async function apiPost(path, body, auth=false) {
-            const headers = { 'Content-Type': 'application/json' };
-            if (auth) {
-                const h = basicAuthHeader();
-                if (!h) throw new Error('Authentication required');
-                headers['Authorization'] = h;
-            }
-            const res = await fetch(API_PREFIX + path, { method: 'POST', headers, body: JSON.stringify(body) });
-            const j = await res.json().catch(()=>({success:false, error:'Invalid JSON response'}));
-            if (!res.ok) throw new Error(j && j.error ? j.error : 'API Error');
-            return j;
-        }
+        async function apiPost(path, body, auth=false) {
+            const headers = { 'Content-Type': 'application/json' };
+            if (auth) {
+                const h = basicAuthHeader();
+                if (!h) throw new Error('Authentication required');
+                headers['Authorization'] = h;
+            }
+            const res = await fetch(API_PREFIX + path, { method: 'POST', headers, body: JSON.stringify(body) });
+            const j = await res.json().catch(()=>({success:false, error:'Invalid JSON response'}));
+            if (!res.ok) throw new Error(j && j.error ? j.error : 'API Error');
+            return j;
+        }
 
-        async function apiGet(path, auth=false) {
-            const headers = {};
-            if (auth) {
-                const h = basicAuthHeader();
-                if (!h) throw new Error('Authentication required');
-                headers['Authorization'] = h;
-            }
-            const res = await fetch(API_PREFIX + path, { method:'GET', headers });
-            const j = await res.json().catch(()=>({success:false, error:'Invalid JSON response'}));
-            if (!res.ok) throw new Error(j && j.error ? j.error : 'API Error');
-            return j;
-        }
+        async function apiGet(path, auth=false) {
+            const headers = {};
+            if (auth) {
+                const h = basicAuthHeader();
+                if (!h) throw new Error('Authentication required');
+                headers['Authorization'] = h;
+            }
+            const res = await fetch(API_PREFIX + path, { method:'GET', headers });
+            const j = await res.json().catch(()=>({success:false, error:'Invalid JSON response'}));
+            if (!res.ok) throw new Error(j && j.error ? j.error : 'API Error');
+            return j;
+        }
 
-        function navigateToRoot() {
-            history.replaceState({}, '', '/');
-            route();
-        }
+        function navigateToRoot() {
+            history.replaceState({}, '', '/');
+            route();
+        }
 
-        function route() {
-            const url = new URL(location.href);
-            const id = url.searchParams.get('id');
-            if (location.pathname.startsWith('/send') || id) {
-                const linkId = id || (location.pathname.split('/send/')[1] || '').replace('/', '');
-                renderSendPage(linkId);
-                return;
-            }
+        function route() {
+            const url = new URL(location.href);
+            const id = url.searchParams.get('id');
+            if (location.pathname.startsWith('/send') || id) {
+                const linkId = id || (location.pathname.split('/send/')[1] || '').replace('/', '');
+                renderSendPage(linkId);
+                return;
+            }
 
-            const username = sessionStorage.getItem('asklyy_username');
-            const password = sessionStorage.getItem('asklyy_password');
-            if (username && password) {
-                renderDashboard();
-            } else {
-                renderMain();
-            }
-        }
-        
-        function truncateMessage(text, limit = 100) {
-            if (!text) return '';
-            text = text.trim();
-            if (text.length <= limit) return text;
-            
-            // Try to truncate to a clean sentence break
-            let short = text.substring(0, limit);
-            const lastSpace = short.lastIndexOf(' ');
-            if (lastSpace > 50) { // Only cut at space if not too close to the start
-                short = short.substring(0, lastSpace);
-            }
-            return short + '...';
-        }
+            const username = sessionStorage.getItem('asklyy_username');
+            const password = sessionStorage.getItem('asklyy_password');
+            if (username && password) {
+                renderDashboard();
+            } else {
+                renderMain();
+            }
+        }
+        
+        function truncateMessage(text, limit = 100) {
+            if (!text) return '';
+            text = text.trim();
+            if (text.length <= limit) return text;
+            
+            // Try to truncate to a clean sentence break
+            let short = text.substring(0, limit);
+            const lastSpace = short.lastIndexOf(' ');
+            if (lastSpace > 50) { // Only cut at space if not too close to the start
+                short = short.substring(0, lastSpace);
+            }
+            return short + '...';
+        }
 
-        // ---------- MAIN (Unchanged) ----------
-        function renderMain() {
-            stopPolling();
-            show(`
-                <div>
-                    <h2 style="margin:0 0 16px; font-size: 20px; font-weight: 700;">Start Your Anonymous Link</h2>
-                    <p class="muted" style="margin-bottom: 20px; font-size: 14px;">Generate a unique link, share it on your socials, and receive private, untraceable messages instantly. Zero sign-up required for senders.</p>
+        // ---------- MAIN (Unchanged JS) ----------
+        function renderMain() {
+            stopPolling();
+            show(`
+                <div>
+                    <h2 style="margin:0 0 16px; font-size: 18px; font-weight: 700;">Start Your Anonymous Link</h2>
+                    <p class="muted" style="margin-bottom: 25px; font-size: 13px;">Generate a unique link, share it on your socials, and receive private, untraceable messages instantly. Zero sign-up required for senders.</p>
 
-                    <div class="auth-container row">
-                        <div>
-                            <h3 style="font-size: 17px; margin-bottom: 10px;"><i class="fas fa-plus-circle" style="color: var(--accent-secondary); margin-right: 8px;"></i> Create New Account</h3>
-                            <div class="col" style="gap:8px;">
-                                <input id="new_username" type="text" placeholder="Choose a unique username" />
-                                <input id="new_password" type="password" placeholder="Choose a strong password" />
-                                <div class="actions" style="margin-top: 10px;">
-                                    <button id="createBtn" style="flex:1;"><i class="fas fa-magic"></i> Generate Link</button>
-                                </div>
-                            </div>
-                            <div id="createMsg" class="small" style="margin-top:8px;"></div>
-                        </div>
+                    <div class="auth-container row">
+                        <div>
+                            <h3 style="font-size: 16px; margin-bottom: 10px;"><i class="fas fa-plus-circle" style="color: var(--accent-secondary); margin-right: 8px;"></i> Create New Account</h3>
+                            <div class="col" style="gap:10px;">
+                                <input id="new_username" type="text" placeholder="Choose a unique username" />
+                                <input id="new_password" type="password" placeholder="Choose a strong password" />
+                                <div class="actions" style="margin-top: 10px;">
+                                    <button id="createBtn" style="flex:1;"><i class="fas fa-magic"></i> Generate Link</button>
+                                </div>
+                            </div>
+                            <div id="createMsg" class="small" style="margin-top:8px;"></div>
+                        </div>
 
-                        <div>
-                            <h3 style="font-size: 17px; margin-bottom: 10px;"><i class="fas fa-lock" style="color: var(--accent-secondary); margin-right: 8px;"></i> Existing User Login</h3>
-                            <div class="col" style="gap:8px;">
-                                <input id="login_username" type="text" placeholder="Your Username" />
-                                <input id="login_password" type="password" placeholder="Your Password" />
-                                <div class="actions" style="margin-top: 10px;">
-                                    <button id="loginBtn" style="flex:1;"><i class="fas fa-sign-in-alt"></i> Access Dashboard</button>
-                                </div>
-                            </div>
-                            <div id="loginMsg" class="small" style="margin-top:8px;"></div>
-                        </div>
-                    </div>
-                    
-                    <div class="notice">
-                        <strong>Quick Demo:</strong> Leave the fields empty and click "Generate Link" for instant, temporary access. No signup needed!
-                    </div>
-                </div>
-            `);
+                        <div>
+                            <h3 style="font-size: 16px; margin-bottom: 10px;"><i class="fas fa-lock" style="color: var(--accent-secondary); margin-right: 8px;"></i> Existing User Login</h3>
+                            <div class="col" style="gap:10px;">
+                                <input id="login_username" type="text" placeholder="Your Username" />
+                                <input id="login_password" type="password" placeholder="Your Password" />
+                                <div class="actions" style="margin-top: 10px;">
+                                    <button id="loginBtn" style="flex:1;"><i class="fas fa-sign-in-alt"></i> Access Dashboard</button>
+                                </div>
+                            </div>
+                            <div id="loginMsg" class="small" style="margin-top:8px;"></div>
+                        </div>
+                    </div>
+                    
+                    <div class="notice" style="margin-top: 25px;">
+                        <strong>Quick Demo:</strong> Leave the fields empty and click "Generate Link" for instant, temporary access. No signup needed!
+                    </div>
+                </div>
+            `);
 
-            const createBtn = qs('#createBtn');
-            const loginBtn = qs('#loginBtn');
-            
-            createBtn.onclick = async () => {
-                const u = qs('#new_username').value.trim();
-                const p = qs('#new_password').value;
-                const msg = qs('#createMsg');
-                msg.textContent = '';
-                
-                let finalU = u, finalP = p;
-                
-                if (!u || !p) {
-                     finalU = 'demo' + Math.random().toString(36).slice(2,8);
-                     finalP = Math.random().toString(36).slice(2,10);
-                     msg.textContent = 'Creating a quick demo link...';
-                }
+            const createBtn = qs('#createBtn');
+            const loginBtn = qs('#loginBtn');
+            
+            createBtn.onclick = async () => {
+                const u = qs('#new_username').value.trim();
+                const p = qs('#new_password').value;
+                const msg = qs('#createMsg');
+                msg.textContent = '';
+                
+                let finalU = u, finalP = p;
+                
+                if (!u || !p) {
+                     finalU = 'demo' + Math.random().toString(36).slice(2,8);
+                     finalP = Math.random().toString(36).slice(2,10);
+                     msg.textContent = 'Creating a quick demo link...';
+                }
 
-                if (!finalU || !finalP) { msg.textContent = 'Username and password required.'; return; }
-                
-                try {
-                    createBtn.disabled = true;
-                    createBtn.innerHTML = '<i class="fas fa-cog fa-spin"></i> Processing...';
-                    const res = await apiPost('/createlink', { username: finalU, password: finalP }, false);
-                    if (res && res.linkId) {
-                        sessionStorage.setItem('asklyy_username', finalU);
-                        sessionStorage.setItem('asklyy_password', finalP);
-                        sessionStorage.setItem('asklyy_linkId', res.linkId);
-                        navigateToRoot();
-                        return;
-                    }
-                    msg.textContent = 'Error: Unexpected response from server.';
-                } catch (err) {
-                    msg.textContent = 'Error: ' + (err.message || 'Could not connect to server.');
-                } finally {
-                    createBtn.disabled = false;
-                    createBtn.innerHTML = '<i class="fas fa-magic"></i> Generate Link';
-                }
-            };
+                if (!finalU || !finalP) { msg.textContent = 'Username and password required.'; return; }
+                
+                try {
+                    createBtn.disabled = true;
+                    createBtn.innerHTML = '<i class="fas fa-cog fa-spin"></i> Processing...';
+                    const res = await apiPost('/createlink', { username: finalU, password: finalP }, false);
+                    if (res && res.linkId) {
+                        sessionStorage.setItem('asklyy_username', finalU);
+                        sessionStorage.setItem('asklyy_password', finalP);
+                        sessionStorage.setItem('asklyy_linkId', res.linkId);
+                        navigateToRoot();
+                        return;
+                    }
+                    msg.textContent = 'Error: Unexpected response from server.';
+                } catch (err) {
+                    msg.textContent = 'Error: ' + (err.message || 'Could not connect to server.');
+                } finally {
+                    createBtn.disabled = false;
+                    createBtn.innerHTML = '<i class="fas fa-magic"></i> Generate Link';
+                }
+            };
 
-            loginBtn.onclick = async () => {
-                const u = qs('#login_username').value.trim();
-                const p = qs('#login_password').value;
-                const msg = qs('#loginMsg');
-                msg.textContent = '';
-                if (!u || !p) { msg.textContent = 'Please enter both username and password.'; return; }
-                
-                try {
-                    sessionStorage.setItem('asklyy_username', u);
-                    sessionStorage.setItem('asklyy_password', p);
-                    
-                    loginBtn.disabled = true;
-                    loginBtn.innerHTML = '<i class="fas fa-spinner fa-pulse"></i> Verifying...';
-                    
-                    const tempLinkId = sessionStorage.getItem('asklyy_linkId') || 'temp';
-                    const res = await apiGet('/getmessages?linkId=' + encodeURIComponent(tempLinkId), true);
-                    
-                    if (res && res.linkId) {
-                        sessionStorage.setItem('asklyy_linkId', res.linkId);
-                    }
-                    
-                    navigateToRoot();
-                } catch (err) {
-                    msg.textContent = 'Login failed. Please check your credentials.';
-                    sessionStorage.removeItem('asklyy_username');
-                    sessionStorage.removeItem('asklyy_password');
-                } finally {
-                    loginBtn.disabled = false;
-                    loginBtn.innerHTML = '<i class="fas fa-sign-in-alt"></i> Access Dashboard';
-                }
-            };
-        }
+            loginBtn.onclick = async () => {
+                const u = qs('#login_username').value.trim();
+                const p = qs('#login_password').value;
+                const msg = qs('#loginMsg');
+                msg.textContent = '';
+                if (!u || !p) { msg.textContent = 'Please enter both username and password.'; return; }
+                
+                try {
+                    sessionStorage.setItem('asklyy_username', u);
+                    sessionStorage.setItem('asklyy_password', p);
+                    
+                    loginBtn.disabled = true;
+                    loginBtn.innerHTML = '<i class="fas fa-spinner fa-pulse"></i> Verifying...';
+                    
+                    const tempLinkId = sessionStorage.getItem('asklyy_linkId') || 'temp';
+                    const res = await apiGet('/getmessages?linkId=' + encodeURIComponent(tempLinkId), true);
+                    
+                    if (res && res.linkId) {
+                        sessionStorage.setItem('asklyy_linkId', res.linkId);
+                    }
+                    
+                    navigateToRoot();
+                } catch (err) {
+                    msg.textContent = 'Login failed. Please check your credentials.';
+                    sessionStorage.removeItem('asklyy_username');
+                    sessionStorage.removeItem('asklyy_password');
+                } finally {
+                    loginBtn.disabled = false;
+                    loginBtn.innerHTML = '<i class="fas fa-sign-in-alt"></i> Access Dashboard';
+                }
+            };
+        }
 
-        // ---------- DASHBOARD (Awesome Polish) ----------
-        async function renderDashboard() {
-            const uname = sessionStorage.getItem('asklyy_username');
-            let linkId = sessionStorage.getItem('asklyy_linkId') || '';
-            
-            show(`<div>
-                <div class="header-controls">
-                    <div class="user-info">
-                        <div style="font-weight:700; font-size: 18px; color: var(--accent-primary);"><i class="fas fa-user-circle" style="margin-right: 8px;"></i>Welcome, ${uname || 'User'}</div>
-                        <div class="small muted">Your secure anonymous message center.</div>
-                    </div>
-                    <div class="controls">
-                        <button id="refreshBtn" class="ghost" title="Manually Refresh Messages"><i class="fas fa-sync-alt"></i> Refresh</button>
-                        <button id="logoutBtn" class="ghost"><i class="fas fa-sign-out-alt"></i> Logout</button>
-                        <button id="deleteBtn" class="ghost" style="color:var(--text-error); border-color:var(--text-error);"><i class="fas fa-trash-alt"></i> Delete Account</button>
-                    </div>
-                </div>
-                
-                <div class="dashboard-grid">
-                    <div class="link-card">
-                        <div class="small muted" style="margin-bottom: 8px;"><i class="fas fa-link" style="margin-right: 5px;"></i> Your Shareable Link</div>
-                        <div class="content">
-                            <div id="shareUrl" style="font-weight:600; font-size: 14px; word-break: break-all;"></div>
-                            <div style="text-align:right;">
-                                <div class="small muted">Link ID</div>
-                                <div id="linkIdText" style="font-weight:700; font-size: 15px; margin-top: 4px; flex-shrink: 0;"></div>
-                            </div>
-                        </div>
-                    </div>
+        // ---------- DASHBOARD (Awesome Polish) ----------
+        async function renderDashboard() {
+            const uname = sessionStorage.getItem('asklyy_username');
+            let linkId = sessionStorage.getItem('asklyy_linkId') || '';
+            
+            show(`<div>
+                <div class="header-controls">
+                    <div class="user-info">
+                        <div style="font-weight:700; font-size: 16px; color: var(--accent-primary);"><i class="fas fa-user-circle" style="margin-right: 8px;"></i>Welcome, ${uname || 'User'}</div>
+                        <div class="small muted">Your secure anonymous message center.</div>
+                    </div>
+                    <div class="controls">
+                        <button id="refreshBtn" class="ghost" title="Manually Refresh Messages"><i class="fas fa-sync-alt"></i> Refresh</button>
+                        <button id="logoutBtn" class="ghost"><i class="fas fa-sign-out-alt"></i> Logout</button>
+                        <button id="deleteBtn" class="ghost" style="color:var(--text-error); border-color:var(--text-error);"><i class="fas fa-trash-alt"></i> Delete Account</button>
+                    </div>
+                </div>
+                
+                <div class="dashboard-grid">
+                    <div class="link-card">
+                        <div class="small muted" style="margin-bottom: 8px;"><i class="fas fa-link" style="margin-right: 5px;"></i> Your Shareable Link</div>
+                        <div class="content">
+                            <div id="shareUrl" style="font-weight:600; font-size: 13px; word-break: break-all;"></div>
+                            <div style="text-align:right;">
+                                <div class="small muted">Link ID</div>
+                                <div id="linkIdText" style="font-weight:700; font-size: 14px; margin-top: 4px; flex-shrink: 0;"></div>
+                            </div>
+                        </div>
+                    </div>
 
-                    <div class="stats-box">
-                        <i class="fas fa-envelope" style="color: var(--accent-primary);"></i>
-                        <div id="messageCountDisplay" class="count">0</div>
-                        <div class="label">Total Messages</div>
-                    </div>
-                </div>
+                    <div class="stats-box">
+                        <i class="fas fa-envelope" style="color: var(--accent-primary);"></i>
+                        <div id="messageCountDisplay" class="count">0</div>
+                        <div class="label muted">Total Messages</div>
+                    </div>
+                </div>
 
-                <div class="messages" id="messagesBox">
-                    <div class="muted small center" style="padding: 20px;">Loading messages...</div>
-                </div>
-            </div>`);
+                <div class="messages" id="messagesBox">
+                    <div class="muted small center" style="padding: 20px;">Loading messages...</div>
+                </div>
+            </div>`);
 
-            const logoutBtn = qs('#logoutBtn');
-            const deleteBtn = qs('#deleteBtn');
-            const refreshBtn = qs('#refreshBtn');
-            const linkIdText = qs('#linkIdText');
-            const shareUrlEl = qs('#shareUrl');
-            const messageCountDisplay = qs('#messageCountDisplay');
+            const logoutBtn = qs('#logoutBtn');
+            const deleteBtn = qs('#deleteBtn');
+            const refreshBtn = qs('#refreshBtn');
+            const linkIdText = qs('#linkIdText');
+            const shareUrlEl = qs('#shareUrl');
+            const messageCountDisplay = qs('#messageCountDisplay');
 
-            if (!linkId) {
-                linkIdText.textContent = 'N/A';
-                shareUrlEl.innerHTML = '<span class="error-text">Link ID unknown. Please re-login or create a link.</span>';
-            } else {
-                linkIdText.textContent = linkId;
-                const fullUrl = `${location.origin}/send/?id=${encodeURIComponent(linkId)}`;
-                shareUrlEl.innerHTML = `<a href="${fullUrl}" target="_blank" style="color:var(--text-primary); text-decoration:none;">${fullUrl}</a>`;
-            }
+            if (!linkId) {
+                linkIdText.textContent = 'N/A';
+                shareUrlEl.innerHTML = '<span class="error-text">Link ID unknown. Please re-login or create a link.</span>';
+            } else {
+                linkIdText.textContent = linkId;
+                const fullUrl = `${location.origin}/send/?id=${encodeURIComponent(linkId)}`;
+                shareUrlEl.innerHTML = `<a href="${fullUrl}" target="_blank" style="color:var(--text-primary); text-decoration:none;">${fullUrl}</a>`;
+            }
 
-            logoutBtn.onclick = () => {
-                stopPolling();
-                sessionStorage.clear();
-                navigateToRoot();
-            };
+            logoutBtn.onclick = () => {
+                stopPolling();
+                sessionStorage.clear();
+                navigateToRoot();
+            };
 
-            deleteBtn.onclick = async () => {
-                const ok = confirm('FINAL WARNING: Delete your account and ALL messages? This cannot be reversed.');
-                if (!ok) return;
-                try {
-                    deleteBtn.disabled = true;
-                    if (!basicAuthHeader()) throw new Error('Not authenticated');
-                    await apiPost('/dltlink', { linkId }, true);
-                    alert('Account successfully deleted.');
-                    logoutBtn.click();
-                } catch (err) {
-                    alert('Deletion failed: ' + (err.message || err));
-                } finally {
-                    deleteBtn.disabled = false;
-                }
-            };
+            deleteBtn.onclick = async () => {
+                const ok = confirm('FINAL WARNING: Delete your account and ALL messages? This cannot be reversed.');
+                if (!ok) return;
+                try {
+                    deleteBtn.disabled = true;
+                    if (!basicAuthHeader()) throw new Error('Not authenticated');
+                    await apiPost('/dltlink', { linkId }, true);
+                    alert('Account successfully deleted.');
+                    logoutBtn.click();
+                } catch (err) {
+                    alert('Deletion failed: ' + (err.message || err));
+                } finally {
+                    deleteBtn.disabled = false;
+                }
+            };
 
-            refreshBtn.onclick = async () => {
-                refreshBtn.disabled = true;
-                refreshBtn.innerHTML = '<i class="fas fa-sync-alt fa-spin"></i> Refreshing';
-                await fetchAndRenderMessages(linkId);
-                refreshBtn.innerHTML = '<i class="fas fa-sync-alt"></i> Refresh';
-                refreshBtn.disabled = false;
-            };
+            refreshBtn.onclick = async () => {
+                refreshBtn.disabled = true;
+                refreshBtn.innerHTML = '<i class="fas fa-sync-alt fa-spin"></i> Refreshing';
+                await fetchAndRenderMessages(linkId);
+                refreshBtn.innerHTML = '<i class="fas fa-sync-alt"></i> Refresh';
+                refreshBtn.disabled = false;
+            };
 
-            startPolling(() => fetchAndRenderMessages(linkId, true)); 
-            fetchAndRenderMessages(linkId);
-        }
+            startPolling(() => fetchAndRenderMessages(linkId, true)); 
+            fetchAndRenderMessages(linkId);
+        }
 
-        async function fetchAndRenderMessages(linkId, silent=false) {
-            const box = qs('#messagesBox');
-            const countDisplay = qs('#messageCountDisplay');
-            if (!linkId) {
-                if (!silent) box.innerHTML = '<div class="muted small center" style="padding: 20px;"><span class="error-text">Error:</span> No link ID found.</div>';
-                return;
-            }
-            
-            try {
-                const res = await apiGet('/getmessages?linkId=' + encodeURIComponent(linkId), true);
-                if (res && res.messages) {
-                    lastMessages = res.messages; // Store full messages
-                    messageCount = res.messages.length;
-                    if (countDisplay) countDisplay.textContent = messageCount;
+        async function fetchAndRenderMessages(linkId, silent=false) {
+            const box = qs('#messagesBox');
+            const countDisplay = qs('#messageCountDisplay');
+            if (!linkId) {
+                if (!silent) box.innerHTML = '<div class="muted small center" style="padding: 20px;"><span class="error-text">Error:</span> No link ID found.</div>';
+                return;
+            }
+            
+            try {
+                const res = await apiGet('/getmessages?linkId=' + encodeURIComponent(linkId), true);
+                if (res && res.messages) {
+                    lastMessages = res.messages; // Store full messages
+                    messageCount = res.messages.length;
+                    if (countDisplay) countDisplay.textContent = messageCount;
 
-                    if (messageCount === 0) {
-                        box.innerHTML = '<div class="muted small center" style="padding: 20px;"><i class="fas fa-inbox" style="margin-right: 8px;"></i>No messages yet. Share your secure link!</div>';
-                        return;
-                    }
-                    
-                    box.innerHTML = res.messages.map(m => {
-                        const name = m.name ? escapeHtml(m.name) : 'Anonymous';
-                        const date = m.createdAt ? new Date(m.createdAt).toLocaleString() : 'Just now';
-                        const truncatedText = truncateMessage(m.text, 100);
-                        
-                        return `<div class="message" data-id="${m.messageId}">
-                            <div class="meta">
-                                <span><i class="fas fa-user-secret" style="margin-right: 5px;"></i>${name}</span>
-                                <span class="small muted">${date}</span>
-                            </div>
-                            <div class="content">${escapeHtml(truncatedText)}</div>
-                        </div>`;
-                    }).join('');
-                    
-                    // Attach click handler to rendered messages
-                    qsa('.message', box).forEach(el => {
-                        el.onclick = () => openMessageModal(el.dataset.id);
-                    });
+                    if (messageCount === 0) {
+                        box.innerHTML = '<div class="muted small center" style="padding: 20px;"><i class="fas fa-inbox" style="margin-right: 8px;"></i>No messages yet. Share your secure link!</div>';
+                        return;
+                    }
+                    
+                    box.innerHTML = res.messages.map(m => {
+                        const name = m.name ? escapeHtml(m.name) : 'Anonymous';
+                        const date = m.createdAt ? new Date(m.createdAt).toLocaleString() : 'Just now';
+                        const truncatedText = truncateMessage(m.text, 100);
+                        
+                        return `<div class="message" data-id="${m.messageId}">
+                            <div class="meta">
+                                <span><i class="fas fa-user-secret" style="margin-right: 5px;"></i>${name}</span>
+                                <span class="small muted">${date}</span>
+                            </div>
+                            <div class="content">${escapeHtml(truncatedText)}</div>
+                        </div>`;
+                    }).join('');
+                    
+                    // Attach click handler to rendered messages
+                    qsa('.message', box).forEach(el => {
+                        el.onclick = () => openMessageModal(el.dataset.id);
+                    });
 
-                } else if (!silent) {
-                    box.innerHTML = '<div class="muted small center" style="padding: 20px;"><span class="error-error">Server Error:</span> Failed to load messages.</div>';
-                }
-            } catch (err) {
-                if (!silent) {
-                    box.innerHTML = `<div class="muted small center" style="padding: 20px;"><span class="error-text">Connection Error:</span> ${escapeHtml(err.message || 'Authentication Failed')}</div>`;
-                }
-            }
-        }
-        
-        // --- MODAL FUNCTIONS ---
-        function openMessageModal(messageId) {
-            const message = lastMessages.find(m => String(m.messageId) === String(messageId));
-            if (!message) {
-                alert("Message not found.");
-                return;
-            }
+                } else if (!silent) {
+                    box.innerHTML = '<div class="muted small center" style="padding: 20px;"><span class="error-text">Server Error:</span> Failed to load messages.</div>';
+                }
+            } catch (err) {
+                if (!silent) {
+                    box.innerHTML = `<div class="muted small center" style="padding: 20px;"><span class="error-text">Connection Error:</span> ${escapeHtml(err.message || 'Authentication Failed')}</div>`;
+                }
+            }
+        }
+        
+        // --- MODAL FUNCTIONS (Unchanged JS) ---
+        function openMessageModal(messageId) {
+            const message = lastMessages.find(m => String(m.messageId) === String(messageId));
+            if (!message) {
+                alert("Message not found.");
+                return;
+            }
 
-            modalContent.innerHTML = renderMessageModal(message);
-            modalOverlay.classList.add('active');
-            
-            // Attach close handler
-            qs('#modalCloseBtn').onclick = closeMessageModal;
-            
-            // Attach copy handler
-            qs('#modalCopyBtn').onclick = () => copyMessageToClipboard(message.text);
-        }
+            modalContent.innerHTML = renderMessageModal(message);
+            modalOverlay.classList.add('active');
+            
+            // Attach close handler
+            qs('#modalCloseBtn').onclick = closeMessageModal;
+            
+            // Attach copy handler
+            qs('#modalCopyBtn').onclick = () => copyMessageToClipboard(message.text);
+        }
 
-        function closeMessageModal() {
-            modalOverlay.classList.remove('active');
-        }
-        
-        function renderMessageModal(m) {
-            const name = m.name ? escapeHtml(m.name) : 'Anonymous';
-            const date = m.createdAt ? new Date(m.createdAt).toLocaleString() : 'Just now';
-            const text = escapeHtml(m.text || '');
-            
-            return `
-                <div class="modal-header">
-                    <h4><i class="fas fa-envelope-open-text" style="margin-right: 8px;"></i>Full Message Details</h4>
-                    <button id="modalCloseBtn" class="modal-close">&times;</button>
-                </div>
-                <div class="muted" style="margin-bottom: 10px;">
-                    From: <strong>${name}</strong>
-                    <span style="float: right;">${date}</span>
-                </div>
-                
-                <div class="message-full" id="messageTextToCopy">${text}</div>
-                
-                <div class="actions" style="justify-content: flex-end; margin-top: 15px;">
-                    <button id="modalCopyBtn" style="background: var(--text-success); box-shadow: 0 4px 15px rgba(52, 211, 153, 0.5);"><i class="fas fa-copy"></i> Copy Message</button>
-                    </div>
-                <div id="copyFeedback" class="small muted" style="margin-top: 10px; text-align: right;"></div>
-            `;
-        }
-        
-        function copyMessageToClipboard(text) {
-            const feedbackEl = qs('#copyFeedback');
-            navigator.clipboard.writeText(text).then(() => {
-                feedbackEl.innerHTML = '<span style="color:var(--text-success);"><i class="fas fa-check"></i> Copied to clipboard!</span>';
-                setTimeout(() => feedbackEl.textContent = '', 2000);
-            }).catch(err => {
-                feedbackEl.innerHTML = '<span class="error-text"><i class="fas fa-times"></i> Failed to copy.</span>';
-                console.error('Copy failed:', err);
-            });
-        }
+        function closeMessageModal() {
+            modalOverlay.classList.remove('active');
+        }
+        
+        function renderMessageModal(m) {
+            const name = m.name ? escapeHtml(m.name) : 'Anonymous';
+            const date = m.createdAt ? new Date(m.createdAt).toLocaleString() : 'Just now';
+            const text = escapeHtml(m.text || '');
+            
+            return `
+                <div class="modal-header">
+                    <h4><i class="fas fa-envelope-open-text" style="margin-right: 8px;"></i>Full Message Details</h4>
+                    <button id="modalCloseBtn" class="modal-close">&times;</button>
+                </div>
+                <div class="muted" style="margin-bottom: 10px; font-size: 12px;">
+                    From: <strong>${name}</strong>
+                    <span class="small muted" style="float: right; margin-top: 2px;">${date}</span>
+                </div>
+                
+                <div class="message-full" id="messageTextToCopy">${text}</div>
+                
+                <div class="actions" style="justify-content: flex-end; margin-top: 15px;">
+                    <button id="modalCopyBtn" style="background: var(--text-success); box-shadow: 0 2px 8px rgba(52, 211, 153, 0.4);"><i class="fas fa-copy"></i> Copy Message</button>
+                    </div>
+                <div id="copyFeedback" class="small muted" style="margin-top: 10px; text-align: right;"></div>
+            `;
+        }
+        
+        function copyMessageToClipboard(text) {
+            const feedbackEl = qs('#copyFeedback');
+            navigator.clipboard.writeText(text).then(() => {
+                feedbackEl.innerHTML = '<span class="success-text"><i class="fas fa-check"></i> Copied to clipboard!</span>';
+                setTimeout(() => feedbackEl.textContent = '', 2000);
+            }).catch(err => {
+                feedbackEl.innerHTML = '<span class="error-text"><i class="fas fa-times"></i> Failed to copy.</span>';
+                console.error('Copy failed:', err);
+            });
+        }
 
 
-        // ---------- SEND PAGE (Unchanged) ----------
-        function renderSendPage(linkIdFromUrl) {
-            stopPolling();
-            const linkId = linkIdFromUrl || '';
-            show(`
-                <div>
-                    <div class="header-controls">
-                        <div class="user-info">
-                            <div style="font-weight:700; font-size: 18px; color: var(--accent-primary);"><i class="fas fa-comment-dots" style="margin-right: 8px;"></i>Send A Secret Message</div>
-                            <div class="small muted">You are sending a message to link ID: <strong style="color:var(--text-primary);" id="sendLinkId">${escapeHtml(linkId)}</strong></div>
-                        </div>
-                        <div class="actions">
-                            <button id="homeBtn" class="ghost"><i class="fas fa-arrow-left"></i> Back</button>
-                        </div>
-                    </div>
+        // ---------- SEND PAGE (Unchanged JS) ----------
+        function renderSendPage(linkIdFromUrl) {
+            stopPolling();
+            const linkId = linkIdFromUrl || '';
+            show(`
+                <div>
+                    <div class="header-controls">
+                        <div class="user-info">
+                            <div style="font-weight:700; font-size: 16px; color: var(--accent-primary);"><i class="fas fa-comment-dots" style="margin-right: 8px;"></i>Send A Secret Message</div>
+                            <div class="small muted">You are sending a message to link ID: <strong style="color:var(--text-primary);" id="sendLinkId">${escapeHtml(linkId)}</strong></div>
+                        </div>
+                        <div class="actions">
+                            <button id="homeBtn" class="ghost"><i class="fas fa-arrow-left"></i> Back</button>
+                        </div>
+                    </div>
 
-                    <form id="sendForm" style="margin-top:20px">
-                        <div class="col" style="gap:10px">
-                            <div>
-                                <label class="small muted" style="display:block; margin-bottom: 5px;">Your identity (Optional - remains anonymous)</label>
-                                <input id="senderName" type="text" placeholder="e.g. Someone who cares" />
-                            </div>
-                            <div>
-                                <label class="small muted" style="display:block; margin-bottom: 5px;">Your secret message</label>
-                                <textarea id="senderText" rows="5" placeholder="Write your message here..." required></textarea>
-                            </div>
-                            <div class="actions" style="margin-top:10px;">
-                                <button id="sendNow" type="submit" style="flex:1;"><i class="fas fa-paper-plane"></i> Send Secret Message</button>
-                                <button id="clearBtn" type="button" class="ghost"><i class="fas fa-times"></i> Clear Fields</button>
-                            </div>
-                            <div id="sendResult" class="small" style="margin-top:10px;"></div>
-                        </div>
-                    </form>
-                    
-                    ${!linkId ? `<div class="notice" style="margin-top: 20px;">
-                        <i class="fas fa-exclamation-triangle"></i> <strong>Error:</strong> This link is missing a valid ID. Please check the URL.
-                    </div>` : ''}
-                </div>
-            `);
+                    <form id="sendForm" style="margin-top:15px">
+                        <div class="col" style="gap:15px">
+                            <div>
+                                <label class="small muted" style="display:block; margin-bottom: 5px;">Your identity (Optional - remains anonymous)</label>
+                                <input id="senderName" type="text" placeholder="e.g. Someone who cares" />
+                            </div>
+                            <div>
+                                <label class="small muted" style="display:block; margin-bottom: 5px;">Your secret message</label>
+                                <textarea id="senderText" rows="4" placeholder="Write your message here..." required></textarea>
+                            </div>
+                            <div class="actions" style="margin-top:10px;">
+                                <button id="sendNow" type="submit" style="flex:1;"><i class="fas fa-paper-plane"></i> Send Secret Message</button>
+                                <button id="clearBtn" type="button" class="ghost"><i class="fas fa-times"></i> Clear Fields</button>
+                            </div>
+                            <div id="sendResult" class="small" style="margin-top:10px;"></div>
+                        </div>
+                    </form>
+                    
+                    ${!linkId ? `<div class="notice" style="margin-top: 20px;">
+                        <i class="fas fa-exclamation-triangle"></i> <strong>Error:</strong> This link is missing a valid ID. Please check the URL.
+                    </div>` : ''}
+                </div>
+            `);
 
-            qs('#homeBtn').onclick = () => {
-                history.pushState({}, '', '/');
-                route();
-            };
+            qs('#homeBtn').onclick = () => {
+                history.pushState({}, '', '/');
+                route();
+            };
 
-            const form = qs('#sendForm');
-            form.addEventListener('submit', async (ev) => {
-                ev.preventDefault();
-                const name = qs('#senderName').value.trim();
-                const text = qs('#senderText').value.trim();
-                const out = qs('#sendResult');
-                out.textContent = '';
-                
-                if (!text) { out.innerHTML = '<span class="error-text">Message cannot be empty.</span>'; return; }
-                if (!linkId) { out.innerHTML = '<span class="error-text">Invalid link ID. Cannot send.</span>'; return; }
-                
-                try {
-                    qs('#sendNow').disabled = true;
-                    qs('#sendNow').innerHTML = '<i class="fas fa-circle-notch fa-spin"></i> Sending...';
-                    await apiPost('/sendmessages', { linkId, name, text }, false);
-                    out.innerHTML = '<span class="success-text"><i class="fas fa-check-circle"></i> Message sent successfully!</span>';
-                    
-                    qs('#senderText').value = '';
-                    qs('#senderName').value = '';
-                } catch (err) {
-                    out.innerHTML = `<span class="error-text"><i class="fas fa-times-circle"></i> Send failed: ${err.message || 'Server error.'}</span>`;
-                } finally {
-                    qs('#sendNow').disabled = false;
-                    qs('#sendNow').innerHTML = '<i class="fas fa-paper-plane"></i> Send Secret Message';
-                }
-            });
+            const form = qs('#sendForm');
+            form.addEventListener('submit', async (ev) => {
+                ev.preventDefault();
+                const name = qs('#senderName').value.trim();
+                const text = qs('#senderText').value.trim();
+                const out = qs('#sendResult');
+                out.textContent = '';
+                
+                if (!text) { out.innerHTML = '<span class="error-text">Message cannot be empty.</span>'; return; }
+                if (!linkId) { out.innerHTML = '<span class="error-text">Invalid link ID. Cannot send.</span>'; return; }
+                
+                try {
+                    qs('#sendNow').disabled = true;
+                    qs('#sendNow').innerHTML = '<i class="fas fa-circle-notch fa-spin"></i> Sending...';
+                    await apiPost('/sendmessages', { linkId, name, text }, false);
+                    out.innerHTML = '<span class="success-text"><i class="fas fa-check-circle"></i> Message sent successfully!</span>';
+                    
+                    qs('#senderText').value = '';
+                    qs('#senderName').value = '';
+                } catch (err) {
+                    out.innerHTML = `<span class="error-text"><i class="fas fa-times-circle"></i> Send failed: ${err.message || 'Server error.'}</span>`;
+                } finally {
+                    qs('#sendNow').disabled = false;
+                    qs('#sendNow').innerHTML = '<i class="fas fa-paper-plane"></i> Send Secret Message';
+                }
+            });
 
-            qs('#clearBtn').onclick = () => {
-                qs('#senderText').value = '';
-                qs('#senderName').value = '';
-                qs('#sendResult').textContent = '';
-            };
-        }
+            qs('#clearBtn').onclick = () => {
+                qs('#senderText').value = '';
+                qs('#senderName').value = '';
+                qs('#sendResult').textContent = '';
+            };
+        }
 
-        // ---------- Polling & Utilities (Unchanged) ----------
-        function startPolling(fn) {
-            stopPolling();
-            messagesPollId = setInterval(() => {
-                if (document.visibilityState === 'visible') fn();
-            }, pollIntervalMs);
-        }
-        function stopPolling() {
-            if (messagesPollId) { clearInterval(messagesPollId); messagesPollId = null; }
-        }
+        // ---------- Polling & Utilities (Unchanged JS) ----------
+        function startPolling(fn) {
+            stopPolling();
+            messagesPollId = setInterval(() => {
+                if (document.visibilityState === 'visible') fn();
+            }, pollIntervalMs);
+        }
+        function stopPolling() {
+            if (messagesPollId) { clearInterval(messagesPollId); messagesPollId = null; }
+        }
 
-        function escapeHtml(s){
-            if (!s) return '';
-            return String(s).replace(/[&<>"']/g, c => ({'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;',"'":'&#039;'}[c]));
-        }
+        function escapeHtml(s){
+            if (!s) return '';
+            return String(s).replace(/[&<>"']/g, c => ({'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;',"'":'&#039;'}[c]));
+        }
 
-        window.addEventListener('popstate', route);
-        // Add listener to close modal on clicking outside or pressing ESC
-        modalOverlay.addEventListener('click', (e) => {
-            if (e.target === modalOverlay) closeMessageModal();
-        });
-        document.addEventListener('keydown', (e) => {
-            if (e.key === 'Escape' && modalOverlay.classList.contains('active')) closeMessageModal();
-        });
-        route();
-    </script>
+        window.addEventListener('popstate', route);
+        // Add listener to close modal on clicking outside or pressing ESC
+        modalOverlay.addEventListener('click', (e) => {
+            if (e.target === modalOverlay) closeMessageModal();
+        });
+        document.addEventListener('keydown', (e) => {
+            if (e.key === 'Escape' && modalOverlay.classList.contains('active')) closeMessageModal();
+        });
+        route();
+    </script>
 </body>
 </html>
