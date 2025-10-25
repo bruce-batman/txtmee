@@ -7,34 +7,26 @@
     <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;600;700;800&display=swap" rel="stylesheet">
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
     <style>
-        /* --- 1. LUXURY COLOR PALETTE & VARIABLES --- */
+        /* --- 1. LUXURY COLOR PALETTE & VARIABLES (Unchanged) --- */
         :root {
-            /* Deeper, more atmospheric dark background */
-            --bg-primary: #04091A; /* Very deep indigo */
-            --bg-secondary: #0F172A; /* Slate blue-darker */
-            --bg-tertiary: #1D263B; /* Slightly lighter for elements */
-
-            /* Glass and Card Effects */
+            --bg-primary: #04091A; 
+            --bg-secondary: #0F172A; 
+            --bg-tertiary: #1D263B; 
             --card-base: rgba(15, 23, 42, 0.7);
             --card-border: rgba(255, 255, 255, 0.12);
             --card-shadow: 0 15px 40px rgba(0, 0, 0, 0.6);
-            
-            /* Accent & Interactions */
-            --accent-primary: #4C72E0; /* Rich medium blue */
-            --accent-secondary: #7F58E8; /* Soft violet for gradient blend */
+            --accent-primary: #4C72E0; 
+            --accent-secondary: #7F58E8; 
             --accent-gradient: linear-gradient(135deg, var(--accent-secondary) 0%, var(--accent-primary) 100%);
             --accent-shadow: 0 5px 25px rgba(76, 114, 224, 0.5);
-
-            /* Typography */
             --text-primary: #EBF4F7;
             --text-muted: #A0B9D5;
-            --text-success: #34D399; /* Emerald green */
-            --text-error: #F87171; /* Soft red */
-            
+            --text-success: #34D399; 
+            --text-error: #F87171; 
             color-scheme: dark;
         }
 
-        /* --- 2. BASE STYLES AND AESTHETICS --- */
+        /* --- 2. BASE STYLES AND AESTHETICS (Refined Scaling) --- */
         *{ box-sizing: border-box; font-family: 'Inter', system-ui, sans-serif; }
         body{
             margin: 0;
@@ -44,43 +36,42 @@
             display: flex;
             align-items: center;
             justify-content: center;
-            padding: 40px 18px;
-            /* Atmospheric Gradient Overlay */
+            padding: 30px 18px; /* Slightly reduced padding */
             background-image: radial-gradient(circle at 10% 10%, rgba(76, 114, 224, 0.15) 1%, transparent 30%), 
                               radial-gradient(circle at 90% 90%, rgba(127, 88, 232, 0.1) 1%, transparent 35%);
         }
-        .container{ width: 100%; max-width: 1000px; }
+        .container{ width: 100%; max-width: 900px; /* Max width slightly reduced */ }
 
-        /* --- 3. CORE COMPONENTS (Smoother Edges) --- */
+        /* --- 3. CORE COMPONENTS (Scaled Down) --- */
         .card {
             background: var(--card-base);
-            padding: 35px;
-            border-radius: 16px; /* Slightly softer than 20px */
+            padding: 30px; /* Reduced box padding */
+            border-radius: 14px; /* Slightly smaller border radius */
             box-shadow: var(--card-shadow);
             border: 1px solid var(--card-border);
-            backdrop-filter: blur(10px); /* Enhanced Glass effect */
+            backdrop-filter: blur(10px); 
         }
         
         /* Header and Logo */
-        header { display: flex; gap: 20px; align-items: center; margin-bottom: 30px; }
+        header { display: flex; gap: 16px; align-items: center; margin-bottom: 25px; }
         .logo {
-            width: 55px; height: 55px; border-radius: 14px;
+            width: 48px; height: 48px; /* Smaller logo */
+            border-radius: 12px;
             background: var(--accent-gradient);
-            display: inline-flex; align-items: center; justify-content: center;
-            font-weight: 800; font-size: 26px; color: white;
-            box-shadow: 0 0 15px rgba(76, 114, 224, 0.4);
+            font-weight: 800; font-size: 22px; 
+            box-shadow: 0 0 12px rgba(76, 114, 224, 0.4);
         }
-        h1 { margin: 0; font-size: 30px; font-weight: 800; color: var(--text-primary); text-shadow: 0 1px 3px rgba(0, 0, 0, 0.5); }
-        p.lead { margin: 4px 0 0; color: var(--text-muted); font-size: 15px; }
+        h1 { margin: 0; font-size: 26px; /* Smaller main title */ font-weight: 800; color: var(--text-primary); }
+        p.lead { margin: 2px 0 0; color: var(--text-muted); font-size: 14px; }
 
         /* Inputs/Textareas */
         input[type="text"], input[type="password"], textarea {
             background: var(--bg-tertiary);
             border: 1px solid rgba(255, 255, 255, 0.1);
-            padding: 14px; /* Larger padding */
-            border-radius: 10px;
+            padding: 12px; /* Reduced input padding */
+            border-radius: 8px;
             color: inherit;
-            font-size: 16px;
+            font-size: 15px; /* Smaller font inside inputs */
             width: 100%;
             transition: all 0.3s ease;
             box-shadow: inset 0 1px 3px rgba(0, 0, 0, 0.4);
@@ -88,108 +79,71 @@
         input:focus, textarea:focus {
             outline: none;
             border-color: var(--accent-primary);
-            box-shadow: 0 0 0 3px rgba(76, 114, 224, 0.3), inset 0 1px 3px rgba(0, 0, 0, 0.4);
+            box-shadow: 0 0 0 2px rgba(76, 114, 224, 0.3), inset 0 1px 3px rgba(0, 0, 0, 0.4);
             background: var(--bg-secondary);
         }
         
-        /* Buttons (More pronounced 3D effect) */
+        /* Buttons */
         button {
             background: var(--accent-gradient);
             border: none;
             color: white;
-            padding: 13px 25px;
-            border-radius: 8px;
+            padding: 10px 20px; /* Reduced button padding/height */
+            border-radius: 6px;
             cursor: pointer;
             font-weight: 700;
-            font-size: 16px;
+            font-size: 14px; /* Smaller button text */
             transition: all 0.2s ease;
             box-shadow: var(--accent-shadow);
         }
         button:hover:not(:disabled) {
-            transform: translateY(-2px);
-            opacity: 0.95;
-            box-shadow: 0 8px 30px rgba(76, 114, 224, 0.6);
-        }
-        button:active:not(:disabled) {
-            transform: translateY(0);
-            opacity: 1;
-            box-shadow: 0 2px 10px rgba(76, 114, 224, 0.4);
-        }
-        button:disabled {
-            opacity: 0.5;
-            cursor: not-allowed;
-            transform: none;
-            box-shadow: none;
+            transform: translateY(-1px);
+            box-shadow: 0 5px 20px rgba(76, 114, 224, 0.5);
         }
         button.ghost {
-            background: transparent;
-            border: 1px solid var(--text-muted);
-            color: var(--text-muted);
-            box-shadow: none;
-            padding: 12px 20px;
-        }
-        button.ghost:hover:not(:disabled) {
-            border-color: var(--text-primary);
-            color: var(--text-primary);
-            background: rgba(255, 255, 255, 0.05);
+            padding: 9px 18px; /* Adjusted ghost button padding */
+            font-size: 14px;
         }
 
-        /* Dashboard specific */
-        .link-card {
-            background: var(--bg-tertiary);
-            padding: 20px;
-            border-radius: 12px;
-            border: 1px solid rgba(127, 88, 232, 0.3);
-            box-shadow: 0 4px 15px rgba(0, 0, 0, 0.3);
-        }
-        .messages {
-            margin-top: 25px;
-            max-height: 450px;
-            padding-right: 15px; /* More padding for scrollbar */
-        }
-        .message {
-            background: var(--bg-secondary);
-            padding: 18px;
-            border-radius: 12px;
-            margin-bottom: 15px;
-            border: 1px solid rgba(255, 255, 255, 0.05);
-            transition: transform 0.2s;
-        }
-        .message:hover {
-            transform: translateY(-2px);
-            box-shadow: 0 6px 15px rgba(0, 0, 0, 0.4);
-        }
-        .message .meta { font-size: 14px; color: var(--text-muted); margin-bottom: 10px; font-weight: 600; }
-        .message .content { font-size: 16px; line-height: 1.6; }
-
-        /* Other Helpers */
+        /* Layout & Typography Helpers */
+        .auth-container { display: flex; gap: 20px; margin-top: 20px; flex-wrap: wrap; }
         .auth-container > div { 
-            padding: 25px; 
-            border-radius: 12px; 
+            padding: 20px; /* Reduced padding inside auth boxes */
+            border-radius: 10px; 
             background: var(--bg-secondary); 
             border: 1px solid var(--card-border);
-            box-shadow: 0 4px 10px rgba(0, 0, 0, 0.4);
+            flex: 1; min-width: 300px;
         }
-        .notice {
-            background: rgba(127, 88, 232, 0.1);
-            border-left: 5px solid var(--accent-secondary);
-            font-size: 15px;
-        }
-        .success-text { color: var(--text-success); font-weight: 600; }
-        .error-text { color: var(--text-error); font-weight: 600; }
-        .muted{ color: var(--text-muted); font-size: 14px; }
-        .small{ font-size: 13px; color: var(--text-muted); }
+        .muted{ color: var(--text-muted); font-size: 13px; }
+        .small{ font-size: 12px; color: var(--text-muted); }
+        .actions { display: flex; gap: 8px; align-items: center; }
 
-        /* Media Queries */
+        /* Dashboard specific */
+        .link-card { padding: 15px; border-radius: 10px; margin-top: 15px; }
+        .messages { margin-top: 20px; max-height: 400px; padding-right: 10px; }
+        .message { padding: 15px; border-radius: 10px; margin-bottom: 10px; }
+        .message .meta { font-size: 13px; margin-bottom: 8px; }
+        .message .content { font-size: 15px; line-height: 1.5; }
+        .header-controls { margin-bottom: 10px; }
+        
+        /* Media Queries (Mobile Scaling Refinement) */
         @media (max-width: 768px) {
-            body { padding: 20px 10px; }
-            .card { padding: 20px; }
-            h1 { font-size: 24px; }
-            header { margin-bottom: 20px; }
-            .auth-container { flex-direction: column; gap: 20px; }
-            .header-controls { flex-direction: column; align-items: flex-start; gap: 10px; }
-            .link-card { flex-direction: column; align-items: flex-start; gap: 10px; }
-            .link-card > div:last-child { align-items: flex-start; text-align: left; margin-top: 5px; }
+            body { padding: 15px; }
+            .card { padding: 20px; border-radius: 10px; }
+            h1 { font-size: 22px; }
+            .logo { width: 40px; height: 40px; font-size: 20px; }
+            header { margin-bottom: 15px; }
+
+            .auth-container { flex-direction: column; gap: 15px; }
+            .auth-container > div { padding: 15px; min-width: 100%; }
+            
+            button { padding: 10px 15px; font-size: 13px; }
+            button.ghost { padding: 8px 15px; }
+
+            .controls { flex-wrap: wrap; } /* Allow controls to wrap on tiny screens */
+            .controls button { margin-top: 5px; }
+            .link-card { flex-direction: column; align-items: stretch; }
+            .link-card > div:last-child { text-align: left; margin-top: 5px; }
         }
     </style>
 </head>
@@ -197,7 +151,7 @@
     <div class="container">
         <div class="card" id="app">
             <header>
-                <div class="logo">A</div>
+                <div class="logo center">A</div>
                 <div>
                     <h1>Asklyy</h1>
                     <p class="lead">Secure and truly anonymous communication, globally.</p>
@@ -209,10 +163,9 @@
     </div>
 
     <script>
-        // JS Logic is kept consistent, with refined messaging and error handling.
+        // JS Logic (Unchanged, as the requests were purely visual/sizing)
         const API_PREFIX = '/api';
         const view = document.getElementById('view');
-        // Silent Polling: 10 seconds
         const pollIntervalMs = 10000; 
         let messagesPollId = null;
 
@@ -282,32 +235,32 @@
             stopPolling();
             show(`
                 <div>
-                    <h2 style="margin:0 0 16px; font-size: 28px; font-weight: 700;">Start Your Anonymous Link</h2>
-                    <p class="muted" style="margin-bottom: 30px;">Generate a unique link, share it on your socials, and receive private, untraceable messages instantly. Zero sign-up required for senders.</p>
+                    <h2 style="margin:0 0 16px; font-size: 20px; font-weight: 700;">Start Your Anonymous Link</h2>
+                    <p class="muted" style="margin-bottom: 25px; font-size: 14px;">Generate a unique link, share it on your socials, and receive private, untraceable messages instantly. Zero sign-up required for senders.</p>
 
                     <div class="auth-container row">
                         <div>
-                            <h3 style="font-size: 20px; margin-bottom: 15px;"><i class="fas fa-plus-circle" style="color: var(--accent-secondary); margin-right: 8px;"></i> Create New Account</h3>
-                            <div class="col" style="gap:10px;">
+                            <h3 style="font-size: 17px; margin-bottom: 12px;"><i class="fas fa-plus-circle" style="color: var(--accent-secondary); margin-right: 8px;"></i> Create New Account</h3>
+                            <div class="col" style="gap:8px;">
                                 <input id="new_username" type="text" placeholder="Choose a unique username" />
                                 <input id="new_password" type="password" placeholder="Choose a strong password" />
                                 <div class="actions" style="margin-top: 10px;">
                                     <button id="createBtn" style="flex:1;"><i class="fas fa-magic"></i> Generate Link</button>
                                 </div>
                             </div>
-                            <div id="createMsg" class="small" style="margin-top:10px;"></div>
+                            <div id="createMsg" class="small" style="margin-top:8px;"></div>
                         </div>
 
                         <div>
-                            <h3 style="font-size: 20px; margin-bottom: 15px;"><i class="fas fa-lock" style="color: var(--accent-secondary); margin-right: 8px;"></i> Existing User Login</h3>
-                            <div class="col" style="gap:10px;">
+                            <h3 style="font-size: 17px; margin-bottom: 12px;"><i class="fas fa-lock" style="color: var(--accent-secondary); margin-right: 8px;"></i> Existing User Login</h3>
+                            <div class="col" style="gap:8px;">
                                 <input id="login_username" type="text" placeholder="Your Username" />
                                 <input id="login_password" type="password" placeholder="Your Password" />
                                 <div class="actions" style="margin-top: 10px;">
                                     <button id="loginBtn" style="flex:1;"><i class="fas fa-sign-in-alt"></i> Access Dashboard</button>
                                 </div>
                             </div>
-                            <div id="loginMsg" class="small" style="margin-top:10px;"></div>
+                            <div id="loginMsg" class="small" style="margin-top:8px;"></div>
                         </div>
                     </div>
                     
@@ -370,7 +323,6 @@
                     loginBtn.disabled = true;
                     loginBtn.innerHTML = '<i class="fas fa-spinner fa-pulse"></i> Verifying...';
                     
-                    // Attempt to verify login
                     const tempLinkId = sessionStorage.getItem('asklyy_linkId') || 'temp';
                     const res = await apiGet('/getmessages?linkId=' + encodeURIComponent(tempLinkId), true);
                     
@@ -398,7 +350,7 @@
             show(`<div>
                 <div class="header-controls">
                     <div class="user-info">
-                        <div style="font-weight:700; font-size: 22px; color: var(--accent-primary);"><i class="fas fa-user-circle" style="margin-right: 8px;"></i>Welcome, ${uname || 'User'}</div>
+                        <div style="font-weight:700; font-size: 18px; color: var(--accent-primary);"><i class="fas fa-user-circle" style="margin-right: 8px;"></i>Welcome, ${uname || 'User'}</div>
                         <div class="small muted">Your personal anonymous message center.</div>
                     </div>
                     <div class="controls">
@@ -411,16 +363,16 @@
                 <div class="link-card row">
                     <div style="flex: 2;">
                         <div class="small muted"><i class="fas fa-share-alt"></i> Share this secret URL</div>
-                        <div id="shareUrl" style="font-weight:600; margin-top:8px; font-size: 16px; word-break: break-all;"></div>
+                        <div id="shareUrl" style="font-weight:600; margin-top:6px; font-size: 15px; word-break: break-all;"></div>
                     </div>
                     <div style="flex: 1; text-align:right;">
                         <div class="small muted">Link ID</div>
-                        <div id="linkIdText" style="font-weight:700; font-size: 18px;"></div>
+                        <div id="linkIdText" style="font-weight:700; font-size: 16px;"></div>
                     </div>
                 </div>
 
                 <div class="messages" id="messagesBox">
-                    <div class="muted small center" style="padding: 30px;">Loading messages...</div>
+                    <div class="muted small center" style="padding: 20px;">Loading messages...</div>
                 </div>
             </div>`);
 
@@ -430,7 +382,6 @@
             const linkIdText = qs('#linkIdText');
             const shareUrlEl = qs('#shareUrl');
 
-            // Link URL setup
             if (!linkId) {
                 linkIdText.textContent = 'N/A';
                 shareUrlEl.innerHTML = '<span class="error-text">Link ID unknown. Please re-login or create a link.</span>';
@@ -440,7 +391,6 @@
                 shareUrlEl.innerHTML = `<a href="${fullUrl}" target="_blank" style="color:var(--text-primary); text-decoration:none;">${fullUrl}</a>`;
             }
 
-            // --- Event Handlers ---
             logoutBtn.onclick = () => {
                 stopPolling();
                 sessionStorage.clear();
@@ -471,7 +421,6 @@
                 refreshBtn.disabled = false;
             };
 
-            // Start silent polling
             startPolling(() => fetchAndRenderMessages(linkId, true)); 
             fetchAndRenderMessages(linkId);
         }
@@ -479,20 +428,18 @@
         async function fetchAndRenderMessages(linkId, silent=false) {
             const box = qs('#messagesBox');
             if (!linkId) {
-                if (!silent) box.innerHTML = '<div class="muted small center" style="padding: 30px;"><span class="error-text">Error:</span> No link ID found.</div>';
+                if (!silent) box.innerHTML = '<div class="muted small center" style="padding: 20px;"><span class="error-text">Error:</span> No link ID found.</div>';
                 return;
             }
             
             try {
                 const res = await apiGet('/getmessages?linkId=' + encodeURIComponent(linkId), true);
                 if (res && res.messages) {
-                    // Check for new messages without disturbing the UI
                     if (res.messages.length === 0) {
-                        box.innerHTML = '<div class="muted small center" style="padding: 30px;"><i class="fas fa-inbox" style="margin-right: 8px;"></i>No messages yet. Share your secure link!</div>';
+                        box.innerHTML = '<div class="muted small center" style="padding: 20px;"><i class="fas fa-inbox" style="margin-right: 8px;"></i>No messages yet. Share your secure link!</div>';
                         return;
                     }
                     
-                    // Render messages
                     box.innerHTML = res.messages.map(m => {
                         const name = m.name ? escapeHtml(m.name) : 'Anonymous';
                         const text = escapeHtml(m.text || '');
@@ -507,11 +454,11 @@
                         </div>`;
                     }).join('');
                 } else if (!silent) {
-                    box.innerHTML = '<div class="muted small center" style="padding: 30px;"><span class="error-text">Server Error:</span> Failed to load messages.</div>';
+                    box.innerHTML = '<div class="muted small center" style="padding: 20px;"><span class="error-text">Server Error:</span> Failed to load messages.</div>';
                 }
             } catch (err) {
                 if (!silent) {
-                    box.innerHTML = `<div class="muted small center" style="padding: 30px;"><span class="error-text">Connection Error:</span> ${escapeHtml(err.message || 'Authentication Failed')}</div>`;
+                    box.innerHTML = `<div class="muted small center" style="padding: 20px;"><span class="error-text">Connection Error:</span> ${escapeHtml(err.message || 'Authentication Failed')}</div>`;
                 }
             }
         }
@@ -524,7 +471,7 @@
                 <div>
                     <div class="header-controls">
                         <div class="user-info">
-                            <div style="font-weight:700; font-size: 22px; color: var(--accent-primary);"><i class="fas fa-comment-dots" style="margin-right: 8px;"></i>Send A Secret Message</div>
+                            <div style="font-weight:700; font-size: 18px; color: var(--accent-primary);"><i class="fas fa-comment-dots" style="margin-right: 8px;"></i>Send A Secret Message</div>
                             <div class="small muted">You are sending a message to link ID: <strong style="color:var(--text-primary);" id="sendLinkId">${escapeHtml(linkId)}</strong></div>
                         </div>
                         <div class="actions">
@@ -532,25 +479,25 @@
                         </div>
                     </div>
 
-                    <form id="sendForm" style="margin-top:25px">
-                        <div class="col" style="gap:15px">
+                    <form id="sendForm" style="margin-top:20px">
+                        <div class="col" style="gap:12px">
                             <div>
                                 <label class="small muted" style="display:block; margin-bottom: 5px;">Your identity (Optional - remains anonymous)</label>
-                                <input id="senderName" placeholder="e.g. Someone who cares" />
+                                <input id="senderName" type="text" placeholder="e.g. Someone who cares" />
                             </div>
                             <div>
                                 <label class="small muted" style="display:block; margin-bottom: 5px;">Your secret message</label>
-                                <textarea id="senderText" rows="7" placeholder="Write your message here..." required></textarea>
+                                <textarea id="senderText" rows="6" placeholder="Write your message here..." required></textarea>
                             </div>
-                            <div class="actions" style="margin-top:15px;">
+                            <div class="actions" style="margin-top:10px;">
                                 <button id="sendNow" type="submit" style="flex:1;"><i class="fas fa-paper-plane"></i> Send Secret Message</button>
                                 <button id="clearBtn" type="button" class="ghost"><i class="fas fa-times"></i> Clear Fields</button>
                             </div>
-                            <div id="sendResult" class="small" style="margin-top:15px;"></div>
+                            <div id="sendResult" class="small" style="margin-top:10px;"></div>
                         </div>
                     </form>
                     
-                    ${!linkId ? `<div class="notice" style="margin-top: 25px;">
+                    ${!linkId ? `<div class="notice" style="margin-top: 20px;">
                         <i class="fas fa-exclamation-triangle"></i> <strong>Error:</strong> This link is missing a valid ID. Please check the URL.
                     </div>` : ''}
                 </div>
@@ -578,7 +525,6 @@
                     await apiPost('/sendmessages', { linkId, name, text }, false);
                     out.innerHTML = '<span class="success-text"><i class="fas fa-check-circle"></i> Message sent successfully!</span>';
                     
-                    // Clear fields after success
                     qs('#senderText').value = '';
                     qs('#senderName').value = '';
                 } catch (err) {
