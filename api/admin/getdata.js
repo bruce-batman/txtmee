@@ -1,6 +1,6 @@
-const { checkAdminCredentials, parseAuthHeader } = require('.../utils/auth');
+const { checkAdminCredentials, parseAuthHeader } = require('../../utils/auth');
 // Assuming the user implements this in utils/storage.js
-const { getAllUsersWithMessages } = require('.../utils/storage'); 
+const { getAllUsersWithMessages } = require('../../utils/storage'); 
 // NOTE: I am assuming `getAllUsersWithMessages` exists in storage.js for this to function.
 
 module.exports = async (req, res) => {
