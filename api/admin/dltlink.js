@@ -1,5 +1,5 @@
-const { checkAdminCredentials, parseAuthHeader } = require('../utils/auth');
-const { deleteUserAndMessages } = require('../utils/storage');
+const { checkAdminCredentials, parseAuthHeader } = require('../../utils/auth');
+const { deleteUserAndMessages } = require('../../utils/storage');
 
 module.exports = async (req, res) => {
     res.setHeader('Access-Control-Allow-Origin', '*');
