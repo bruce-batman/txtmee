@@ -7,11 +7,9 @@
     <meta name="description" content="Asklyy lets you send and receive anonymous messages instantly. Share your link and get honest feedback from anyone."/>
     
     <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;600;700;800&display=swap" rel="stylesheet">
-    
     <link rel="preload" href="https://site-assets.fontawesome.com/releases/v6.4.2/css/all.css" as="style" onload="this.onload=null;this.rel='stylesheet'">
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
-    <noscript><link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css"></noscript>
-
+    
     <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.7.1/jquery.min.js"></script>
 
     <style>
@@ -37,14 +35,14 @@
             color-scheme: dark;
         }
 
-        /* --- 2. BASE STYLES & LAYOUT (Merged & Adjusted) --- */
+        /* --- 2. BASE STYLES & LAYOUT --- */
         * { box-sizing: border-box; font-family: 'Inter', system-ui, sans-serif; }
         body {
             margin: 0;
             background: var(--bg-primary);
             min-height: 100vh;
             color: var(--text-primary);
-            padding-bottom: 50px; /* Space for footer */
+            padding-bottom: 50px;
             background-image: radial-gradient(circle at 10% 10%, rgba(76, 114, 224, 0.1) 1%, transparent 30%), 
                               radial-gradient(circle at 90% 90%, rgba(127, 88, 232, 0.08) 1%, transparent 35%);
         }
@@ -61,8 +59,7 @@
             width: 100%; 
             padding-top: 20px;
         }
-        .center-xy { justify-content: center; align-items: center; }
-
+        
         /* Typography */
         h1 { font-size: 24px; margin: 0; }
         h2 { font-size: 20px; margin: 15px 0 10px; }
@@ -72,7 +69,7 @@
         a { color: var(--accent-primary); text-decoration: none; }
         a:hover { text-decoration: underline; }
 
-        /* Inputs & Buttons (Asklyy Sizing) */
+        /* Inputs & Buttons */
         input[type="text"], input[type="password"], textarea, select { 
             padding: 8px 10px;
             font-size: 13px;
@@ -81,41 +78,18 @@
             border-radius: 6px;
             color: var(--text-primary);
             width: 100%;
-            transition: border-color 0.2s;
         }
-        textarea { resize: vertical; }
-        input:focus, textarea:focus, select:focus { border-color: var(--accent-primary); outline: none; }
-
         button, .btn { 
             padding: 7px 14px;
             font-size: 13px;
             line-height: 1.4; 
-            cursor: pointer;
             border-radius: 6px;
             font-weight: 600;
-            border: none;
             background: var(--accent-primary);
             color: var(--text-primary);
-            transition: transform 0.1s, background-color 0.1s, box-shadow 0.1s;
             box-shadow: var(--shadow-subtle);
         }
-        button:hover:not(:disabled), .btn:hover:not(:disabled) {
-            opacity: 0.9;
-            transform: translateY(-1px);
-        }
-        .btn--full { width: 100%; }
-        .btn-icon i { margin-right: 8px; }
-        button.ghost {
-            background: transparent;
-            color: var(--text-muted);
-            border: 1px solid var(--text-muted);
-            box-shadow: none;
-        }
-        button.ghost:hover {
-            color: var(--text-primary);
-            border-color: var(--text-primary);
-        }
-
+        
         /* Card/Wrapper Styles */
         .wrapper {
             background: var(--card-base);
@@ -129,7 +103,7 @@
         .create-account-container { max-width: 400px; margin-top: 50px; }
 
 
-        /* --- 3. NAVBAR (Secret Message Structure) --- */
+        /* --- 3. NAVBAR & FOOTER --- */
         .nav {
             display: flex;
             justify-content: space-between;
@@ -137,17 +111,31 @@
             padding: 10px 15px;
             background: var(--bg-secondary);
             border-bottom: 1px solid var(--card-border);
-            box-shadow: var(--shadow-subtle);
         }
-        .nav .logo img { height: 40px; width: auto; }
-        .navOpenBtn, .navCloseBtn { background: none; border: none; font-size: 20px; color: var(--text-primary); }
+        .nav .logo h3 { font-size: 20px; margin: 0; color: var(--text-primary); }
+        .navOpenBtn, .navCloseBtn { background: none; border: none; font-size: 20px; color: var(--text-primary); cursor: pointer; }
         .nav-links { display: flex; align-items: center; }
         .nav-links ul { display: flex; list-style: none; margin: 0; padding: 0; gap: 20px; }
         .nav-links li a { color: var(--text-primary); font-size: 14px; font-weight: 500; }
         .navCloseBtn { display: none; }
         .navOpenBtn { display: block; }
+        
+        footer {
+            background: var(--bg-secondary);
+            color: var(--text-muted);
+            padding: 20px 0;
+            text-align: center;
+            border-top: 1px solid var(--card-border);
+            margin-top: 30px;
+        }
+        .social-link a { margin: 0 10px; font-size: 18px; color: var(--text-primary); }
+        .footer-menu ul { list-style: none; padding: 10px 0 15px; margin: 0; display: flex; flex-wrap: wrap; justify-content: center; gap: 8px 15px; }
+        .footer-menu a { color: var(--text-muted); font-size: 12px; }
+        footer p { font-size: 11px; margin: 10px 0 0; }
+        footer hr { border: none; border-top: 1px solid var(--card-border); max-width: 400px; margin: 10px auto; }
 
-        /* --- 4. DASHBOARD/HELLO AREA (Secret Message Style) --- */
+
+        /* --- 4. DASHBOARD & MESSAGE BOARD --- */
         .helloarea {
             display: flex;
             justify-content: space-between;
@@ -165,83 +153,7 @@
             font-size: 20px;
             color: var(--text-muted);
             cursor: pointer;
-            transition: color 0.2s;
         }
-        .iconbg:hover { color: var(--accent-primary); }
-
-
-        /* --- 5. POPUPS & OVERLAYS (Secret Message Style) --- */
-        .overlay {
-            display: none;
-            position: fixed;
-            top: 0;
-            left: 0;
-            width: 100%;
-            height: 100%;
-            background: rgba(0, 0, 0, 0.75);
-            z-index: 999;
-            backdrop-filter: blur(5px);
-        }
-        .popup, .popupcred {
-            display: none;
-            position: fixed;
-            top: 50%;
-            left: 50%;
-            transform: translate(-50%, -50%);
-            padding: 20px;
-            border-radius: 10px;
-            background: var(--bg-tertiary);
-            box-shadow: var(--card-shadow);
-            border: 1px solid var(--accent-secondary);
-            z-index: 1000;
-            max-width: 90%;
-            width: 350px;
-        }
-        .popup h3, .popupcred h2 { font-size: 18px; margin-top: 0; color: var(--accent-primary); }
-        .popup .field { 
-            display: flex; 
-            gap: 5px; 
-            margin: 15px 0;
-            align-items: center;
-        }
-        .popup .field i { color: var(--text-muted); margin-right: 5px; }
-        .popup .field input { flex-grow: 1; border: 1px solid var(--accent-primary); }
-        .popup .field button { 
-            padding: 8px 12px; 
-            font-size: 12px; 
-            background: var(--accent-secondary); 
-            flex-shrink: 0;
-        }
-        .popup .icons { 
-            display: flex; 
-            justify-content: space-around; 
-            list-style: none; 
-            padding: 0; 
-            margin-top: 20px;
-        }
-        .popup .icons i { 
-            font-size: 24px; 
-            color: var(--text-primary); 
-            transition: color 0.2s;
-        }
-        .popup .icons i:hover { color: var(--accent-primary); }
-        .close-btn { 
-            position: absolute; 
-            top: 10px; 
-            right: 10px; 
-            background: none; 
-            border: none;
-            color: var(--text-muted); 
-            font-size: 20px; 
-            cursor: pointer;
-            padding: 5px;
-        }
-        .popupcred h3 { font-size: 15px; color: var(--text-muted); }
-        .popupcred p { font-size: 14px; margin: 5px 0; font-weight: 500; }
-        .btnclose { margin-top: 15px; }
-
-
-        /* --- 6. MESSAGE BOARD & MESSAGES (Asklyy Dark Mode) --- */
         .messagehead { 
             display: flex; 
             justify-content: space-between; 
@@ -250,123 +162,94 @@
             padding-bottom: 5px;
             border-bottom: 1px solid var(--card-border);
         }
-        .reload-btn { 
-            background: none; 
-            border: none; 
-            color: var(--text-muted); 
-            font-size: 20px; 
-            padding: 5px;
-            box-shadow: none;
-        }
+        .reload-btn { background: none; border: none; color: var(--text-muted); font-size: 20px; padding: 5px; box-shadow: none; cursor: pointer;}
         .reload-icon.spin { animation: spin 0.8s linear; }
         @keyframes spin { 100% { transform: rotate(360deg); } }
 
-        #messageBoard { 
-            margin-top: 15px; 
-            display: flex; 
-            flex-direction: column; 
-            gap: 12px;
-        }
+        #messageBoard { margin-top: 15px; display: flex; flex-direction: column; gap: 12px; }
         .message {
             background: var(--bg-secondary);
             padding: 12px;
             border-radius: 8px;
             border-left: 3px solid var(--accent-primary);
             box-shadow: var(--shadow-subtle);
-            display: flex;
-            flex-direction: column;
-            gap: 5px;
+            cursor: pointer; /* Message is clickable */
         }
-        .message.ghost { border-left-color: var(--accent-secondary); } /* Example theme */
-
-        .message .mess { margin: 0; font-size: 14px; line-height: 1.4; }
-        .message .timestamp { 
-            font-size: 11px; 
-            color: var(--text-muted); 
-            margin-bottom: 5px; 
-            display: block;
-        }
+        .message .mess { margin: 0; font-size: 14px; line-height: 1.4; max-height: 2.8em; overflow: hidden; text-overflow: ellipsis; }
+        .message .timestamp { font-size: 11px; color: var(--text-muted); margin-bottom: 5px; display: block; }
         .message div { display: flex; justify-content: space-between; align-items: center; margin-top: 5px; }
         .message div p { margin: 0; font-size: 11px; color: var(--text-muted); }
         .icondele { color: var(--text-error); cursor: pointer; font-size: 14px; padding: 5px; }
-        .icondele:hover { opacity: 0.8; }
-
-        /* --- 7. FOOTER (Secret Message Structure) --- */
-        footer {
-            background: var(--bg-secondary);
-            color: var(--text-muted);
-            padding: 20px 0;
-            text-align: center;
-            border-top: 1px solid var(--card-border);
-            margin-top: 30px;
+        
+        
+        /* --- 5. MODALS & POPUPS --- */
+        .overlay {
+            position: fixed; top: 0; left: 0; width: 100%; height: 100%;
+            background: rgba(0, 0, 0, 0.8);
+            backdrop-filter: blur(5px);
+            z-index: 999;
+            display: none;
         }
-        .social-link a { margin: 0 10px; font-size: 18px; color: var(--text-primary); }
-        .footer-menu ul { list-style: none; padding: 10px 0 15px; margin: 0; display: flex; flex-wrap: wrap; justify-content: center; gap: 8px 15px; }
-        .footer-menu a { color: var(--text-muted); font-size: 12px; }
-        footer p { font-size: 11px; margin: 10px 0 0; }
-        footer hr { border: none; border-top: 1px solid var(--card-border); max-width: 400px; margin: 10px auto; }
+        .popupcred, .popup-share {
+            position: fixed;
+            top: 50%; left: 50%;
+            transform: translate(-50%, -50%);
+            padding: 20px;
+            border-radius: 10px;
+            background: var(--bg-tertiary);
+            box-shadow: var(--card-shadow);
+            border: 1px solid var(--accent-secondary);
+            z-index: 1000;
+            max-width: 90%; width: 350px;
+            display: none;
+        }
+
+        /* Message Detail Modal (New positioning) */
+        #messageDetailModal {
+            position: fixed;
+            top: -100%; /* Start above screen */
+            left: 50%;
+            transform: translate(-50%, 0);
+            padding: 20px;
+            border-radius: 10px;
+            background: var(--bg-tertiary);
+            box-shadow: var(--card-shadow);
+            border: 1px solid var(--accent-primary);
+            z-index: 1001;
+            max-width: 90%;
+            width: 450px;
+            transition: top 0.4s ease-out; /* Smooth slide down */
+            display: none;
+        }
+        #messageDetailModal.active {
+            top: 20px; /* Slide down to visible position */
+            display: block;
+        }
+        #messageDetailModal .full-message {
+            white-space: pre-wrap;
+            word-wrap: break-word;
+            font-size: 15px;
+            line-height: 1.6;
+            background: var(--bg-secondary);
+            padding: 15px;
+            border-radius: 8px;
+            margin: 15px 0;
+            border: 1px solid var(--card-border);
+        }
+        .modal-header { display: flex; justify-content: space-between; align-items: center; }
+        .modal-header h4 { margin: 0; font-size: 18px; color: var(--accent-primary); }
         
         /* Toast Notifications */
         .toast-container {
-            position: fixed;
-            bottom: 20px;
-            right: 20px;
-            z-index: 1001;
-            display: flex;
-            flex-direction: column;
-            gap: 10px;
+            position: fixed; bottom: 20px; right: 20px; z-index: 1002;
+            display: flex; flex-direction: column; gap: 10px;
         }
         .toast {
-            background-color: var(--text-success);
-            color: var(--bg-primary);
-            padding: 10px 15px;
-            border-radius: 5px;
-            font-size: 14px;
-            font-weight: 600;
-            opacity: 0;
-            visibility: hidden;
-            transform: translateY(20px);
-            transition: opacity 0.3s, transform 0.3s, visibility 0.3s;
-            display: flex;
-            justify-content: space-between;
-            align-items: center;
-            gap: 10px;
+            background-color: var(--text-success); color: var(--bg-primary); padding: 10px 15px;
+            border-radius: 5px; font-size: 14px; font-weight: 600; opacity: 0; visibility: hidden;
+            transform: translateY(20px); transition: all 0.3s;
         }
-        .toast.show {
-            opacity: 1;
-            visibility: visible;
-            transform: translateY(0);
-        }
-        .toast .close-btn {
-            background: none;
-            border: none;
-            color: var(--bg-primary);
-            font-size: 18px;
-            cursor: pointer;
-            padding: 0;
-        }
-
-
-        /* --- 8. MOBILE ADJUSTMENTS --- */
-        @media (max-width: 768px) {
-            .nav-links {
-                position: fixed;
-                top: 0;
-                right: -100%;
-                width: 70%;
-                height: 100%;
-                background: var(--bg-secondary);
-                transition: right 0.3s;
-                flex-direction: column;
-                padding-top: 60px;
-                z-index: 50;
-                border-left: 1px solid var(--card-border);
-            }
-            .nav-links.active { right: 0; }
-            .nav-links ul { flex-direction: column; gap: 15px; width: 100%; padding: 0 20px; }
-            .navCloseBtn { display: block; position: absolute; top: 15px; right: 15px; }
-            .navOpenBtn { display: block; }
-        }
+        .toast.show { opacity: 1; visibility: visible; transform: translateY(0); }
 
     </style>
 </head>
@@ -374,7 +257,7 @@
 <body>
     <nav class="nav">
         <a href="/" class="logo" rel="noopener noreferrer">
-            <h3 style="margin: 0; color: var(--text-primary);">Asklyy</h3>
+            <h3>Asklyy</h3>
         </a>
        <button class="navOpenBtn" aria-label="Open Navigation Menu"> <i class="fa-light fa-bars"></i></button>
         <div class="nav-links">
@@ -393,26 +276,26 @@
         <div id="app-view" style="width: 100%;">
             </div>
 
-        <div id="popup" class="popupcred">
-            <span class="close-btn" onclick="closePopup()"><i class="fa-solid fa-circle-xmark"></i></span>
+        <div id="credentialPopup" class="popupcred">
+            <span class="close-btn" onclick="closeCredentialPopup()"><i class="fa-solid fa-circle-xmark"></i></span>
                 <h2>Login Details</h2>
                 <hr>
                 <h3 style="color: var(--text-success);">Take a Screenshot!</h3>
                 <p>Link ID: <span id="popup_linkId" style="font-weight:700;"></span></p>
                 <p>Password/PIN: <span id="popup_password" style="font-weight:700;"></span></p>
-                <button class="btnclose" onclick="closePopup()"> Done! </button>
+                <button class="btn" onclick="closeCredentialPopup()"> Done! </button>
         </div>
 
-        <div id="sharePopup" class="popup container">
+        <div id="sharePopup" class="popup-share">
             <span class="close-btn" onclick="closeSharePopup()"><i class="fa-solid fa-circle-xmark"></i></span>
             <div class="content">
-              <h3>Share your link with your friends</h3>
-                <div class="field">
+              <h3>Share your link with friends</h3>
+                <div class="field" style="display: flex; align-items: center;">
                     <i class="fa-light fa-link"></i>
-                    <input type="text" id="shareLinkInput" value="" readonly />
-                    <button onclick="copyLink()"> Copy </button>
+                    <input type="text" id="shareLinkInput" value="" readonly style="flex-grow: 1; margin-right: 5px;"/>
+                    <button onclick="copyLink()" style="flex-shrink: 0;"> Copy </button>
                 </div>
-                <ul class="icons">
+                <ul class="icons" style="display: flex; justify-content: space-around; list-style: none; padding: 0; margin-top: 20px;">
                     <a id="waShare"><i class="fab fa-whatsapp"></i> </a>
                     <a id="fbShare"><i class="fab fa-facebook-f"></i> </a>
                     <a id="twitterShare"><i class="fa-brands fa-x-twitter"></i></a>
@@ -422,27 +305,25 @@
             </div>
         </div>
         
-        <div id="overlay" class="overlay" onclick="closePopup(); closeSharePopup();"></div>
+        <div id="messageDetailModal">
+            <div class="modal-header">
+                <h4 id="modalSenderName"></h4>
+                <button class="close-btn" onclick="hideMessageDetailModal()">&times;</button>
+            </div>
+            <p class="muted small" id="modalTimestamp"></p>
+            <div class="full-message" id="modalMessageContent"></div>
+            <div style="text-align: right;">
+                <button class="btn" onclick="copyMessageToClipboard()"><i class="fas fa-copy"></i> Copy Message</button>
+            </div>
+        </div>
+
+        
+        <div id="overlay" class="overlay" onclick="closeCredentialPopup(); closeSharePopup(); hideMessageDetailModal();"></div>
     </div>
 
 
     <footer>
         <div class="container">
-           <div class="social-link">
-                         <a href="#"><i class="fab fa-facebook-f"></i></a>
-                    <a href="#"><i class="fab fa-instagram"></i></a>
-                    <a href="#"><i class="fa-brands fa-x-twitter"></i></a>
-         </div>
-            <div class="footer-menu">
-                <ul>
-                    <li><a href="#">About Us</a></li>
-                    <li><a href="#">Contact Us</a></li>
-                    <li><a href="#">Privacy Policy</a></li>
-                    <li><a href="#">Terms & conditions</a></li>
-                     <li><a href="#">Disclaimer</a></li>
-                      <li><a href="#">Blog</a></li>
-                </ul>
-            </div>
             <hr>
             <p>Copyright 2025 Asklyy. All Rights Reserved</p>
         </div>
@@ -452,36 +333,35 @@
     const API_PREFIX = '/api';
     const appView = document.getElementById('app-view');
     const overlay = document.getElementById('overlay');
-    const credPopup = document.getElementById('popup');
+    const credentialPopup = document.getElementById('credentialPopup');
     const sharePopup = document.getElementById('sharePopup');
+    const messageDetailModal = document.getElementById('messageDetailModal');
     const toastContainer = document.getElementById('toastContainer');
+    
     let messagesPollId = null;
     const pollIntervalMs = 10000;
-    let lastMessages = []; // To hold messages for modal view
+    let lastMessages = []; 
 
     // --- Core Helpers ---
     function show(html) { appView.innerHTML = html; }
     function qs(sel, root = document) { return root.querySelector(sel); }
-    function qsa(sel, root = document) { return Array.from(root.querySelectorAll(sel)); }
-    function escapeHtml(s) {
-        if (!s) return '';
-        return String(s).replace(/[&<>"']/g, c => ({ '&': '&amp;', '<': '&lt;', '>': '&gt;', '"': '&quot;', "'": '&#039;' }[c]));
-    }
     function basicAuthHeader() {
         const u = sessionStorage.getItem('asklyy_username');
         const p = sessionStorage.getItem('asklyy_password');
         if (!u || !p) return null;
         return 'Basic ' + btoa(u + ':' + p);
     }
+    function escapeHtml(s) {
+        if (!s) return '';
+        return String(s).replace(/[&<>"']/g, c => ({ '&': '&amp;', '<': '&lt;', '>': '&gt;', '"': '&quot;', "'": '&#039;' }[c]));
+    }
     
-    // --- API Functions (MOCK) ---
+    // --- API Functions (MOCK IMPLEMENTATION) ---
     async function apiPost(path, body, auth = false) {
-        // MOCK IMPLEMENTATION: Replace with your actual backend logic
         return new Promise((resolve, reject) => {
             setTimeout(() => {
                 if (path === '/createlink') {
                     if (body.username && body.username.toLowerCase() === 'fail') return reject(new Error('Username taken.'));
-                    // Generate a random 6-char link ID
                     const linkId = Math.random().toString(36).substring(2, 8).toUpperCase();
                     resolve({ success: true, linkId: linkId });
                 } else if (path === '/sendmessages') {
@@ -497,11 +377,10 @@
     }
 
     async function apiGet(path, auth = false) {
-        // MOCK IMPLEMENTATION: This is a placeholder for demonstration
         if (path.startsWith('/getmessages')) {
              if (!auth) throw new Error('Authentication Required');
              const mockMessages = [
-                { messageId: 1, text: "Your design looks awesome, keep up the great work!", createdAt: new Date(Date.now() - 3600000).toISOString(), name: "A Fan" },
+                { messageId: 1, text: "Your design looks awesome, keep up the great work! This is a longer message.", createdAt: new Date(Date.now() - 3600000).toISOString(), name: "A Fan" },
                 { messageId: 2, text: "Just wanted to say hi anonymously!", createdAt: new Date(Date.now() - 86400000).toISOString(), name: "" },
                 { messageId: 3, text: "This is a much longer message to test the word wrap and truncation functionality, ensuring that no matter how much text is submitted, it is displayed nicely in the dashboard list and fully in the modal popup.", createdAt: new Date(Date.now() - 7200000).toISOString(), name: "Test User" },
             ];
@@ -518,47 +397,35 @@
     }
 
     function route() {
+        // Close all popups on route change
+        hideMessageDetailModal();
+        closeCredentialPopup();
+        closeSharePopup();
+
         const url = new URL(location.href);
         const id = url.searchParams.get('id');
         
-        // Handle Send Page (External Link)
         if (location.pathname === '/send' || location.pathname.startsWith('/send/') || id) {
             const linkId = id || (location.pathname.split('/send/')[1] || '').replace('/', '');
             renderSendPage(linkId);
             return;
         }
 
-        // Handle Login Page (If needed, currently redirects to main)
-        if (location.pathname === '/login/') {
-            // For now, redirecting to main if not logged in
-            if (sessionStorage.getItem('asklyy_username')) {
-                 renderDashboard();
-            } else {
-                 renderMain(true); // Flag to show login section primarily
-            }
-            return;
-        }
-
-        // Handle Logged-In User (Dashboard)
         const username = sessionStorage.getItem('asklyy_username');
         const password = sessionStorage.getItem('asklyy_password');
         if (username && password) {
             renderDashboard();
         } else {
-            // Main Registration Page
             renderMain();
         }
     }
     
-    // --- Toast & Popup Handlers (Secret Message style) ---
+    // --- Toast & Popup Handlers ---
     function showToast(message, isError = false) {
         const toast = document.createElement("div");
-        toast.className = `toast ${isError ? 'error-toast' : 'show'}`;
-        toast.innerHTML = `
-            <span>${message}</span>
-            <button class="close-btn" onclick="this.parentElement.remove()">×</button>
-        `;
-        if (isError) toast.style.backgroundColor = 'var(--text-error)';
+        toast.className = `toast show ${isError ? 'error-toast' : ''}`;
+        toast.innerHTML = `<span>${message}</span>`;
+        if (isError) toast.style.backgroundColor = 'var(--text-error)'; else toast.style.backgroundColor = 'var(--text-success)';
         toastContainer.appendChild(toast);
 
         setTimeout(() => {
@@ -567,11 +434,11 @@
         }, 3000);
     }
     
-    function closePopup() { credPopup.style.display = 'none'; overlay.style.display = 'none'; }
-    function openPopup() { 
+    function closeCredentialPopup() { credentialPopup.style.display = 'none'; overlay.style.display = 'none'; }
+    function openCredentialPopup() { 
         qs('#popup_linkId').textContent = sessionStorage.getItem('asklyy_linkId') || 'N/A';
         qs('#popup_password').textContent = sessionStorage.getItem('asklyy_password') || 'N/A';
-        credPopup.style.display = 'block'; 
+        credentialPopup.style.display = 'block'; 
         overlay.style.display = 'block'; 
     }
 
@@ -594,7 +461,6 @@
         qs('#fbShare').href = `https://www.facebook.com/sharer/sharer.php?u=${encodedUrl}&quote=${encodedText}`;
         qs('#twitterShare').href = `https://twitter.com/intent/tweet?url=${encodedUrl}&text=${encodedText}`;
         qs('#teleShare').href = `https://t.me/share/url?url=${encodedUrl}&text=${encodedText}`;
-        // IG Share is complex (requires native share API or image), we'll keep the link simple.
         qs('#igShare').href = `javascript:copyLink();showToast('Link copied! Please paste it manually in your Story or Bio.');`;
         
         sharePopup.style.display = 'block';
@@ -607,13 +473,34 @@
         copyText.setSelectionRange(0, 99999);
         navigator.clipboard.writeText(copyText.value)
             .then(() => showToast('✅ Link copied to clipboard!'))
-            .catch(err => {
-                console.error('Failed to copy: ', err);
-                showToast("Failed to copy link. Please try manually.", true);
-            });
+            .catch(() => showToast("Failed to copy link. Please try manually.", true));
+    }
+    
+    function showMessageDetailModal(message) {
+        qs('#modalSenderName').innerHTML = `<i class="fas fa-user-secret" style="margin-right: 5px;"></i>${message.name || 'Anonymous'}`;
+        qs('#modalTimestamp').textContent = new Date(message.createdAt).toLocaleString();
+        qs('#modalMessageContent').textContent = message.text;
+        messageDetailModal.dataset.fullText = message.text; // Store text for easy copy
+        
+        messageDetailModal.classList.add('active');
+        overlay.style.display = 'block';
     }
 
-    // --- Time Utility (Secret Message style) ---
+    function hideMessageDetailModal() {
+        messageDetailModal.classList.remove('active');
+        overlay.style.display = 'none';
+    }
+
+    function copyMessageToClipboard() {
+        const textToCopy = messageDetailModal.dataset.fullText;
+        navigator.clipboard.writeText(textToCopy).then(() => {
+            showToast('✅ Full message copied to clipboard!');
+        }).catch(() => {
+            showToast('Failed to copy.', true);
+        });
+    }
+
+    // --- Time Utility ---
     function timeSince(date, now) {
         const seconds = Math.floor((now - date) / 1000);
         let interval = seconds / 31536000;
@@ -633,7 +520,6 @@
         const now = new Date();
         document.querySelectorAll('.timestamp').forEach(element => {
             const timeString = element.getAttribute('data-time');
-            // Assuming ISO string or compatible format
             const time = new Date(timeString); 
             const relativeTime = timeSince(time, now);
             element.innerHTML = relativeTime;
@@ -641,8 +527,8 @@
     }
 
 
-    // --- Main/Registration View (Secret Message Layout) ---
-    function renderMain(isLoginView = false) {
+    // --- View Functions ---
+    function renderMain() {
         stopPolling();
         
         show(`
@@ -653,21 +539,20 @@
                 </div>
 
                 <div id="auth-switch">
-                    ${isLoginView ? renderLoginForm() : renderCreateForm()}
+                    ${renderCreateForm()}
                 </div>
             </div>
 
-            <div class="container" style="margin-top: 20px;">
-                <p class="muted small" style="text-align:center;">
-                    <a href="javascript:void(0)" onclick="switchAuthView()">${isLoginView ? 'Need a new link? Create Account' : 'Already have an account? Login here'}</a>
+            <div class="container" style="margin-top: 20px; text-align: center;">
+                <p class="muted small" style="margin-bottom: 10px;">
+                    Already have an account? <a href="javascript:void(0)" onclick="switchAuthView()">Login here</a>
                 </p>
-                <div class="notice" style="margin-top: 15px;">
-                    <strong>Quick Demo:</strong> Leave the fields empty and click "Generate Link" for instant, temporary access.
+                <div class="notice">
+                    <strong>Quick Demo:</strong> Leave the password blank and click "Generate Link" for instant, temporary access.
                 </div>
             </div>
         `);
         
-        // Attach switch handler
         window.switchAuthView = () => {
              const isNowLogin = !qs('#auth-switch').querySelector('form').dataset.mode.includes('create');
              qs('#auth-switch').innerHTML = isNowLogin ? renderLoginForm() : renderCreateForm();
@@ -680,19 +565,14 @@
     function renderCreateForm() {
         return `
             <form id="createForm" data-mode="create" style="margin-top: 20px;">
-                <div class="col" style="gap: 15px;">
+                <div style="display: flex; flex-direction: column; gap: 15px;">
                     <input id="new_username" type="text" placeholder="Choose a unique username" required />
-                    <input id="new_password" type="password" placeholder="Choose a strong password (or leave blank for demo)" />
+                    <input id="new_password" type="password" placeholder="Choose a strong password (optional for demo)" />
                     
-                    <div class="content" style="display: flex; gap: 8px; align-items: center;">
-                        <input type="checkbox" checked="checked" id="tc" name="tc" required style="width: auto;"/>
-                        <label for="tc" class="small muted">I accept the terms & conditions (simulated)</label>
-                    </div>
-
                     <button id="createBtn" class="btn btn--full w-100 btn-icon" type="submit">
                         <i class="fa-regular fa-link-simple"></i> Generate Link
                     </button>
-                    <div id="createMsg" class="small" style="margin-top:5px; text-align: center;"></div>
+                    <div id="createMsg" class="small" style="text-align: center;"></div>
                 </div>
             </form>
         `;
@@ -701,19 +581,20 @@
     function renderLoginForm() {
         return `
             <form id="loginForm" data-mode="login" style="margin-top: 20px;">
-                <div class="col" style="gap: 15px;">
+                <div style="display: flex; flex-direction: column; gap: 15px;">
                     <input id="login_username" type="text" placeholder="Your Username" required />
                     <input id="login_password" type="password" placeholder="Your Password" required />
                     <button id="loginBtn" class="btn btn--full w-100 btn-icon" type="submit">
                         <i class="fas fa-sign-in-alt"></i> Access Dashboard
                     </button>
-                    <div id="loginMsg" class="small" style="margin-top:5px; text-align: center;"></div>
+                    <div id="loginMsg" class="small" style="text-align: center;"></div>
                 </div>
             </form>
         `;
     }
 
     function attachAuthHandlers() {
+        // ... (CreateForm & LoginForm handlers - same as previous correct version)
         const createForm = qs('#createForm');
         if (createForm) {
             createForm.onsubmit = async (e) => {
@@ -725,14 +606,13 @@
                 
                 let finalU = u, finalP = p;
                 
-                if (!u && !p) {
-                     finalU = 'demo' + Math.random().toString(36).slice(2,8);
+                if (!u) { msg.innerHTML = 'Username required.'; return; }
+                if (!p) {
+                     // DEMO MODE if password is blank
                      finalP = Math.random().toString(36).slice(2,10);
-                     msg.textContent = 'Creating a quick demo link...';
+                     msg.textContent = 'Creating demo credentials...';
                 }
 
-                if (!finalU) { msg.textContent = 'Username required.'; return; }
-                
                 try {
                     btn.disabled = true;
                     btn.innerHTML = '<i class="fas fa-cog fa-spin"></i> Processing...';
@@ -743,13 +623,8 @@
                         sessionStorage.setItem('asklyy_password', finalP);
                         sessionStorage.setItem('asklyy_linkId', res.linkId);
                         
-                        if (!u || !p) {
-                            showToast('Demo link created! Showing credentials...');
-                        } else {
-                            showToast('✅ Account created successfully!');
-                        }
-                        
-                        openPopup(); // Show credentials on success
+                        showToast('✅ Link created!');
+                        openCredentialPopup(); 
                         navigateToRoot();
                     } else {
                         throw new Error('Unexpected response.');
@@ -781,7 +656,6 @@
                     btn.disabled = true;
                     btn.innerHTML = '<i class="fas fa-spinner fa-pulse"></i> Verifying...';
                     
-                    // Simple auth check via a mock GET call
                     const res = await apiGet('/getmessages?linkId=temp', true);
                     
                     if (res && res.linkId) {
@@ -804,8 +678,8 @@
     }
 
 
-    // --- Dashboard View (Secret Message Layout) ---
     async function renderDashboard() {
+        // ... (Dashboard logic)
         stopPolling();
         const uname = sessionStorage.getItem('asklyy_username') || 'User';
         const linkId = sessionStorage.getItem('asklyy_linkId') || 'N/A';
@@ -824,10 +698,10 @@
             <div class="wrapper container" style="margin-top: 20px;">
                 <div class="content" style="text-align: center;">
                     <h3>Your Anonymous Link is Ready</h3>
-                    <div class="field">
+                    <div class="field" style="display: flex; align-items: center;">
                         <i class="fa-light fa-link"></i>
-                        <input type="text" id="shareLinkDisplay" value="${location.origin}/send?id=${escapeHtml(linkId)}" readonly />
-                        <button onclick="openSharePopup()"> Share </button>
+                        <input type="text" id="shareLinkDisplay" value="${location.origin}/send?id=${escapeHtml(linkId)}" readonly style="flex-grow: 1; margin-right: 5px;" />
+                        <button onclick="openSharePopup()" style="flex-shrink: 0;"> Share </button>
                     </div>
                 </div>
             </div>
@@ -837,7 +711,7 @@
                     <div class="messagehead" id="messageBoard">
                         <h3>Message Board</h3>
                         <div style="display: flex; gap: 10px;">
-                            <button class="ghost" id="deleteAccountBtn"><i class="fas fa-trash-alt" style="color:var(--text-error);"></i> Delete Account</button>
+                            <button class="ghost" id="deleteAccountBtn" style="color:var(--text-error); border-color:var(--text-error);"><i class="fas fa-trash-alt"></i> Delete</button>
                             <button class="reload-btn" id="reloadButton">
                                 <i class="fa-regular fa-arrow-rotate-right reload-icon" id="reloadIcon"></i>
                             </button>
@@ -851,7 +725,7 @@
         `);
 
         // Attach Dashboard Handlers
-        qs('#openCredsBtn').onclick = openPopup;
+        qs('#openCredsBtn').onclick = openCredentialPopup;
         qs('#openShareBtn').onclick = openSharePopup;
         qs('#logoutBtn').onclick = () => {
             stopPolling();
@@ -891,10 +765,6 @@
     // --- Message Fetching & Rendering ---
     async function fetchAndRenderMessages(linkId, silent = false) {
         const box = qs('#messagesBox');
-        if (!linkId || linkId === 'N/A') {
-             if (!silent) box.innerHTML = '<div class="muted small" style="padding: 20px; text-align: center;"><span style="color:var(--text-error);">Error:</span> No link ID found.</div>';
-             return;
-        }
         
         try {
             const res = await apiGet('/getmessages?linkId=' + encodeURIComponent(linkId), true);
@@ -907,16 +777,25 @@
                 }
                 
                 box.innerHTML = lastMessages.map(m => {
-                    const messageText = escapeHtml(m.text || '');
-                    return `<div class="message default">
-                        <p class="mess">${messageText}</p>
-                        <p class='timestamp' data-time='${m.createdAt}'></p>
+                    const messageText = m.text;
+                    return `<div class="message" data-id="${m.messageId}">
+                        <p class="mess">${escapeHtml(messageText)}</p>
+                        <p class='timestamp' data-time='${m.createdAt}'>Loading...</p>
                         <div>
-                        <p>💌 asklyy.com</p>
+                        <p>💌 asklyy.com | From: ${m.name || 'Anonymous'}</p>
                         <i class="fas fa-trash-alt icondele" onclick='deleteMessage(${m.messageId})' title="Delete Message"></i>
                         </div>
                     </div>`;
                 }).join('');
+                
+                // Attach click handlers for detail modal
+                document.querySelectorAll('.message').forEach(el => {
+                    el.onclick = () => {
+                        const messageId = parseInt(el.dataset.id);
+                        const message = lastMessages.find(m => m.messageId === messageId);
+                        if (message) showMessageDetailModal(message);
+                    };
+                });
                 
                 updateTimestamps();
 
@@ -930,11 +809,11 @@
         }
     }
     
-    // Placeholder function for client-side delete (requires server-side impl)
+    // Placeholder function for client-side delete
     window.deleteMessage = async (id) => {
         if (!confirm("Are you sure you want to delete this message?")) return;
         try {
-             // MOCK AJAX DELETE: Replace with your actual apiPost('/delete_message', { id }, true);
+             // MOCK AJAX DELETE
              await new Promise(resolve => setTimeout(resolve, 300));
              lastMessages = lastMessages.filter(m => m.messageId !== id);
              showToast('🗑️ Message deleted.', true);
@@ -944,11 +823,14 @@
         }
     }
 
-    // --- Send Page View (Simplified Secret Message style) ---
+    // --- Send Page View (Corrected with Optional Name) ---
     function renderSendPage(linkIdFromUrl) {
         stopPolling();
         const linkId = linkIdFromUrl || '';
-        const username = 'User'; // You may need a server call here to get the actual username
+        const username = sessionStorage.getItem('asklyy_username') || 'a user'; // Fallback
+
+        // A real app would make a server call here to get the recipient's username using linkId
+        // For this demo, we'll use a placeholder or session name if available.
 
         show(`
             <div class="wrapper container create-account-container" style="max-width: 450px; margin-top: 50px;">
@@ -960,13 +842,22 @@
                 <form id="sendForm" style="margin-top:20px">
                     <input type="hidden" name="linkId" value="${escapeHtml(linkId)}">
                     
-                    <div class="col" style="gap: 15px;">
-                        <textarea id="senderText" rows="5" placeholder="Write your anonymous message here..." required></textarea>
+                    <div style="display: flex; flex-direction: column; gap: 15px;">
+                        
+                        <div>
+                            <label class="small muted" style="display:block; margin-bottom: 5px;">Your identity (Optional - remains anonymous to recipient)</label>
+                            <input id="senderName" type="text" placeholder="e.g. Someone who cares" />
+                        </div>
+
+                        <div>
+                            <label class="small muted" style="display:block; margin-bottom: 5px;">Your secret message</label>
+                            <textarea id="senderText" rows="5" placeholder="Write your anonymous message here..." required></textarea>
+                        </div>
                         
                         <button id="sendNow" class="btn btn--full w-100" type="submit">
                             <i class="fas fa-paper-plane"></i> Send Secret Message
                         </button>
-                        <div id="sendResult" class="small" style="margin-top:5px; text-align: center;"></div>
+                        <div id="sendResult" class="small" style="text-align: center;"></div>
                     </div>
                 </form>
                 
@@ -980,6 +871,7 @@
         form.onsubmit = async (ev) => {
             ev.preventDefault();
             const text = qs('#senderText').value.trim();
+            const name = qs('#senderName').value.trim();
             const out = qs('#sendResult');
             
             if (!text) { out.innerHTML = '<span style="color:var(--text-error);">Message cannot be empty.</span>'; return; }
@@ -988,10 +880,11 @@
             try {
                 qs('#sendNow').disabled = true;
                 qs('#sendNow').innerHTML = '<i class="fas fa-circle-notch fa-spin"></i> Sending...';
-                await apiPost('/sendmessages', { linkId, name: '', text }, false);
+                await apiPost('/sendmessages', { linkId, name, text }, false);
                 
                 out.innerHTML = '<span style="color:var(--text-success);"><i class="fas fa-check-circle"></i> Message sent successfully!</span>';
                 qs('#senderText').value = '';
+                qs('#senderName').value = '';
             } catch (err) {
                 out.innerHTML = `<span style="color:var(--text-error);"><i class="fas fa-times-circle"></i> Send failed: ${escapeHtml(err.message || 'Server error.')}</span>`;
             } finally {
@@ -1004,8 +897,6 @@
     // --- Global Init ---
     document.addEventListener("DOMContentLoaded", function() {
         route();
-        // Setup for timestamps
-        updateTimestamps();
         setInterval(updateTimestamps, 60000);
 
         // Mobile Menu Toggle
