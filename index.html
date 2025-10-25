@@ -1,26 +1,28 @@
-<!DOCTYPE html>
+<!doctype html>
 <html lang="en">
 <head>
     <meta charset="utf-8" />
     <meta name="viewport" content="width=device-width,initial-scale=1" />
-    <title>Asklyy — Send & Receive Anonymous Messages</title>
-    <meta name="description" content="Asklyy lets you send and receive anonymous messages instantly. Share your link and get honest feedback from anyone."/>
-    
+    <title>Asklyy — Send Anonymous Messages</title>
     <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;600;700;800&display=swap" rel="stylesheet">
-    <link rel="preload" href="https://site-assets.fontawesome.com/releases/v6.4.2/css/all.css" as="style" onload="this.onload=null;this.rel='stylesheet'">
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
-    
-    <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.7.1/jquery.min.js"></script>
-
     <style>
-        /* --- 1. LUXURY COLOR PALETTE & VARIABLES (Asklyy Dark Mode) --- */
+        /* * DESIGN OVERHAUL:
+         * 1. Less shiny: Reduced shadows and blur.
+         * 2. Smaller scale: Reduced font sizes, padding, and input heights.
+         * 3. Better spacing: Increased margins between components (especially messages).
+         * 4. Cleaner buttons: Standardized button styles and improved mobile layout.
+         * 5. V2: Further reduced scale on link card, stats box, and buttons.
+         */
+
+        /* --- 1. LUXURY COLOR PALETTE & VARIABLES (ADJUSTED) --- */
         :root {
             --bg-primary: #04091A; 
             --bg-secondary: #0F172A; 
             --bg-tertiary: #1D263B; 
-            --card-base: rgba(15, 23, 42, 0.95); /* Slightly less blur base */
+            --card-base: rgba(15, 23, 42, 0.9);
             --card-border: rgba(255, 255, 255, 0.08);
-            --card-shadow: 0 8px 20px rgba(0, 0, 0, 0.6);
+            --card-shadow: 0 6px 15px rgba(0, 0, 0, 0.4);
             --accent-primary: #4C72E0; 
             --accent-secondary: #7F58E8; 
             --accent-gradient: linear-gradient(135deg, var(--accent-secondary) 0%, var(--accent-primary) 100%);
@@ -30,898 +32,799 @@
             --text-error: #F87171; 
             --stat-bg: rgba(76, 114, 224, 0.08);
             --stat-border: rgba(76, 114, 224, 0.3);
-            --shadow-subtle: 0 2px 5px rgba(0, 0, 0, 0.5);
-            
+
             color-scheme: dark;
         }
 
-        /* --- 2. BASE STYLES & LAYOUT --- */
-        * { box-sizing: border-box; font-family: 'Inter', system-ui, sans-serif; }
-        body {
+        /* --- 2. BASE STYLES AND AESTHETICS (FURTHER ADJUSTED) --- */
+        *{ box-sizing: border-box; font-family: 'Inter', system-ui, sans-serif; }
+        body{
             margin: 0;
             background: var(--bg-primary);
             min-height: 100vh;
             color: var(--text-primary);
-            padding-bottom: 50px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            padding: 20px 10px;
             background-image: radial-gradient(circle at 10% 10%, rgba(76, 114, 224, 0.1) 1%, transparent 30%), 
                               radial-gradient(circle at 90% 90%, rgba(127, 88, 232, 0.08) 1%, transparent 35%);
         }
-        .container { 
-            width: 100%; 
-            max-width: 800px; 
-            margin: 0 auto; 
-            padding: 0 15px; 
-        }
-        .d-flex-column { 
-            display: flex; 
-            flex-direction: column; 
-            align-items: center; 
-            width: 100%; 
-            padding-top: 20px;
-        }
-        
-        /* Typography */
-        h1 { font-size: 24px; margin: 0; }
-        h2 { font-size: 20px; margin: 15px 0 10px; }
-        p.lead { font-size: 13px; margin: 0; color: var(--text-muted); }
-        .muted { color: var(--text-muted); font-size: 12px; }
-        .small { font-size: 10px; color: var(--text-muted); }
-        a { color: var(--accent-primary); text-decoration: none; }
-        a:hover { text-decoration: underline; }
+        .container{ width: 100%; max-width: 800px; }
 
-        /* Inputs & Buttons */
-        input[type="text"], input[type="password"], textarea, select { 
-            padding: 10px 12px;
-            font-size: 14px;
+        /* Global Typography & Component Scaling */
+        h1 { font-size: 20px; margin: 0; }
+        p.lead { font-size: 11px; margin: 0; color: var(--text-muted); }
+        .row { display: flex; gap: 10px; align-items: flex-start; }
+        .col { display: flex; flex-direction: column; gap: 8px; flex: 1; }
+        .muted{ color: var(--text-muted); font-size: 11px; }
+        .small{ font-size: 9px; color: var(--text-muted); }
+        .actions { display: flex; gap: 6px; align-items: center; }
+
+        /* Inputs (Smaller and flatter) */
+        input[type="text"], input[type="password"], textarea { 
+            padding: 7px 10px; /* Reduced input padding */
+            font-size: 12px; /* Smaller font */
             background: var(--bg-secondary);
             border: 1px solid var(--card-border);
-            border-radius: 6px;
+            border-radius: 5px;
             color: var(--text-primary);
             width: 100%;
         }
-        button, .btn { 
-            padding: 9px 16px;
-            font-size: 14px;
+
+        /* Buttons (Smaller and less shiny) */
+        button { 
+            padding: 5px 10px; /* **FURTHER REDUCED BUTTON PADDING** */
+            font-size: 12px; /* **SMALLER FONT** */
             line-height: 1.4; 
-            border-radius: 6px;
+            cursor: pointer;
+            border-radius: 5px; /* Smaller radius */
             font-weight: 600;
             border: none;
             background: var(--accent-primary);
             color: var(--text-primary);
-            box-shadow: 0 4px 10px rgba(76, 114, 224, 0.4);
-            cursor: pointer;
-            transition: transform 0.1s;
+            transition: transform 0.1s, background-color 0.1s, box-shadow 0.1s;
+            box-shadow: 0 2px 4px rgba(0, 0, 0, 0.4); /* Lighter button shadow */
+            flex-shrink: 0; /* Important for short buttons */
         }
-        button:hover, .btn:hover { transform: translateY(-1px); }
-        .btn--full { width: 100%; }
-        .btn-icon i { margin-right: 8px; }
-        
-        /* Card/Wrapper Styles */
-        .wrapper {
+        button:hover:not(:disabled) {
+            opacity: 0.9;
+            transform: translateY(-1px);
+        }
+        button.ghost {
+            background: transparent;
+            color: var(--text-muted);
+            border: 1px solid var(--text-muted);
+            box-shadow: none;
+        }
+        button.ghost:hover {
+            color: var(--text-primary);
+            border-color: var(--text-primary);
+        }
+        .notice {
+            background: var(--stat-bg);
+            border: 1px solid var(--stat-border);
+            padding: 8px 10px; /* Reduced padding */
+            border-radius: 5px;
+            font-size: 12px;
+            color: var(--text-muted);
+        }
+        .success-text { color: var(--text-success); }
+        .error-text { color: var(--text-error); }
+
+        /* --- 3. CORE COMPONENTS (ADJUSTED) --- */
+        .card {
             background: var(--card-base);
-            padding: 30px;
-            border-radius: 12px;
+            padding: 18px; /* Reduced padding */
+            border-radius: 8px; /* Slightly smaller radius */
             box-shadow: var(--card-shadow);
             border: 1px solid var(--card-border);
-            backdrop-filter: blur(8px);
-            margin-bottom: 20px;
+            backdrop-filter: blur(8px); 
         }
-        .create-account-container { max-width: 420px; margin-top: 50px; }
-
-
-        /* --- 3. NAVBAR & FOOTER --- */
-        .nav {
-            display: flex;
-            justify-content: space-between;
-            align-items: center;
-            padding: 10px 15px;
-            background: var(--bg-secondary);
-            border-bottom: 1px solid var(--card-border);
+        .logo {
+            width: 35px; height: 35px; /* Smaller logo */
+            background: var(--accent-gradient);
+            border-radius: 7px;
+            font-size: 18px;
+            font-weight: 800;
+            display: flex; justify-content: center; align-items: center;
+            margin-right: 10px;
+            flex-shrink: 0;
         }
-        .nav .logo h3 { font-size: 20px; margin: 0; color: var(--text-primary); }
-        .navOpenBtn, .navCloseBtn { background: none; border: none; font-size: 24px; color: var(--text-primary); cursor: pointer; }
-        .nav-links { display: flex; align-items: center; }
-        .nav-links ul { display: flex; list-style: none; margin: 0; padding: 0; gap: 25px; }
-        .nav-links li a { color: var(--text-primary); font-size: 15px; font-weight: 500; }
-        .navCloseBtn { display: none; }
-        
-        footer {
-            background: var(--bg-secondary);
-            color: var(--text-muted);
-            padding: 25px 0;
-            text-align: center;
-            border-top: 1px solid var(--card-border);
-            margin-top: 30px;
-        }
-        footer hr { border: none; border-top: 1px solid var(--card-border); max-width: 400px; margin: 15px auto; }
-        footer p { font-size: 12px; margin: 0; }
-
-
-        /* --- 4. DASHBOARD & MESSAGE BOARD --- */
-        .helloarea {
-            display: flex;
-            justify-content: space-between;
-            align-items: center;
-            background: var(--bg-secondary);
-            padding: 15px;
-            border-radius: 8px;
-            margin-top: 20px;
-            border: 1px solid var(--stat-border);
-            width: 100%;
-        }
-        .hellouser { font-size: 18px; font-weight: 700; margin: 0; color: var(--accent-primary); }
-        .helloicon { display: flex; gap: 15px; }
-        .iconbg {
-            font-size: 22px;
-            color: var(--text-muted);
-            cursor: pointer;
-            transition: color 0.2s;
-        }
-        .iconbg:hover { color: var(--text-primary); }
-        
-        .messagehead { 
+        header { 
             display: flex; 
-            justify-content: space-between; 
             align-items: center; 
-            margin-top: 20px;
-            padding-bottom: 5px;
+            margin-bottom: 15px; /* Reduced margin */
         }
-        .messagehead h3 { margin: 0; font-size: 18px; color: var(--text-primary); }
-        .reload-btn { background: none; border: none; color: var(--text-muted); font-size: 22px; padding: 5px; cursor: pointer;}
-        .reload-icon.spin { animation: spin 0.8s linear; }
-        @keyframes spin { 100% { transform: rotate(360deg); } }
 
-        #messagesBox { margin-top: 15px; display: flex; flex-direction: column; gap: 10px; }
-        .message {
-            background: var(--bg-secondary);
-            padding: 15px;
-            border-radius: 8px;
-            border-left: 4px solid var(--accent-primary);
-            box-shadow: var(--shadow-subtle);
-            cursor: pointer;
-            transition: background-color 0.1s;
+        /* --- 4. DASHBOARD & MESSAGE STYLING (FURTHER ADJUSTED FOR COMPACTNESS) --- */
+        .header-controls {
+            display: flex;
+            justify-content: space-between;
+            align-items: flex-start;
+            margin-bottom: 15px;
         }
-        .message:hover { background-color: var(--bg-tertiary); }
-        .message .mess { margin: 0; font-size: 15px; line-height: 1.4; max-height: 3em; overflow: hidden; text-overflow: ellipsis; }
-        .message .timestamp { font-size: 12px; color: var(--text-muted); margin: 5px 0; display: block; }
-        .message-footer { display: flex; justify-content: space-between; align-items: center; margin-top: 10px; font-size: 12px;}
-        .message-footer p { margin: 0; color: var(--text-muted); }
-        .icondele { color: var(--text-error); cursor: pointer; font-size: 16px; padding: 5px; }
-        
-        
-        /* --- 5. MODALS & POPUPS --- */
-        .overlay {
-            position: fixed; top: 0; left: 0; width: 100%; height: 100%;
-            background: rgba(0, 0, 0, 0.85);
-            backdrop-filter: blur(8px);
-            z-index: 999;
+        /* New class for all dashboard content below controls */
+        .dashboard-content { transition: opacity 0.3s ease; } 
+
+        .dashboard-grid {
+            display: grid;
+            grid-template-columns: 3fr 1fr; /* More space for link */
+            gap: 10px; /* Reduced gap */
+            margin-top: 10px;
+        }
+        .link-card { 
+            background: var(--bg-tertiary); 
+            padding: 8px; /* Reduced padding */
+            border-radius: 5px; 
+            border: 1px solid var(--stat-border); 
+        }
+        .link-card .content { display: flex; justify-content: space-between; align-items: flex-end; gap: 8px; }
+        .stats-box { 
+            background: var(--stat-bg); 
+            padding: 8px; /* Reduced padding */
+            border-radius: 5px; 
+            border: 1px solid var(--stat-border); 
+            text-align: center;
+        }
+        .stats-box .count { font-size: 20px; font-weight: 800; } /* Smaller count */
+        .stats-box .label { font-size: 10px; margin-top: -3px; } /* Smaller label */
+
+        .credentials-reminder {
+            background: #252F43;
+            border-left: 3px solid var(--accent-secondary);
+            padding: 10px;
+            border-radius: 5px;
+            margin-top: 15px;
+            font-size: 12px;
+        }
+
+        .messages { margin-top: 15px; max-height: 300px; overflow-y: auto; padding-right: 5px; } 
+        .message { 
+            background: var(--bg-secondary); 
+            padding: 8px; /* Reduced message padding */
+            border-radius: 5px; /* Smaller radius */
+            margin-bottom: 10px; /* Reduced spacing between messages */
+            border-left: 3px solid var(--accent-primary);
+            transition: all 0.15s ease-in-out;
+        }
+        .message:hover {
+            background-color: var(--bg-tertiary);
+            transform: translateY(-1px);
+        }
+        .message .meta { font-size: 10px; margin-bottom: 3px; line-height: 1.2; }
+        .message .content { 
+            font-size: 12px; 
+            line-height: 1.3;
+            max-height: 2.6em; 
+        }
+
+        /* --- 5. MODAL/DETAIL CARD STYLES (ADJUSTED) --- */
+        .modal-overlay {
+            position: fixed; top: 0; left: 0; right: 0; bottom: 0;
+            background: rgba(0, 0, 0, 0.9);
+            backdrop-filter: blur(10px);
             display: none;
-            transition: opacity 0.3s;
-        }
-        .popupcred, .popup-share {
-            position: fixed;
-            top: 50%; left: 50%;
-            transform: translate(-50%, -50%);
-            padding: 25px;
-            border-radius: 12px;
-            background: var(--bg-tertiary);
-            box-shadow: var(--card-shadow);
-            border: 1px solid var(--accent-secondary);
+            align-items: center; justify-content: center;
             z-index: 1000;
-            max-width: 90%; width: 380px;
-            display: none;
         }
-
-        /* Message Detail Modal (Slide-in from top) */
-        #messageDetailModal {
-            position: fixed;
-            top: -100%; /* Start above screen */
-            left: 50%;
-            transform: translate(-50%, 0);
-            padding: 25px;
-            border-radius: 12px;
+        .modal-overlay.active { display: flex; }
+        .modal-content {
             background: var(--card-base);
+            padding: 15px; /* Reduced modal padding */
+            border-radius: 8px;
             box-shadow: var(--card-shadow);
             border: 1px solid var(--accent-primary);
-            z-index: 1001;
-            max-width: 90%;
-            width: 500px;
-            transition: top 0.4s cubic-bezier(0.175, 0.885, 0.32, 1.275);
-            display: none;
+            width: 90%;
+            max-width: 450px; /* Reduced max width */
+            max-height: 90vh;
+            display: flex;
+            flex-direction: column;
+            transform: scale(0.95); opacity: 0;
+            transition: transform 0.2s ease-out, opacity 0.2s ease-out;
         }
-        #messageDetailModal.active {
-            top: 20px;
-            display: block;
+        .modal-overlay.active .modal-content { transform: scale(1); opacity: 1; }
+        .modal-header {
+            display: flex; justify-content: space-between; align-items: center;
+            margin-bottom: 10px;
         }
-        #messageDetailModal .full-message {
-            white-space: pre-wrap;
-            word-wrap: break-word;
-            font-size: 16px;
-            line-height: 1.6;
-            background: var(--bg-secondary);
-            padding: 15px;
-            border-radius: 8px;
-            margin: 15px 0;
-            border: 1px solid var(--card-border);
+        .modal-header h4 {
+            font-size: 15px;
+            margin: 0;
         }
-        .modal-header { display: flex; justify-content: space-between; align-items: center; margin-bottom: 10px; }
-        .modal-header h4 { margin: 0; font-size: 18px; color: var(--accent-primary); }
-        
-        /* Toast Notifications */
-        .toast-container {
-            position: fixed; bottom: 20px; right: 20px; z-index: 1002;
-            display: flex; flex-direction: column; gap: 10px;
+        .modal-close {
+            background: transparent; border: none; color: var(--text-muted);
+            font-size: 20px; line-height: 1; padding: 0;
+            cursor: pointer;
         }
-        .toast {
-            background-color: var(--text-success); color: var(--bg-primary); padding: 12px 18px;
-            border-radius: 6px; font-size: 15px; font-weight: 600; opacity: 0; visibility: hidden;
-            transform: translateY(20px); transition: all 0.3s;
-        }
-        .toast.show { opacity: 1; visibility: visible; transform: translateY(0); }
-        .toast.error-toast { background-color: var(--text-error); }
+        .modal-close:hover { color: var(--text-primary); }
 
-        /* Mobile specific adjustments */
+        .message-full {
+             white-space: pre-wrap;
+             word-wrap: break-word;
+             font-size: 13px; /* Slightly smaller modal text */
+             line-height: 1.4;
+             background: var(--bg-secondary);
+             padding: 10px;
+             border-radius: 5px;
+             border: 1px solid var(--card-border);
+             margin-bottom: 10px;
+             overflow-y: auto; /* Allow scrolling for long messages */
+             flex-grow: 1;
+        }
+        
+        /* --- 6. MOBILE ADJUSTMENTS (Enhanced Button Layout) --- */
         @media (max-width: 768px) {
-            .nav-links {
-                position: fixed; top: 0; right: -100%; width: 70%; height: 100%;
-                background: var(--bg-secondary); transition: right 0.3s; flex-direction: column;
-                padding-top: 60px; z-index: 50; border-left: 1px solid var(--card-border);
+            body { padding: 10px; }
+            .card { padding: 15px; }
+            h1 { font-size: 18px; }
+            
+            .header-controls { 
+                flex-direction: column; 
+                align-items: stretch; 
+                gap: 10px; 
             }
-            .nav-links.active { right: 0; }
-            .nav-links ul { flex-direction: column; gap: 20px; width: 100%; padding: 0 20px; }
-            .navCloseBtn { position: absolute; top: 15px; right: 15px; }
-            .helloicon { gap: 10px; }
-            .iconbg { font-size: 20px; }
-            .wrapper { padding: 20px; }
+            .controls { 
+                display: flex; 
+                flex-wrap: wrap; 
+                gap: 5px; /* Smaller button gap */
+                justify-content: flex-end;
+            }
+            /* **Removed flex-grow from buttons for shorter length** */
+            .controls button { min-width: auto; } 
+            .controls #deleteBtn { min-width: 100%; order: 10; } /* Forces Delete button to its own line */
+            .dashboard-grid { grid-template-columns: 1fr; gap: 8px; }
+            .row, .auth-container { flex-direction: column; gap: 10px; }
+            .modal-content { max-height: 85vh; }
+        }
+        @media (min-width: 480px) and (max-width: 768px) {
+            .controls { justify-content: flex-end; }
+            .controls #deleteBtn { min-width: 48%; }
         }
     </style>
 </head>
-
 <body>
-    <nav class="nav">
-        <a href="/" class="logo" rel="noopener noreferrer">
-            <h3>Asklyy</h3>
-        </a>
-       <button class="navOpenBtn" aria-label="Open Navigation Menu"> <i class="fa-light fa-bars"></i></button>
-        <div class="nav-links">
-            <button class="navCloseBtn" aria-label="Close Navigation Menu">
-            <i class="fa-light fa-xmark"></i></button>
-            <ul>
-                <li><a href="/">Register</a></li>
-                <li><a href="/login/">Login</a></li>
-            </ul>
-        </div>
-    </nav>
-    
-    <div class="toast-container" id="toastContainer"></div> 
-
-    <div class="d-flex-column">
-        <div id="app-view" style="width: 100%;">
-            </div>
-
-        <div id="credentialPopup" class="popupcred">
-            <span class="close-btn" onclick="closeCredentialPopup()"><i class="fa-solid fa-circle-xmark"></i></span>
-                <h2>Login Details</h2>
-                <hr>
-                <h3 style="color: var(--text-success);">Take a Screenshot!</h3>
-                <p>Link ID: <span id="popup_linkId" style="font-weight:700;"></span></p>
-                <p>Password/PIN: <span id="popup_password" style="font-weight:700;"></span></p>
-                <button class="btn" onclick="closeCredentialPopup()"> Done! </button>
-        </div>
-
-        <div id="sharePopup" class="popup-share">
-            <span class="close-btn" onclick="closeSharePopup()"><i class="fa-solid fa-circle-xmark"></i></span>
-            <div class="content">
-              <h3>Share your link with friends</h3>
-                <div class="field" style="display: flex; align-items: center;">
-                    <i class="fa-light fa-link"></i>
-                    <input type="text" id="shareLinkInput" value="" readonly style="flex-grow: 1; margin-right: 5px;"/>
-                    <button onclick="copyLink()" style="flex-shrink: 0;"> Copy </button>
+    <div class="container">
+        <div class="card" id="app">
+            <header>
+                <div class="logo center">A</div>
+                <div>
+                    <h1>Asklyy</h1>
+                    <p class="lead">Secure and truly anonymous communication, globally.</p>
                 </div>
-                <ul class="icons" style="display: flex; justify-content: space-around; list-style: none; padding: 0; margin-top: 20px;">
-                    <a id="waShare" target="_blank"><i class="fab fa-whatsapp"></i> </a>
-                    <a id="fbShare" target="_blank"><i class="fab fa-facebook-f"></i> </a>
-                    <a id="twitterShare" target="_blank"><i class="fa-brands fa-x-twitter"></i></a>
-                    <a id="igShare" href="javascript:void(0)"><i class="fab fa-instagram"></i></a>
-                    <a id="teleShare" target="_blank"><i class="fab fa-telegram-plane"></i></a>
-                </ul>
-            </div>
-        </div>
-        
-        <div id="messageDetailModal">
-            <div class="modal-header">
-                <h4 id="modalSenderName"></h4>
-                <button class="close-btn" onclick="hideMessageDetailModal()">&times;</button>
-            </div>
-            <p class="muted small" id="modalTimestamp"></p>
-            <div class="full-message" id="modalMessageContent"></div>
-            <div style="text-align: right;">
-                <button class="btn" onclick="copyMessageToClipboard()"><i class="fas fa-copy"></i> Copy Message</button>
-            </div>
-        </div>
+            </header>
 
-        
-        <div id="overlay" class="overlay" onclick="closeCredentialPopup(); closeSharePopup(); hideMessageDetailModal();"></div>
+            <div id="view"></div>
+        </div>
+    </div>
+    
+    <div class="modal-overlay" id="messageModalOverlay">
+        <div class="modal-content" id="messageModalContent">
+            </div>
     </div>
 
+    <script>
+        // JS Logic (Functionality remains largely unchanged, focusing on UI/flow improvements)
+        const API_PREFIX = '/api';
+        const view = document.getElementById('view');
+        const modalOverlay = document.getElementById('messageModalOverlay');
+        const modalContent = document.getElementById('messageModalContent');
+        const pollIntervalMs = 10000; 
+        let messagesPollId = null;
+        let messageCount = 0; 
+        let lastMessages = []; // Store the full list of messages
 
-    <footer>
-        <div class="container">
-            <hr>
-            <p>Copyright 2025 Asklyy. All Rights Reserved</p>
-        </div>
-    </footer>
-    
-<script>
-    const API_PREFIX = '/api';
-    const appView = document.getElementById('app-view');
-    const overlay = document.getElementById('overlay');
-    const credentialPopup = document.getElementById('credentialPopup');
-    const sharePopup = document.getElementById('sharePopup');
-    const messageDetailModal = document.getElementById('messageDetailModal');
-    const toastContainer = document.getElementById('toastContainer');
-    
-    let messagesPollId = null;
-    const pollIntervalMs = 10000;
-    let lastMessages = []; 
+        // ---------- Helpers ----------
+        function show(html){ view.innerHTML = html; }
+        function qs(sel, root=document) { return root.querySelector(sel); }
+        function qsa(sel, root=document) { return Array.from(root.querySelectorAll(sel)); }
 
-    // --- Core Helpers ---
-    function show(html) { appView.innerHTML = html; }
-    function qs(sel, root = document) { return root.querySelector(sel); }
-    function basicAuthHeader() {
-        const u = sessionStorage.getItem('asklyy_username');
-        const p = sessionStorage.getItem('asklyy_password');
-        if (!u || !p) return null;
-        return 'Basic ' + btoa(u + ':' + p);
-    }
-    function escapeHtml(s) {
-        if (!s) return '';
-        return String(s).replace(/[&<>"']/g, c => ({ '&': '&amp;', '<': '&lt;', '>': '&gt;', '"': '&quot;', "'": '&#039;' }[c]));
-    }
-    
-    // --- API Functions (MOCK IMPLEMENTATION - REPLACE WITH REAL BACKEND) ---
-    async function apiPost(path, body, auth = false) {
-        return new Promise((resolve, reject) => {
-            setTimeout(() => {
-                if (path === '/createlink') {
-                    if (body.username && body.username.toLowerCase() === 'fail') return reject(new Error('Username taken.'));
-                    const linkId = Math.random().toString(36).substring(2, 8).toUpperCase();
-                    resolve({ success: true, linkId: linkId });
-                } else if (path === '/sendmessages') {
-                    if (!body.linkId || !body.text) return reject(new Error('Missing link ID or message text.'));
-                    resolve({ success: true });
-                } else if (path === '/dltlink') {
-                    resolve({ success: true });
-                } else {
-                    reject(new Error('Invalid API path.'));
-                }
-            }, 500);
-        });
-    }
-
-    async function apiGet(path, auth = false) {
-        if (path.startsWith('/getmessages')) {
-             if (!auth) throw new Error('Authentication Required');
-             const mockMessages = [
-                { messageId: 1, text: "Your design looks awesome, keep up the great work! This is a longer message that should demonstrate how text truncation works in the message list.", createdAt: new Date(Date.now() - 3600000).toISOString(), name: "A Fan" },
-                { messageId: 2, text: "Just wanted to say hi anonymously!", createdAt: new Date(Date.now() - 86400000).toISOString(), name: "" },
-                { messageId: 3, text: "This message is critical feedback about your recent project. It is honest, candid, and hopefully constructive. The system worked perfectly!", createdAt: new Date(Date.now() - 7200000).toISOString(), name: "The Critic" },
-            ];
-            return { success: true, linkId: sessionStorage.getItem('asklyy_linkId'), messages: mockMessages.reverse() };
-        }
-        return { success: true };
-    }
-
-
-    // --- Routing & Navigation ---
-    function navigateToRoot() {
-        history.replaceState({}, '', '/');
-        route();
-    }
-
-    function route() {
-        hideMessageDetailModal();
-        closeCredentialPopup();
-        closeSharePopup();
-
-        const url = new URL(location.href);
-        const id = url.searchParams.get('id');
-        
-        if (location.pathname === '/send' || location.pathname.startsWith('/send/') || id) {
-            const linkId = id || (location.pathname.split('/send/')[1] || '').replace('/', '');
-            renderSendPage(linkId);
-            return;
+        function basicAuthHeader() {
+            const u = sessionStorage.getItem('asklyy_username');
+            const p = sessionStorage.getItem('asklyy_password');
+            if (!u || !p) return null;
+            return 'Basic ' + btoa(u + ':' + p);
         }
 
-        const username = sessionStorage.getItem('asklyy_username');
-        const password = sessionStorage.getItem('asklyy_password');
-        if (username && password) {
-            renderDashboard();
-        } else {
-            renderMain();
-        }
-    }
-    
-    // --- Toast & Popup Handlers ---
-    function showToast(message, isError = false) {
-        const toast = document.createElement("div");
-        toast.className = `toast show ${isError ? 'error-toast' : ''}`;
-        toast.innerHTML = `<span>${message}</span>`;
-        toastContainer.appendChild(toast);
-
-        setTimeout(() => {
-            toast.classList.remove("show");
-            setTimeout(() => toast.remove(), 300);
-        }, 3000);
-    }
-    
-    function closeCredentialPopup() { credentialPopup.style.display = 'none'; overlay.style.display = 'none'; }
-    function openCredentialPopup() { 
-        qs('#popup_linkId').textContent = sessionStorage.getItem('asklyy_linkId') || 'N/A';
-        qs('#popup_password').textContent = sessionStorage.getItem('asklyy_password') || 'N/A';
-        credentialPopup.style.display = 'block'; 
-        overlay.style.display = 'block'; 
-    }
-
-    function closeSharePopup() { sharePopup.style.display = 'none'; overlay.style.display = 'none'; }
-    function openSharePopup() {
-        const linkId = sessionStorage.getItem('asklyy_linkId');
-        const username = sessionStorage.getItem('asklyy_username') || 'a friend';
-        if (!linkId) return showToast('Error: No link ID found to share.', true);
-        
-        const shareUrl = `${location.origin}/send?id=${encodeURIComponent(linkId)}`;
-        const baseText = `Hey, it’s ${username} here! 👋 Got something to say? 🤫 Share your secrets anonymously. Share them here 💌👉 ${shareUrl}`;
-
-        qs('#shareLinkInput').value = shareUrl;
-
-        const encodedUrl = encodeURIComponent(shareUrl);
-        const encodedText = encodeURIComponent(baseText);
-
-        qs('#waShare').href = `https://wa.me/?text=${encodedText}`;
-        qs('#fbShare').href = `https://www.facebook.com/sharer/sharer.php?u=${encodedUrl}&quote=${encodedText}`;
-        qs('#twitterShare').href = `https://twitter.com/intent/tweet?url=${encodedUrl}&text=${encodedText}`;
-        qs('#teleShare').href = `https://t.me/share/url?url=${encodedUrl}&text=${encodedText}`;
-        
-        sharePopup.style.display = 'block';
-        overlay.style.display = 'block';
-    }
-
-    function copyLink() {
-        const copyText = qs("#shareLinkInput");
-        copyText.select();
-        copyText.setSelectionRange(0, 99999);
-        navigator.clipboard.writeText(copyText.value)
-            .then(() => showToast('✅ Link copied to clipboard!'))
-            .catch(() => showToast("Failed to copy link. Please try manually.", true));
-    }
-    
-    function showMessageDetailModal(message) {
-        qs('#modalSenderName').innerHTML = `Full Message from <i class="fas fa-user-secret" style="margin-right: 5px;"></i>${message.name || 'Anonymous'}`;
-        qs('#modalTimestamp').textContent = new Date(message.createdAt).toLocaleString();
-        qs('#modalMessageContent').textContent = message.text;
-        messageDetailModal.dataset.fullText = message.text;
-        
-        messageDetailModal.classList.add('active');
-        overlay.style.display = 'block';
-    }
-
-    function hideMessageDetailModal() {
-        messageDetailModal.classList.remove('active');
-        // Only hide overlay if no other popups are active
-        if (credentialPopup.style.display !== 'block' && sharePopup.style.display !== 'block') {
-             overlay.style.display = 'none';
-        }
-    }
-
-    function copyMessageToClipboard() {
-        const textToCopy = messageDetailModal.dataset.fullText;
-        navigator.clipboard.writeText(textToCopy).then(() => {
-            showToast('✅ Full message copied to clipboard!');
-        }).catch(() => {
-            showToast('Failed to copy.', true);
-        });
-    }
-
-    // --- Time Utility ---
-    function timeSince(date, now) {
-        const seconds = Math.floor((now - date) / 1000);
-        let interval = seconds / 31536000;
-        if (interval > 1) return Math.floor(interval) + " years ago";
-        interval = seconds / 2592000;
-        if (interval > 1) return Math.floor(interval) + " months ago";
-        interval = seconds / 86400;
-        if (interval > 1) return Math.floor(interval) + " days ago";
-        interval = seconds / 3600;
-        if (interval > 1) return Math.floor(interval) + " hours ago";
-        interval = seconds / 60;
-        if (interval > 1) return Math.floor(interval) + " minutes ago";
-        return "Just now";
-    }
-
-    function updateTimestamps() {
-        const now = new Date();
-        document.querySelectorAll('.timestamp').forEach(element => {
-            const timeString = element.getAttribute('data-time');
-            const time = new Date(timeString); 
-            const relativeTime = timeSince(time, now);
-            element.innerHTML = relativeTime;
-        });
-    }
-
-
-    // --- View Functions ---
-    function renderMain() {
-        stopPolling();
-        
-        show(`
-            <div class="wrapper container create-account-container">
-                <div class="title" style="text-align: center;">
-                    <h1 class="mainheading">Asklyy</h1>
-                    <p class="headerstyle lead">Create Your Anonymous Link <br>&amp; Send Secret Messages</p>
-                </div>
-
-                <div id="auth-switch">
-                    ${renderCreateForm()}
-                </div>
-            </div>
-
-            <div class="container" style="margin-top: 20px; text-align: center;">
-                <p class="muted small" style="margin-bottom: 10px;">
-                    Already have an account? <a href="javascript:void(0)" onclick="switchAuthView()">Login here</a>
-                </p>
-                <div class="notice">
-                    <strong>Quick Demo:</strong> Leave the password blank and click "Generate Link" for instant, temporary access.
-                </div>
-            </div>
-        `);
-        
-        window.switchAuthView = () => {
-             const isNowLogin = !qs('#auth-switch').querySelector('form').dataset.mode.includes('create');
-             qs('#auth-switch').innerHTML = isNowLogin ? renderLoginForm() : renderCreateForm();
-             attachAuthHandlers();
+        async function apiPost(path, body, auth=false) {
+            const headers = { 'Content-Type': 'application/json' };
+            if (auth) {
+                const h = basicAuthHeader();
+                if (!h) throw new Error('Authentication required');
+                headers['Authorization'] = h;
+            }
+            const res = await fetch(API_PREFIX + path, { method: 'POST', headers, body: JSON.stringify(body) });
+            const j = await res.json().catch(()=>({success:false, error:'Invalid JSON response'}));
+            if (!res.ok) throw new Error(j && j.error ? j.error : 'API Error');
+            return j;
         }
 
-        attachAuthHandlers();
-    }
+        async function apiGet(path, auth=false) {
+            const headers = {};
+            if (auth) {
+                const h = basicAuthHeader();
+                if (!h) throw new Error('Authentication required');
+                headers['Authorization'] = h;
+            }
+            const res = await fetch(API_PREFIX + path, { method:'GET', headers });
+            const j = await res.json().catch(()=>({success:false, error:'Invalid JSON response'}));
+            if (!res.ok) throw new Error(j && j.error ? j.error : 'API Error');
+            return j;
+        }
 
-    function renderCreateForm() {
-        return `
-            <form id="createForm" data-mode="create" style="margin-top: 20px;">
-                <div style="display: flex; flex-direction: column; gap: 15px;">
-                    <input id="new_username" type="text" placeholder="Choose a unique username" required />
-                    <input id="new_password" type="password" placeholder="Choose a strong password (optional for demo)" />
+        function navigateToRoot() {
+            history.replaceState({}, '', '/');
+            route();
+        }
+
+        function route() {
+            const url = new URL(location.href);
+            const id = url.searchParams.get('id');
+            if (location.pathname.startsWith('/send') || id) {
+                const linkId = id || (location.pathname.split('/send/')[1] || '').replace('/', '');
+                renderSendPage(linkId);
+                return;
+            }
+
+            const username = sessionStorage.getItem('asklyy_username');
+            const password = sessionStorage.getItem('asklyy_password');
+            if (username && password) {
+                renderDashboard();
+            } else {
+                renderMain();
+            }
+        }
+        
+        function truncateMessage(text, limit = 100) {
+            if (!text) return '';
+            text = text.trim();
+            if (text.length <= limit) return text;
+            
+            let short = text.substring(0, limit);
+            const lastSpace = short.lastIndexOf(' ');
+            if (lastSpace > 50) {
+                short = short.substring(0, lastSpace);
+            }
+            return short + '...';
+        }
+
+        // ---------- MAIN ----------
+        function renderMain() {
+            stopPolling();
+            show(`
+                <div>
+                    <h2 style="margin:0 0 12px; font-size: 18px; font-weight: 700;">Start Your Anonymous Link</h2>
+                    <p class="muted" style="margin-bottom: 15px; font-size: 12px;">Generate a unique link, share it on your socials, and receive private, untraceable messages instantly. Zero sign-up required for senders.</p>
+
+                    <div class="auth-container row">
+                        <div>
+                            <h3 style="font-size: 15px; margin-bottom: 8px;"><i class="fas fa-plus-circle" style="color: var(--accent-secondary); margin-right: 6px;"></i> Create New Link</h3>
+                            <div class="col" style="gap:6px;">
+                                <input id="new_username" type="text" placeholder="Choose a username" />
+                                <input id="new_password" type="password" placeholder="Choose a password (or leave blank)" />
+                                <div class="actions" style="margin-top: 6px;">
+                                    <button id="createBtn" style="flex:1;"><i class="fas fa-magic"></i> Generate</button>
+                                </div>
+                            </div>
+                            <div id="createMsg" class="small" style="margin-top:6px;"></div>
+                        </div>
+
+                        <div>
+                            <h3 style="font-size: 15px; margin-bottom: 8px;"><i class="fas fa-lock" style="color: var(--accent-secondary); margin-right: 6px;"></i> Existing User Login</h3>
+                            <div class="col" style="gap:6px;">
+                                <input id="login_username" type="text" placeholder="Your Username" />
+                                <input id="login_password" type="password" placeholder="Your Password" />
+                                <div class="actions" style="margin-top: 6px;">
+                                    <button id="loginBtn" style="flex:1;"><i class="fas fa-sign-in-alt"></i> Access</button>
+                                </div>
+                            </div>
+                            <div id="loginMsg" class="small" style="margin-top:6px;"></div>
+                        </div>
+                    </div>
                     
-                    <button id="createBtn" class="btn btn--full w-100 btn-icon" type="submit">
-                        <i class="fa-regular fa-link-simple"></i> Generate Link
-                    </button>
-                    <div id="createMsg" class="small" style="text-align: center;"></div>
+                    <div class="notice" style="margin-top: 15px;">
+                        <strong>Quick Demo:</strong> Leave both fields empty and click "Generate" for instant, temporary access.
+                    </div>
                 </div>
-            </form>
-        `;
-    }
+            `);
 
-    function renderLoginForm() {
-        return `
-            <form id="loginForm" data-mode="login" style="margin-top: 20px;">
-                <div style="display: flex; flex-direction: column; gap: 15px;">
-                    <input id="login_username" type="text" placeholder="Your Username" required />
-                    <input id="login_password" type="password" placeholder="Your Password" required />
-                    <button id="loginBtn" class="btn btn--full w-100 btn-icon" type="submit">
-                        <i class="fas fa-sign-in-alt"></i> Access Dashboard
-                    </button>
-                    <div id="loginMsg" class="small" style="text-align: center;"></div>
-                </div>
-            </form>
-        `;
-    }
-
-    function attachAuthHandlers() {
-        const createForm = qs('#createForm');
-        if (createForm) {
-            createForm.onsubmit = async (e) => {
-                e.preventDefault();
+            const createBtn = qs('#createBtn');
+            const loginBtn = qs('#loginBtn');
+            
+            createBtn.onclick = async () => {
                 const u = qs('#new_username').value.trim();
                 const p = qs('#new_password').value;
                 const msg = qs('#createMsg');
-                const btn = qs('#createBtn');
+                msg.textContent = '';
                 
                 let finalU = u, finalP = p;
+                let isDemo = false;
                 
-                if (!u) { msg.innerHTML = '<span style="color:var(--text-error);">Username required.</span>'; return; }
-                if (!p) {
-                     finalP = Math.random().toString(36).slice(2,10);
-                     msg.textContent = 'Creating demo credentials...';
+                if (!u || !p) {
+                    isDemo = true;
+                    // Generate demo credentials if fields are empty
+                    finalU = 'demo' + Math.random().toString(36).slice(2,8);
+                    finalP = Math.random().toString(36).slice(2,10);
+                    msg.textContent = 'Creating a quick demo link...';
                 }
 
+                if (!finalU || !finalP) { msg.innerHTML = '<span class="error-text">Username and password required.</span>'; return; }
+                
                 try {
-                    btn.disabled = true;
-                    btn.innerHTML = '<i class="fas fa-cog fa-spin"></i> Processing...';
-                    const res = await apiPost('/createlink', { username: finalU, password: finalP }, false);
+                    createBtn.disabled = true;
+                    createBtn.innerHTML = '<i class="fas fa-cog fa-spin"></i> Processing...';
                     
+                    const res = await apiPost('/createlink', { username: finalU, password: finalP }, false);
                     if (res && res.linkId) {
                         sessionStorage.setItem('asklyy_username', finalU);
                         sessionStorage.setItem('asklyy_password', finalP);
                         sessionStorage.setItem('asklyy_linkId', res.linkId);
                         
-                        showToast('✅ Link created!');
-                        openCredentialPopup(); 
+                        // Show the generated or user-provided credentials for a moment
+                        if (isDemo) {
+                            alert(`DEMO Account Created!\n\nUsername: ${finalU}\nPassword: ${finalP}\n\n(Save these! Demo accounts may be purged.)`);
+                        } else {
+                             alert(`Account Created!\n\nUsername: ${finalU}\nPassword: ${p}\n\n(Ensure you save these details.)`);
+                        }
+
                         navigateToRoot();
-                    } else {
-                        throw new Error('Unexpected response.');
+                        return;
                     }
+                    msg.innerHTML = '<span class="error-text">Error: Unexpected response from server.</span>';
                 } catch (err) {
-                    msg.innerHTML = `<span style="color:var(--text-error);">Error: ${escapeHtml(err.message)}</span>`;
+                    msg.innerHTML = '<span class="error-text">Error: ' + (err.message || 'Could not connect to server.') + '</span>';
                 } finally {
-                    btn.disabled = false;
-                    btn.innerHTML = '<i class="fa-regular fa-link-simple"></i> Generate Link';
+                    createBtn.disabled = false;
+                    createBtn.innerHTML = '<i class="fas fa-magic"></i> Generate';
                 }
             };
-        }
 
-        const loginForm = qs('#loginForm');
-        if (loginForm) {
-            loginForm.onsubmit = async (e) => {
-                e.preventDefault();
+            loginBtn.onclick = async () => {
                 const u = qs('#login_username').value.trim();
                 const p = qs('#login_password').value;
                 const msg = qs('#loginMsg');
-                const btn = qs('#loginBtn');
-
-                if (!u || !p) { msg.textContent = 'Please enter both username and password.'; return; }
+                msg.textContent = '';
+                if (!u || !p) { msg.innerHTML = '<span class="error-text">Credentials required.</span>'; return; }
                 
                 try {
                     sessionStorage.setItem('asklyy_username', u);
                     sessionStorage.setItem('asklyy_password', p);
                     
-                    btn.disabled = true;
-                    btn.innerHTML = '<i class="fas fa-spinner fa-pulse"></i> Verifying...';
+                    loginBtn.disabled = true;
+                    loginBtn.innerHTML = '<i class="fas fa-spinner fa-pulse"></i> Verifying...';
                     
-                    const res = await apiGet('/getmessages?linkId=temp', true);
+                    const tempLinkId = sessionStorage.getItem('asklyy_linkId') || 'temp';
+                    const res = await apiGet('/getmessages?linkId=' + encodeURIComponent(tempLinkId), true);
                     
                     if (res && res.linkId) {
                         sessionStorage.setItem('asklyy_linkId', res.linkId);
-                        showToast('✅ Login successful!');
-                        navigateToRoot();
-                    } else {
-                        throw new Error('Link ID not found.');
                     }
+                    
+                    navigateToRoot();
                 } catch (err) {
-                    msg.innerHTML = `<span style="color:var(--text-error);">Login failed: Check credentials.</span>`;
+                    msg.innerHTML = '<span class="error-text">Login failed. Check credentials.</span>';
                     sessionStorage.removeItem('asklyy_username');
                     sessionStorage.removeItem('asklyy_password');
                 } finally {
-                    btn.disabled = false;
-                    btn.innerHTML = '<i class="fas fa-sign-in-alt"></i> Access Dashboard';
+                    loginBtn.disabled = false;
+                    loginBtn.innerHTML = '<i class="fas fa-sign-in-alt"></i> Access';
                 }
             };
         }
-    }
 
-
-    async function renderDashboard() {
-        stopPolling();
-        const uname = sessionStorage.getItem('asklyy_username') || 'User';
-        const linkId = sessionStorage.getItem('asklyy_linkId') || 'N/A';
-
-        show(`
-            <div class="container helloarea">
-                <div><p class="hellouser">Hello ${escapeHtml(uname)}</p></div>
-                <div class="helloicon">
-                    <i class="fa-regular fa-key iconbg" id="openCredsBtn" title="Show Login Details"></i>
-                    <a href="#messageBoard"> <i class="fa-regular fa-message-lines iconbg" title="Go to Message Board"></i> </a>
-                    <i class="fa-regular fa-share-nodes iconbg" id="openShareBtn" title="Share your link"></i>
-                    <i class="fa-regular fa-arrow-right-from-bracket iconbg" id="logoutBtn" title="Logout"></i>
-                </div>
-            </div>
-
-            <div class="wrapper container" style="margin-top: 20px;">
-                <div class="content" style="text-align: center;">
-                    <h3>Your Anonymous Link is Ready</h3>
-                    <div class="field" style="display: flex; align-items: center;">
-                        <i class="fa-light fa-link"></i>
-                        <input type="text" id="shareLinkDisplay" value="${location.origin}/send?id=${escapeHtml(linkId)}" readonly style="flex-grow: 1; margin-right: 5px;" />
-                        <button onclick="openSharePopup()" style="flex-shrink: 0;"> Share </button>
+        // ---------- DASHBOARD ----------
+        async function renderDashboard() {
+            const uname = sessionStorage.getItem('asklyy_username');
+            const pass = sessionStorage.getItem('asklyy_password'); // Added to display password
+            let linkId = sessionStorage.getItem('asklyy_linkId') || '';
+            
+            show(`<div>
+                <div class="header-controls">
+                    <div class="user-info">
+                        <div style="font-weight:700; font-size: 16px; color: var(--accent-primary);"><i class="fas fa-user-circle" style="margin-right: 6px;"></i>${uname || 'User'} Dashboard</div>
+                        <div class="small muted">Message Center</div>
+                    </div>
+                    <div class="controls">
+                        <button id="refreshBtn" class="ghost" title="Refresh"><i class="fas fa-sync-alt"></i></button>
+                        <button id="logoutBtn" class="ghost"><i class="fas fa-sign-out-alt"></i> Log Out</button>
+                        <button id="deleteBtn" class="ghost" style="color:var(--text-error); border-color:var(--text-error);"><i class="fas fa-trash-alt"></i> Delete</button>
                     </div>
                 </div>
-            </div>
 
-            <div class="container" style="margin-top: 20px;">
-                <section>
-                    <div class="messagehead" id="messageBoard">
-                        <h3>Message Board</h3>
-                        <div style="display: flex; gap: 10px;">
-                            <button class="btn ghost" id="deleteAccountBtn" style="color:var(--text-error); border-color:var(--text-error); padding: 5px 10px;"><i class="fas fa-trash-alt"></i> Delete</button>
-                            <button class="reload-btn" id="reloadButton">
-                                <i class="fa-regular fa-arrow-rotate-right reload-icon" id="reloadIcon"></i>
-                            </button>
+                <div class="credentials-reminder">
+                    <i class="fas fa-key" style="margin-right: 5px; color: var(--accent-secondary);"></i>
+                    <strong>Login Info:</strong> Username: <span style="font-weight:700; color:var(--text-primary);">${escapeHtml(uname)}</span> | Password: <span style="font-weight:700; color:var(--text-primary);">${escapeHtml(pass)}</span>
+                </div>
+                
+                <div class="dashboard-content">
+                    <div class="dashboard-grid">
+                        <div class="link-card">
+                            <div class="small muted" style="margin-bottom: 5px;"><i class="fas fa-link" style="margin-right: 3px;"></i> Your Shareable Link</div>
+                            <div class="content">
+                                <div id="shareUrl" style="font-weight:600; font-size: 13px; word-break: break-all;"></div>
+                                <div style="text-align:right;">
+                                    <div class="small muted">ID</div>
+                                    <div id="linkIdText" style="font-weight:700; font-size: 14px; margin-top: 2px; flex-shrink: 0;"></div>
+                                </div>
+                            </div>
+                        </div>
+
+                        <div class="stats-box">
+                            <i class="fas fa-envelope" style="color: var(--accent-primary); font-size: 16px;"></i>
+                            <div id="messageCountDisplay" class="count">0</div>
+                            <div class="label">Total Msgs</div>
                         </div>
                     </div>
-                    <div id="messagesBox">
-                        <div class="muted small" style="padding: 20px; text-align: center;">Loading messages...</div>
+
+                    <div class="messages" id="messagesBox">
+                        <div class="muted small center" style="padding: 15px;">Loading messages...</div>
                     </div>
-                </section>
-            </div>
-        `);
+                </div>
+            </div>`);
 
-        // Attach Dashboard Handlers
-        qs('#openCredsBtn').onclick = openCredentialPopup;
-        qs('#openShareBtn').onclick = openSharePopup;
-        qs('#logoutBtn').onclick = () => {
-            stopPolling();
-            sessionStorage.clear();
-            showToast('Logged out.');
-            navigateToRoot();
-        };
-        
-        const reloadButton = qs('#reloadButton');
-        reloadButton.onclick = async () => {
-            const icon = qs("#reloadIcon");
-            icon.classList.add("spin");
-            await fetchAndRenderMessages(linkId);
-            setTimeout(() => icon.classList.remove("spin"), 800);
-            showToast('Messages refreshed.');
-        };
-
-        qs('#deleteAccountBtn').onclick = async () => {
-            const ok = confirm('FINAL WARNING: Delete your account and ALL messages? This cannot be reversed.');
-            if (!ok) return;
-            try {
-                qs('#deleteAccountBtn').disabled = true;
-                await apiPost('/dltlink', { linkId }, true);
-                showToast('Account successfully deleted.', true);
-                qs('#logoutBtn').click();
-            } catch (err) {
-                showToast('Deletion failed: ' + (err.message || 'Server Error'), true);
-            } finally {
-                qs('#deleteAccountBtn').disabled = false;
+            const logoutBtn = qs('#logoutBtn');
+            const deleteBtn = qs('#deleteBtn');
+            const refreshBtn = qs('#refreshBtn');
+            const linkIdText = qs('#linkIdText');
+            const shareUrlEl = qs('#shareUrl');
+            
+            if (!linkId) {
+                linkIdText.textContent = 'N/A';
+                shareUrlEl.innerHTML = '<span class="error-text">Link ID unknown. Re-login or create a link.</span>';
+            } else {
+                linkIdText.textContent = linkId;
+                const fullUrl = `${location.origin}/send/?id=${encodeURIComponent(linkId)}`;
+                // Added copy button next to the link
+                shareUrlEl.innerHTML = `<a href="${fullUrl}" target="_blank" style="color:var(--text-primary); text-decoration:none;">${fullUrl}</a> <i class="fas fa-copy" id="copyLinkBtn" style="cursor:pointer; color: var(--text-muted); margin-left: 5px;" title="Copy Link"></i>`;
+                qs('#copyLinkBtn').onclick = () => copyMessageToClipboard(fullUrl, true);
             }
-        };
 
-        startPolling(() => fetchAndRenderMessages(linkId, true)); 
-        fetchAndRenderMessages(linkId);
-    }
-    
-    // --- Message Fetching & Rendering ---
-    async function fetchAndRenderMessages(linkId, silent = false) {
-        const box = qs('#messagesBox');
-        
-        try {
-            const res = await apiGet('/getmessages?linkId=' + encodeURIComponent(linkId), true);
-            if (res && res.messages) {
-                lastMessages = res.messages;
-                
-                if (lastMessages.length === 0) {
-                    box.innerHTML = '<div class="muted small" style="padding: 20px; text-align: center;"><i class="fas fa-inbox" style="margin-right: 8px;"></i>No messages yet. Share your link!</div>';
-                    return;
+            logoutBtn.onclick = () => {
+                stopPolling();
+                sessionStorage.clear();
+                navigateToRoot();
+            };
+
+            deleteBtn.onclick = async () => {
+                const ok = confirm('FINAL WARNING: Delete your account and ALL messages? This cannot be reversed.');
+                if (!ok) return;
+                try {
+                    deleteBtn.disabled = true;
+                    if (!basicAuthHeader()) throw new Error('Not authenticated');
+                    await apiPost('/dltlink', { linkId }, true);
+                    alert('Account successfully deleted.');
+                    logoutBtn.click();
+                } catch (err) {
+                    alert('Deletion failed: ' + (err.message || err));
+                } finally {
+                    deleteBtn.disabled = false;
                 }
-                
-                box.innerHTML = lastMessages.map(m => {
-                    const messageText = m.text;
-                    return `<div class="message" data-id="${m.messageId}">
-                        <p class="mess">${escapeHtml(messageText)}</p>
-                        <p class='timestamp' data-time='${m.createdAt}'>Loading...</p>
-                        <div class="message-footer">
-                        <p>💌 asklyy.com | From: ${m.name || 'Anonymous'}</p>
-                        <i class="fas fa-trash-alt icondele" onclick='deleteMessage(event, ${m.messageId})' title="Delete Message"></i>
-                        </div>
-                    </div>`;
-                }).join('');
-                
-                // Attach click handlers for detail modal
-                document.querySelectorAll('.message').forEach(el => {
-                    el.onclick = () => {
-                        const messageId = parseInt(el.dataset.id);
-                        const message = lastMessages.find(m => m.messageId === messageId);
-                        if (message) showMessageDetailModal(message);
-                    };
-                });
-                
-                updateTimestamps();
+            };
 
-            } else if (!silent) {
-                box.innerHTML = '<div class="muted small" style="padding: 20px; text-align: center;"><span style="color:var(--text-error);">Server Error:</span> Failed to load messages.</div>';
-            }
-        } catch (err) {
-            if (!silent) {
-                box.innerHTML = `<div class="muted small" style="padding: 20px; text-align: center;"><span style="color:var(--text-error);">Connection Error:</span> ${escapeHtml(err.message || 'Authentication Failed')}</div>`;
-            }
+            refreshBtn.onclick = async () => {
+                refreshBtn.disabled = true;
+                refreshBtn.innerHTML = '<i class="fas fa-sync-alt fa-spin"></i>';
+                await fetchAndRenderMessages(linkId);
+                refreshBtn.innerHTML = '<i class="fas fa-sync-alt"></i>';
+                refreshBtn.disabled = false;
+            };
+
+            startPolling(() => fetchAndRenderMessages(linkId, true)); 
+            fetchAndRenderMessages(linkId);
         }
-    }
-    
-    // Placeholder function for client-side delete
-    window.deleteMessage = async (event, id) => {
-        event.stopPropagation(); // Prevent message detail modal from opening
-        if (!confirm("Are you sure you want to delete this message?")) return;
-        try {
-             await new Promise(resolve => setTimeout(resolve, 300));
-             lastMessages = lastMessages.filter(m => m.messageId !== id);
-             showToast('🗑️ Message deleted.', true);
-             fetchAndRenderMessages(sessionStorage.getItem('asklyy_linkId'));
-        } catch (error) {
-            showToast('Failed to delete message.', true);
-        }
-    }
 
-    // --- Send Page View (Corrected with Optional Name) ---
-    function renderSendPage(linkIdFromUrl) {
-        stopPolling();
-        const linkId = linkIdFromUrl || '';
-        // MOCK: Get recipient's username using a mock function (replace with real API call)
-        const recipientName = 'Recipient'; 
-
-        show(`
-            <div class="wrapper container create-account-container" style="max-width: 450px; margin-top: 50px;">
-                <div class="title" style="text-align: center;">
-                    <h1 class="sendtitle">Send a Secret <br> Message to ${escapeHtml(recipientName)}</h1>
-                    <p class="sendpara lead muted">They will never know who messaged them 😉</p>
-                </div>
-                
-                <form id="sendForm" style="margin-top:20px">
-                    <input type="hidden" name="linkId" value="${escapeHtml(linkId)}">
-                    
-                    <div style="display: flex; flex-direction: column; gap: 15px;">
-                        
-                        <div>
-                            <label class="small muted" style="display:block; margin-bottom: 5px;">Your identity (Optional - remains anonymous)</label>
-                            <input id="senderName" type="text" placeholder="e.g. Someone who cares" />
-                        </div>
-
-                        <div>
-                            <label class="small muted" style="display:block; margin-bottom: 5px;">Your secret message</label>
-                            <textarea id="senderText" rows="5" placeholder="Write your anonymous message here..." required></textarea>
-                        </div>
-                        
-                        <button id="sendNow" class="btn btn--full w-100" type="submit">
-                            <i class="fas fa-paper-plane"></i> Send Secret Message
-                        </button>
-                        <div id="sendResult" class="small" style="text-align: center;"></div>
-                    </div>
-                </form>
-                
-                ${!linkId ? `<div class="notice" style="margin-top: 20px;">
-                    <i class="fas fa-exclamation-triangle"></i> <strong>Error:</strong> This link is missing a valid ID.
-                </div>` : ''}
-            </div>
-        `);
-        
-        const form = qs('#sendForm');
-        form.onsubmit = async (ev) => {
-            ev.preventDefault();
-            const text = qs('#senderText').value.trim();
-            const name = qs('#senderName').value.trim();
-            const out = qs('#sendResult');
-            
-            if (!text) { out.innerHTML = '<span style="color:var(--text-error);">Message cannot be empty.</span>'; return; }
-            if (!linkId) { out.innerHTML = '<span style="color:var(--text-error);">Invalid link ID. Cannot send.</span>'; return; }
+        async function fetchAndRenderMessages(linkId, silent=false) {
+            const box = qs('#messagesBox');
+            const countDisplay = qs('#messageCountDisplay');
+            if (!linkId) {
+                if (!silent) box.innerHTML = '<div class="muted small center" style="padding: 15px;"><span class="error-text">Error:</span> No link ID found.</div>';
+                return;
+            }
             
             try {
-                qs('#sendNow').disabled = true;
-                qs('#sendNow').innerHTML = '<i class="fas fa-circle-notch fa-spin"></i> Sending...';
-                await apiPost('/sendmessages', { linkId, name, text }, false);
-                
-                out.innerHTML = '<span style="color:var(--text-success);"><i class="fas fa-check-circle"></i> Message sent successfully!</span>';
-                qs('#senderText').value = '';
-                qs('#senderName').value = '';
+                const res = await apiGet('/getmessages?linkId=' + encodeURIComponent(linkId), true);
+                if (res && res.messages) {
+                    lastMessages = res.messages; // Store full messages
+                    messageCount = res.messages.length;
+                    if (countDisplay) countDisplay.textContent = messageCount;
+
+                    if (messageCount === 0) {
+                        box.innerHTML = '<div class="muted small center" style="padding: 15px;"><i class="fas fa-inbox" style="margin-right: 5px;"></i>No messages yet. Share your secure link!</div>';
+                        return;
+                    }
+                    
+                    box.innerHTML = res.messages.map(m => {
+                        const name = m.name ? escapeHtml(m.name) : 'Anonymous';
+                        const date = m.createdAt ? new Date(m.createdAt).toLocaleString() : 'Just now';
+                        const truncatedText = truncateMessage(m.text, 100);
+                        
+                        return `<div class="message" data-id="${m.messageId}">
+                            <div class="meta">
+                                <span><i class="fas fa-user-secret" style="margin-right: 3px;"></i>${name}</span>
+                                <span class="small muted" style="float:right;">${date}</span>
+                            </div>
+                            <div class="content">${escapeHtml(truncatedText)}</div>
+                        </div>`;
+                    }).join('');
+                    
+                    // Attach click handler to rendered messages
+                    qsa('.message', box).forEach(el => {
+                        el.onclick = () => openMessageModal(el.dataset.id);
+                    });
+
+                } else if (!silent) {
+                    box.innerHTML = '<div class="muted small center" style="padding: 15px;"><span class="error-text">Server Error:</span> Failed to load messages.</div>';
+                }
             } catch (err) {
-                out.innerHTML = `<span style="color:var(--text-error);"><i class="fas fa-times-circle"></i> Send failed: ${escapeHtml(err.message || 'Server error.')}</span>`;
-            } finally {
-                qs('#sendNow').disabled = false;
-                qs('#sendNow').innerHTML = '<i class="fas fa-paper-plane"></i> Send Secret Message';
+                if (!silent) {
+                    box.innerHTML = `<div class="muted small center" style="padding: 15px;"><span class="error-text">Connection Error:</span> ${escapeHtml(err.message || 'Authentication Failed')}</div>`;
+                }
             }
-        };
-    }
+        }
+        
+        // --- MODAL FUNCTIONS ---
+        function openMessageModal(messageId) {
+            const message = lastMessages.find(m => String(m.messageId) === String(messageId));
+            if (!message) {
+                alert("Message not found.");
+                return;
+            }
 
-    // --- Global Init ---
-    document.addEventListener("DOMContentLoaded", function() {
+            // **HIDES DASHBOARD CONTENT WHEN MODAL OPENS**
+            const dashboardContent = qs('.dashboard-content');
+            if(dashboardContent) dashboardContent.style.opacity = '0';
+
+            modalContent.innerHTML = renderMessageModal(message);
+            modalOverlay.classList.add('active');
+            
+            qs('#modalCloseBtn').onclick = closeMessageModal;
+            qs('#modalCopyBtn').onclick = () => copyMessageToClipboard(message.text);
+        }
+
+        function closeMessageModal() {
+            modalOverlay.classList.remove('active');
+            
+            // **RE-SHOWS DASHBOARD CONTENT WHEN MODAL CLOSES**
+            const dashboardContent = qs('.dashboard-content');
+            if(dashboardContent) dashboardContent.style.opacity = '1';
+        }
+        
+        function renderMessageModal(m) {
+            const name = m.name ? escapeHtml(m.name) : 'Anonymous';
+            const date = m.createdAt ? new Date(m.createdAt).toLocaleString() : 'Just now';
+            const text = escapeHtml(m.text || '');
+            
+            return `
+                <div class="modal-header">
+                    <h4><i class="fas fa-envelope-open-text" style="margin-right: 6px;"></i>Full Message</h4>
+                    <button id="modalCloseBtn" class="modal-close"><i class="fas fa-times"></i></button>
+                </div>
+                <div class="muted" style="margin-bottom: 8px; font-size: 11px;">
+                    From: <strong>${name}</strong>
+                    <span style="float: right;">${date}</span>
+                </div>
+                
+                <div class="message-full" id="messageTextToCopy">${text}</div>
+                
+                <div class="actions" style="justify-content: flex-end; margin-top: 10px;">
+                    <button id="modalCopyBtn" style="background: var(--text-success); box-shadow: 0 4px 10px rgba(52, 211, 153, 0.4);"><i class="fas fa-copy"></i> Copy</button>
+                    </div>
+                <div id="copyFeedback" class="small muted" style="margin-top: 5px; text-align: right;"></div>
+            `;
+        }
+        
+        function copyMessageToClipboard(text, isLink = false) {
+            const feedbackEl = isLink ? qs('#shareUrl') : qs('#copyFeedback');
+            const originalHtml = feedbackEl.innerHTML;
+            
+            navigator.clipboard.writeText(text).then(() => {
+                const message = isLink ? 'Link Copied!' : 'Copied to clipboard!';
+                feedbackEl.innerHTML = `<span style="color:var(--text-success);"><i class="fas fa-check"></i> ${message}</span>`;
+                setTimeout(() => {
+                    if (isLink) {
+                        // Re-render the full link structure if it was the link copy button
+                        const linkId = sessionStorage.getItem('asklyy_linkId');
+                        const fullUrl = `${location.origin}/send/?id=${encodeURIComponent(linkId)}`;
+                        feedbackEl.innerHTML = `<a href="${fullUrl}" target="_blank" style="color:var(--text-primary); text-decoration:none;">${fullUrl}</a> <i class="fas fa-copy" id="copyLinkBtn" style="cursor:pointer; color: var(--text-muted); margin-left: 5px;" title="Copy Link"></i>`;
+                        qs('#copyLinkBtn').onclick = () => copyMessageToClipboard(fullUrl, true);
+                    } else {
+                        feedbackEl.textContent = '';
+                    }
+                }, 2000);
+            }).catch(err => {
+                feedbackEl.innerHTML = `<span class="error-text"><i class="fas fa-times"></i> Failed to copy.</span>`;
+                console.error('Copy failed:', err);
+            });
+        }
+
+
+        // ---------- SEND PAGE (MODIFIED FOR SIMPLICITY) ----------
+        function renderSendPage(linkIdFromUrl) {
+            stopPolling();
+            const linkId = linkIdFromUrl || '';
+            
+            show(`
+                <div>
+                    <div class="header-controls" style="justify-content: center;">
+                        <div class="user-info" style="text-align: center;">
+                            <div style="font-weight:700; font-size: 18px; color: var(--accent-primary);"><i class="fas fa-comment-dots" style="margin-right: 6px;"></i>Send A Secret Message</div>
+                            <div class="small muted">To Link ID: <strong style="color:var(--text-primary);" id="sendLinkId">${escapeHtml(linkId)}</strong></div>
+                        </div>
+                    </div>
+
+                    <form id="sendForm" style="margin-top:15px">
+                        <div class="col" style="gap:10px">
+                            
+                            <div>
+                                <label class="small muted" style="display:block; margin-bottom: 5px;">Your secret message</label>
+                                <textarea id="senderText" rows="4" placeholder="Write your anonymous message here..." required></textarea>
+                            </div>
+                            <div class="actions" style="margin-top:5px;">
+                                <button id="sendNow" type="submit" style="flex:1;"><i class="fas fa-paper-plane"></i> Send</button>
+                            </div>
+                            <div id="sendResult" class="small" style="margin-top:8px;"></div>
+                        </div>
+                    </form>
+                    
+                    ${!linkId ? `<div class="notice" style="margin-top: 15px;">
+                        <i class="fas fa-exclamation-triangle"></i> <strong>Error:</strong> This link is missing a valid ID. Please check the URL.
+                    </div>` : ''}
+                </div>
+            `);
+            
+            const form = qs('#sendForm');
+            form.addEventListener('submit', async (ev) => {
+                ev.preventDefault();
+                // 'name' is now always empty, enforcing full anonymity
+                const name = ''; 
+                const text = qs('#senderText').value.trim();
+                const out = qs('#sendResult');
+                out.textContent = '';
+                
+                if (!text) { out.innerHTML = '<span class="error-text">Message cannot be empty.</span>'; return; }
+                if (!linkId) { out.innerHTML = '<span class="error-text">Invalid link ID. Cannot send.</span>'; return; }
+                
+                try {
+                    qs('#sendNow').disabled = true;
+                    qs('#sendNow').innerHTML = '<i class="fas fa-circle-notch fa-spin"></i> Sending...';
+                    await apiPost('/sendmessages', { linkId, name, text }, false);
+                    out.innerHTML = '<span class="success-text"><i class="fas fa-check-circle"></i> Message sent successfully!</span>';
+                    
+                    qs('#senderText').value = '';
+                } catch (err) {
+                    out.innerHTML = `<span class="error-text"><i class="fas fa-times-circle"></i> Send failed: ${err.message || 'Server error.'}</span>`;
+                } finally {
+                    qs('#sendNow').disabled = false;
+                    qs('#sendNow').innerHTML = '<i class="fas fa-paper-plane"></i> Send';
+                }
+            });
+        }
+
+        // ---------- Polling & Utilities (Unchanged) ----------
+        function startPolling(fn) {
+            stopPolling();
+            messagesPollId = setInterval(() => {
+                if (document.visibilityState === 'visible') fn();
+            }, pollIntervalMs);
+        }
+        function stopPolling() {
+            if (messagesPollId) { clearInterval(messagesPollId); messagesPollId = null; }
+        }
+
+        function escapeHtml(s){
+            if (!s) return '';
+            return String(s).replace(/[&<>"']/g, c => ({'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;',"'":'&#039;'}[c]));
+        }
+
+        window.addEventListener('popstate', route);
+        // Add listener to close modal on clicking outside or pressing ESC
+        modalOverlay.addEventListener('click', (e) => {
+            if (e.target === modalOverlay) closeMessageModal();
+        });
+        document.addEventListener('keydown', (e) => {
+            if (e.key === 'Escape' && modalOverlay.classList.contains('active')) closeMessageModal();
+        });
         route();
-        setInterval(updateTimestamps, 60000);
-
-        // Mobile Menu Toggle
-        qs('.navOpenBtn').onclick = () => qs('.nav-links').classList.add('active');
-        qs('.navCloseBtn').onclick = () => qs('.nav-links').classList.remove('active');
-    });
-
-    window.addEventListener('popstate', route);
-</script>
+    </script>
 </body>
 </html>
