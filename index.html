@@ -7,18 +7,18 @@
     <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;600;700;800&display=swap" rel="stylesheet">
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
     <style>
-        /* --- 1. LUXURY COLOR PALETTE & VARIABLES (Unchanged) --- */
+        /* --- 1. LUXURY COLOR PALETTE & VARIABLES (Minor Adjustments) --- */
         :root {
             --bg-primary: #04091A; 
             --bg-secondary: #0F172A; 
             --bg-tertiary: #1D263B; 
-            --card-base: rgba(15, 23, 42, 0.7);
-            --card-border: rgba(255, 255, 255, 0.12);
-            --card-shadow: 0 15px 40px rgba(0, 0, 0, 0.6);
+            --card-base: rgba(15, 23, 42, 0.75); /* Slight opacity boost */
+            --card-border: rgba(255, 255, 255, 0.1);
+            --card-shadow: 0 12px 30px rgba(0, 0, 0, 0.7); /* Deeper shadow */
             --accent-primary: #4C72E0; 
             --accent-secondary: #7F58E8; 
             --accent-gradient: linear-gradient(135deg, var(--accent-secondary) 0%, var(--accent-primary) 100%);
-            --accent-shadow: 0 5px 25px rgba(76, 114, 224, 0.5);
+            --accent-shadow: 0 4px 20px rgba(76, 114, 224, 0.4);
             --text-primary: #EBF4F7;
             --text-muted: #A0B9D5;
             --text-success: #34D399; 
@@ -26,7 +26,7 @@
             color-scheme: dark;
         }
 
-        /* --- 2. BASE STYLES AND AESTHETICS (Refined Scaling) --- */
+        /* --- 2. BASE STYLES AND AESTHETICS (Tighter Fit) --- */
         *{ box-sizing: border-box; font-family: 'Inter', system-ui, sans-serif; }
         body{
             margin: 0;
@@ -36,112 +36,120 @@
             display: flex;
             align-items: center;
             justify-content: center;
-            padding: 30px 18px; /* Slightly reduced padding */
+            padding: 30px 15px; 
             background-image: radial-gradient(circle at 10% 10%, rgba(76, 114, 224, 0.15) 1%, transparent 30%), 
                               radial-gradient(circle at 90% 90%, rgba(127, 88, 232, 0.1) 1%, transparent 35%);
         }
-        .container{ width: 100%; max-width: 900px; /* Max width slightly reduced */ }
+        .container{ width: 100%; max-width: 850px; /* Further reduced max width for compactness */ }
 
-        /* --- 3. CORE COMPONENTS (Scaled Down) --- */
+        /* --- 3. CORE COMPONENTS (Scaled Down and Tightened) --- */
         .card {
             background: var(--card-base);
-            padding: 30px; /* Reduced box padding */
-            border-radius: 14px; /* Slightly smaller border radius */
+            padding: 24px; /* Uniform, tighter padding */
+            border-radius: 12px; 
             box-shadow: var(--card-shadow);
             border: 1px solid var(--card-border);
-            backdrop-filter: blur(10px); 
+            backdrop-filter: blur(8px); 
         }
         
         /* Header and Logo */
-        header { display: flex; gap: 16px; align-items: center; margin-bottom: 25px; }
+        header { display: flex; gap: 14px; align-items: center; margin-bottom: 20px; }
         .logo {
-            width: 48px; height: 48px; /* Smaller logo */
-            border-radius: 12px;
+            width: 44px; height: 44px; /* Tighter logo size */
+            border-radius: 10px;
             background: var(--accent-gradient);
-            font-weight: 800; font-size: 22px; 
-            box-shadow: 0 0 12px rgba(76, 114, 224, 0.4);
+            font-weight: 800; font-size: 20px; 
+            box-shadow: 0 0 10px rgba(76, 114, 224, 0.3);
         }
-        h1 { margin: 0; font-size: 26px; /* Smaller main title */ font-weight: 800; color: var(--text-primary); }
-        p.lead { margin: 2px 0 0; color: var(--text-muted); font-size: 14px; }
+        h1 { margin: 0; font-size: 24px; font-weight: 800; color: var(--text-primary); }
+        p.lead { margin: 2px 0 0; color: var(--text-muted); font-size: 13px; }
 
-        /* Inputs/Textareas */
+        /* Inputs/Textareas (Lower Height) */
         input[type="text"], input[type="password"], textarea {
             background: var(--bg-tertiary);
             border: 1px solid rgba(255, 255, 255, 0.1);
-            padding: 12px; /* Reduced input padding */
-            border-radius: 8px;
+            padding: 10px 12px; /* Reduced vertical padding */
+            border-radius: 6px; /* Sharper corners */
             color: inherit;
-            font-size: 15px; /* Smaller font inside inputs */
+            font-size: 14px; 
             width: 100%;
-            transition: all 0.3s ease;
+            transition: all 0.2s ease;
             box-shadow: inset 0 1px 3px rgba(0, 0, 0, 0.4);
         }
         input:focus, textarea:focus {
             outline: none;
             border-color: var(--accent-primary);
-            box-shadow: 0 0 0 2px rgba(76, 114, 224, 0.3), inset 0 1px 3px rgba(0, 0, 0, 0.4);
+            box-shadow: 0 0 0 2px rgba(76, 114, 224, 0.2), inset 0 1px 3px rgba(0, 0, 0, 0.4);
             background: var(--bg-secondary);
         }
         
-        /* Buttons */
+        /* Buttons (Lower Height and Tighter Text) */
         button {
             background: var(--accent-gradient);
             border: none;
             color: white;
-            padding: 10px 20px; /* Reduced button padding/height */
-            border-radius: 6px;
+            padding: 9px 16px; /* Tighter button padding/height */
+            border-radius: 5px;
             cursor: pointer;
-            font-weight: 700;
-            font-size: 14px; /* Smaller button text */
+            font-weight: 600; /* Slightly lower weight for better desktop look */
+            font-size: 14px; 
             transition: all 0.2s ease;
             box-shadow: var(--accent-shadow);
         }
         button:hover:not(:disabled) {
             transform: translateY(-1px);
-            box-shadow: 0 5px 20px rgba(76, 114, 224, 0.5);
         }
         button.ghost {
-            padding: 9px 18px; /* Adjusted ghost button padding */
-            font-size: 14px;
+            padding: 8px 15px; /* Adjusted ghost button padding */
         }
-
+        
         /* Layout & Typography Helpers */
-        .auth-container { display: flex; gap: 20px; margin-top: 20px; flex-wrap: wrap; }
+        .row { display: flex; gap: 20px; align-items: flex-start; }
+        .col { display: flex; flex-direction: column; gap: 10px; flex: 1; } /* Reduced column gap */
+
+        .auth-container { gap: 15px; margin-top: 15px; } /* Reduced container gap */
         .auth-container > div { 
-            padding: 20px; /* Reduced padding inside auth boxes */
-            border-radius: 10px; 
-            background: var(--bg-secondary); 
-            border: 1px solid var(--card-border);
-            flex: 1; min-width: 300px;
+            padding: 18px; /* Reduced padding inside auth boxes */
+            border-radius: 8px; 
+            flex: 1; min-width: 280px;
         }
+        .auth-container h3 { font-size: 16px; margin-bottom: 10px; } /* Smaller H3 */
         .muted{ color: var(--text-muted); font-size: 13px; }
-        .small{ font-size: 12px; color: var(--text-muted); }
+        .small{ font-size: 11px; color: var(--text-muted); }
         .actions { display: flex; gap: 8px; align-items: center; }
 
         /* Dashboard specific */
-        .link-card { padding: 15px; border-radius: 10px; margin-top: 15px; }
-        .messages { margin-top: 20px; max-height: 400px; padding-right: 10px; }
-        .message { padding: 15px; border-radius: 10px; margin-bottom: 10px; }
-        .message .meta { font-size: 13px; margin-bottom: 8px; }
-        .message .content { font-size: 15px; line-height: 1.5; }
         .header-controls { margin-bottom: 10px; }
-        
-        /* Media Queries (Mobile Scaling Refinement) */
+        .user-info div { font-size: 16px; }
+        .link-card { padding: 12px; border-radius: 8px; margin-top: 12px; }
+        .messages { margin-top: 15px; max-height: 380px; padding-right: 8px; }
+        .message { padding: 12px; border-radius: 8px; margin-bottom: 8px; }
+        .message .meta { font-size: 12px; margin-bottom: 6px; }
+        .message .content { font-size: 14px; line-height: 1.4; }
+
+        /* Send Page */
+        /* This ensures the senderName input (which is type="text" but defined explicitly) is styled correctly */
+        #sendForm input[type="text"] {
+             /* Inherits all styles above, ensuring consistency */
+             margin-bottom: 0; 
+        }
+
+        /* Media Queries (Final Mobile Tightening) */
         @media (max-width: 768px) {
-            body { padding: 15px; }
-            .card { padding: 20px; border-radius: 10px; }
-            h1 { font-size: 22px; }
-            .logo { width: 40px; height: 40px; font-size: 20px; }
+            body { padding: 12px; }
+            .card { padding: 18px; }
+            h1 { font-size: 20px; }
+            .logo { width: 36px; height: 36px; font-size: 18px; }
             header { margin-bottom: 15px; }
 
-            .auth-container { flex-direction: column; gap: 15px; }
-            .auth-container > div { padding: 15px; min-width: 100%; }
+            .row, .auth-container { flex-direction: column; gap: 12px; }
             
-            button { padding: 10px 15px; font-size: 13px; }
-            button.ghost { padding: 8px 15px; }
-
-            .controls { flex-wrap: wrap; } /* Allow controls to wrap on tiny screens */
-            .controls button { margin-top: 5px; }
+            /* Tighter controls on mobile */
+            .header-controls { flex-direction: column; align-items: stretch; gap: 8px; }
+            .controls { justify-content: space-between; flex-wrap: wrap; }
+            .controls button { flex-grow: 1; min-width: 48%; } /* Two buttons per row */
+            .controls button:last-child { min-width: 100%; } /* Delete takes full width */
+            
             .link-card { flex-direction: column; align-items: stretch; }
             .link-card > div:last-child { text-align: left; margin-top: 5px; }
         }
@@ -163,9 +171,10 @@
     </div>
 
     <script>
-        // JS Logic (Unchanged, as the requests were purely visual/sizing)
+        // JS Logic (Functionality remains unchanged)
         const API_PREFIX = '/api';
         const view = document.getElementById('view');
+        // Silent Polling: 10 seconds
         const pollIntervalMs = 10000; 
         let messagesPollId = null;
 
@@ -236,11 +245,11 @@
             show(`
                 <div>
                     <h2 style="margin:0 0 16px; font-size: 20px; font-weight: 700;">Start Your Anonymous Link</h2>
-                    <p class="muted" style="margin-bottom: 25px; font-size: 14px;">Generate a unique link, share it on your socials, and receive private, untraceable messages instantly. Zero sign-up required for senders.</p>
+                    <p class="muted" style="margin-bottom: 20px; font-size: 14px;">Generate a unique link, share it on your socials, and receive private, untraceable messages instantly. Zero sign-up required for senders.</p>
 
                     <div class="auth-container row">
                         <div>
-                            <h3 style="font-size: 17px; margin-bottom: 12px;"><i class="fas fa-plus-circle" style="color: var(--accent-secondary); margin-right: 8px;"></i> Create New Account</h3>
+                            <h3 style="font-size: 17px; margin-bottom: 10px;"><i class="fas fa-plus-circle" style="color: var(--accent-secondary); margin-right: 8px;"></i> Create New Account</h3>
                             <div class="col" style="gap:8px;">
                                 <input id="new_username" type="text" placeholder="Choose a unique username" />
                                 <input id="new_password" type="password" placeholder="Choose a strong password" />
@@ -252,7 +261,7 @@
                         </div>
 
                         <div>
-                            <h3 style="font-size: 17px; margin-bottom: 12px;"><i class="fas fa-lock" style="color: var(--accent-secondary); margin-right: 8px;"></i> Existing User Login</h3>
+                            <h3 style="font-size: 17px; margin-bottom: 10px;"><i class="fas fa-lock" style="color: var(--accent-secondary); margin-right: 8px;"></i> Existing User Login</h3>
                             <div class="col" style="gap:8px;">
                                 <input id="login_username" type="text" placeholder="Your Username" />
                                 <input id="login_password" type="password" placeholder="Your Password" />
@@ -363,11 +372,11 @@
                 <div class="link-card row">
                     <div style="flex: 2;">
                         <div class="small muted"><i class="fas fa-share-alt"></i> Share this secret URL</div>
-                        <div id="shareUrl" style="font-weight:600; margin-top:6px; font-size: 15px; word-break: break-all;"></div>
+                        <div id="shareUrl" style="font-weight:600; margin-top:4px; font-size: 14px; word-break: break-all;"></div>
                     </div>
                     <div style="flex: 1; text-align:right;">
                         <div class="small muted">Link ID</div>
-                        <div id="linkIdText" style="font-weight:700; font-size: 16px;"></div>
+                        <div id="linkIdText" style="font-weight:700; font-size: 15px; margin-top: 4px;"></div>
                     </div>
                 </div>
 
@@ -480,14 +489,14 @@
                     </div>
 
                     <form id="sendForm" style="margin-top:20px">
-                        <div class="col" style="gap:12px">
+                        <div class="col" style="gap:10px">
                             <div>
                                 <label class="small muted" style="display:block; margin-bottom: 5px;">Your identity (Optional - remains anonymous)</label>
                                 <input id="senderName" type="text" placeholder="e.g. Someone who cares" />
                             </div>
                             <div>
                                 <label class="small muted" style="display:block; margin-bottom: 5px;">Your secret message</label>
-                                <textarea id="senderText" rows="6" placeholder="Write your message here..." required></textarea>
+                                <textarea id="senderText" rows="5" placeholder="Write your message here..." required></textarea>
                             </div>
                             <div class="actions" style="margin-top:10px;">
                                 <button id="sendNow" type="submit" style="flex:1;"><i class="fas fa-paper-plane"></i> Send Secret Message</button>
